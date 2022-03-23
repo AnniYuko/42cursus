@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   bzero_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 16:12:04 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/23 09:58:14 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/23 09:57:45 by akroll            #+#    #+#             */
+/*   Updated: 2022/03/23 09:59:34 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void ft_bzero(void *s, unsigned int n)
-{
-	char *p;
+#include <stdio.h>
+#include "../ft_bzero.c"
 
-	p = s;
-	while (n-- > 0)
-	{
-		*p = 0;
-		p++;
-	}
+int main()
+{
+	char str1[] = "tree";
+	char str2[] = "arbol";
+
+	ft_bzero(str1, 10);
+
+	printf("%s", str1);
+	printf("%s", str2);
+
+	return 0;
 }
