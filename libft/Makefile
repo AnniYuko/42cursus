@@ -1,16 +1,24 @@
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror
+RM := rm -f
+sources := $(wildcard *.c)
+objects := $(sources:.c=.o)
 NAME := libft.a
 
 all: libft.a
 
-libft.a:
-	ar
+libft.a: $(objects)
+	ar cr $@ $^
+
+$(objects): %.o: %.c
+	$(CC) $(CFLAGS) -c $^ -o $@
 
 clean:
-	rm -f *.o
+	$(RM) $(objects)
 
 fclean:
-	rm -f *.o $(NAME)
+	$(RM) $(objects) $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re

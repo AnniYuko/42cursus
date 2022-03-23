@@ -1,45 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   memcpy_test.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 16:12:04 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/23 09:45:59 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/23 14:45:52 by akroll            #+#    #+#             */
+/*   Updated: 2022/03/23 14:51:45 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
-void ft_bzero(void *s, unsigned int n)
-{
-	char *p;
-
-	p = s;
-	while (n-- > 0)
-	{
-		*p = 0;
-		p++;
-	}
-}
+#include "../libft/libft.h"
+#include "../libft/ft_memcpy.c"
 
 int main()
 {
-	int i = 0;
-	int size = 3;
-	char *strs[size];
+	char str[] = "happy birthday";
+	char *p;
 
-	strs[0] = "tree";
-	strs[1] = "arbol";
-	strs[2] = "baum";
+	printf("before: %s", str);
 
-	ft_bzero(strs, 1);
-
-	while (i < size)
-	{
-		printf("%s", strs[i]);
-		i++;
-	}
+	p = ft_memcpy(str, str + 7, 8);
+	printf("after memcpy: %s\n", p);
 	return 0;
 }

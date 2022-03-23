@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:48:58 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/22 15:15:10 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/23 14:12:47 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@
 	- if c is \0 the functions returns its position, since it is part of the string
 */
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strrchr(const char *s, int c)
 {
-	int i;
-	char character;
-	char *last_occ;
+	int		i;
+	char	*str;
+	char	*last_occ;
 
 	i = 0;
+	str = (char*)s;
 	last_occ = NULL;
-	character = itoa(c);
-	while (s[i - 1])
+	while (str[i - 1])
 	{
-		if (s[i] == character)
-			last_occ = s[i];
+		if (str[i] == c)
+			last_occ = str[i];
 		i++;
 	}
-	return(last_occ);
+	return (last_occ);
 }

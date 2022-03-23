@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 14:49:28 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/23 14:12:49 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/22 15:15:44 by akroll            #+#    #+#             */
+/*   Updated: 2022/03/23 14:33:49 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-/*
-	- locate char (ASCII) in string
-	- return pointer to char, otherwise NULL
-	- if c is \0 the functions returns its position, since it is part of the string
-*/
-
-char	*ft_strchr(const char *s, int c)
+unsigned int	ft_strlcat(char *dest, const char *src, unsigned int destsize)
 {
-	int i;
-	char *str;
+	unsigned int i;
 
 	i = 0;
-	str = (char*)s;
-	while (str[i - 1])
+
 	{
-		if (str[i] == c)
-			return(&str[i]);
-		i++;
+
 	}
-	return(NULL);
+	if (destsize != 0)
+		dest[i] = '\0';
+	return(i);
 }

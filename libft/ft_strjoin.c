@@ -6,13 +6,13 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 10:27:15 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/22 14:28:00 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/23 13:34:58 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char    *ft_strjoin(const char *s1, const char *s2)
+char    *ft_strjoin(char const *s1, char const *s2)
 {
     char *concat_str;
     int i;
