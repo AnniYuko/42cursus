@@ -1,32 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 16:25:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/23 08:59:41 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/22 16:12:04 by akroll            #+#    #+#             */
+/*   Updated: 2022/03/23 09:45:59 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-	- len is the amount of bytes
-	- c is converted to unsigned char
-	- len amount of chars are written to string b
-*/
+#include <stdio.h>
 
-void	*ft_memset(void *b, int c, unsigned int len)
+void ft_bzero(void *s, unsigned int n)
 {
-	unsigned char *p;
-	unsigned int i;
+	char *p;
 
-	p = &b;
-	i = 0;
-	while (i < len)
+	p = s;
+	while (n-- > 0)
 	{
-		p[i] = c;
+		*p = 0;
+		p++;
+	}
+}
+
+int main()
+{
+	int i = 0;
+	int size = 3;
+	char *strs[size];
+
+	strs[0] = "tree";
+	strs[1] = "arbol";
+	strs[2] = "baum";
+
+	ft_bzero(strs, 1);
+
+	while (i < size)
+	{
+		printf("%s", strs[i]);
 		i++;
 	}
-	return(b);
+	return 0;
 }
