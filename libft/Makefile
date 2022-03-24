@@ -5,9 +5,9 @@ sources := $(wildcard *.c)
 objects := $(sources:.c=.o)
 NAME := libft.a
 
-all: libft.a
+all: $(NAME)
 
-libft.a: $(objects)
+$(NAME): $(objects)
 	ar cr $@ $^
 
 $(objects): %.o: %.c
