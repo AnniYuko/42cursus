@@ -6,18 +6,13 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 16:12:04 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/23 09:58:14 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/24 12:06:16 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 void ft_bzero(void *s, unsigned int n)
 {
-	char *p;
-
-	p = s;
-	while (n-- > 0)
-	{
-		*p = 0;
-		p++;
-	}
+	ft_memset(s, 0, n);
 }
