@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 10:50:31 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/23 14:37:36 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/24 13:17:42 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 
 void *ft_memchr(const void *s, int c, unsigned int n)
 {
-	char *p;
+	const unsigned char *p;
 
-	p = (char*)s;
+	p = s;
 	while (n-- > 0)
 	{
 		if (*p == c)
-			return(p);
+			return((void *)p);
 		p++;
 	}
 	return(NULL);

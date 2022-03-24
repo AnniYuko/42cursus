@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 16:25:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/24 12:02:37 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/24 12:20:43 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 	- len amount of chars are written to string b
 */
 
-void	*ft_memset(void *b, int c, unsigned int len)
+#include "libft.h"
+
+void	*ft_memset(void *b, int c, size_t len)
 {
 	unsigned char *p;
-	unsigned int i;
+	size_t i;
 
 	p = b;
 	i = 0;

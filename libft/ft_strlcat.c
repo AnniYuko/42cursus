@@ -6,20 +6,26 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:15:44 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/23 14:33:49 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/24 13:39:47 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned int	ft_strlcat(char *dest, const char *src, unsigned int destsize)
+#include "libft.h"
+
+size_t	ft_strlcat(char *dest, const char *src, size_t destsize)
 {
-	unsigned int i;
+	size_t i;
+	size_t destlen;
+	size_t srclen;
 
 	i = 0;
-
+	destlen = ft_strlen(dest);
+	srclen = ft_strlen(src);
+	while (i < (destsize - 1))
 	{
-
+		dest[i++] = *src++;
 	}
 	if (destsize != 0)
 		dest[i] = '\0';
-	return(i);
+	return(destlen + srclen);
 }
