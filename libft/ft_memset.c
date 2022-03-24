@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 16:25:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/23 10:57:38 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/24 11:17:23 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*ft_memset(void *b, int c, unsigned int len)
 	i = 0;
 	while (i < len)
 	{
-		p[i] = c;
+		p[i] = (unsigned char)c;
 		i++;
 	}
 	return(b);
