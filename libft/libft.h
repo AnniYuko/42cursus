@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:02:47 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/24 12:23:33 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/25 13:48:54 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ int		ft_isascii(int c);
 
 void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *b, int c, size_t len);
+void	*ft_memcpy(void *dest, const void *src, unsigned int n);
+int		ft_memcmp(const void *s1, const void *s2, size_t n);
 
 #endif
