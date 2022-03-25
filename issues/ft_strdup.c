@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 15:57:18 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/25 14:55:17 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/22 13:50:17 by akroll            #+#    #+#             */
+/*   Updated: 2022/03/25 14:49:23 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void *ft_calloc(size_t count, size_t size)
+char	*ft_strdup(const char *s1)
 {
-	void	*mem;
-	size_t	n;
+	char	*dest;
 
-	n = count * size;
-	mem = malloc(n);
-	if (!mem)
+	dest = malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	//If insufficient memory is available, NULL is returned and errno is set to ENOMEM?
+	if (!dest)
 		return(NULL);
-	ft_bzero(mem, n);
-	return(mem);
+	ft_strlcpy(dest, s1, sizeof(dest));
+	return (dest);
 }
-//set errno to ENOMEM?
