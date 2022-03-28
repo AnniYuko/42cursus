@@ -6,12 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:45:52 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/25 13:32:29 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 11:23:44 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
-#include "../libft/ft_memcpy.c"
 
 int main()
 {

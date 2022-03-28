@@ -6,12 +6,12 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 09:57:45 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/23 09:59:34 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 11:22:47 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "../ft_bzero.c"
+#include "../libft/libft.h"
 
 int main()
 {
