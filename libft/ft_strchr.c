@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:49:28 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/23 14:12:49 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 14:10:00 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
 	i = 0;
-	str = (char*)s;
+	str = (char *)s;
 	while (str[i - 1])
 	{
 		if (str[i] == c)
-			return(&str[i]);
+			return (&str[i]);
 		i++;
 	}
-	return(NULL);
+	return (NULL);
 }

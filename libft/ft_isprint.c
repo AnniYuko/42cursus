@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:45:08 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/22 14:47:00 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 14:01:17 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int	ft_isprint(int c)
 {
 	if (c < 32 || c >= 127)
-		return(1);
-	return(0);
+		return (1);
+	return (0);
 }

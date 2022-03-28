@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 10:27:15 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/23 13:34:58 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 10:08:40 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char    *ft_strjoin(char const *s1, char const *s2)
 
     i = 0;
     j = 0;
-    printf("size s1: %d\nsize s2: %d\n", ft_strlen(s1), ft_strlen(s2));
+    printf("size s1: %zu\nsize s2: %zu\n", ft_strlen(s1), ft_strlen(s2));
     concat_str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
     if (!concat_str)
         return(NULL);

@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:48:58 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/23 14:12:47 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 14:15:48 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ char	*ft_strrchr(const char *s, int c)
 	char	*last_occ;
 
 	i = 0;
-	str = (char*)s;
+	str = (char *)s;
 	last_occ = NULL;
 	while (str[i - 1])
 	{
 		if (str[i] == c)
-			last_occ = str[i];
+			last_occ = &str[i];
 		i++;
 	}
 	return (last_occ);

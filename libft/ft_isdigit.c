@@ -6,13 +6,13 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:37:01 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/22 14:39:45 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 14:00:59 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
-		return(1);
-	return(0);
+		return (1);
+	return (0);
 }

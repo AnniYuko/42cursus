@@ -6,17 +6,17 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 12:34:16 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/28 13:06:27 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 14:04:59 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void *ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	const unsigned char *p_src;
-	unsigned char *p_dest;
-	size_t i;
+	const unsigned char	*p_src;
+	unsigned char		*p_dest;
+	size_t				i;
 
 	p_dest = (unsigned char *)dest;
 	p_src = (const unsigned char *)src;

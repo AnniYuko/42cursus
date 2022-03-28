@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:35:06 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/28 10:07:40 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 14:00:23 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_isalpha(int c)
 {
 	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-		return(1);
+		return (1);
 	else
-		return(0);
+		return (0);
 }

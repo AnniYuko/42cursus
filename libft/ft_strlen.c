@@ -6,18 +6,18 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 10:58:33 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/24 12:24:35 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 14:15:00 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-    size_t len;
+	size_t	len;
 
-    len = 0;
-    while (s[len] != '\0')
-        len++;
-    return(len);
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
 }

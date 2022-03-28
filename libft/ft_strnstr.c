@@ -6,21 +6,26 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:09:43 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/25 16:47:52 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 14:15:27 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "libft.h"
 
-char *ft_strnstr(const char *haystack, const char *needle, size_t len)
+/*
+	- returns first occurrence of needle (pointer to first char)
+	- if needle is empty string, returns pointer to haystack
+	- if needle is not found, returns NULL
+	- at most len amount of chars are searched, stops if there is a '\0'
+*/
+
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	size_t	i;
 
 	i = 0;
 	while (haystack[i] && i < len)
 	{
-		printf("while\n");
 		if (haystack[i] == needle[0])
 		{
 			printf("haystack: %c\nneedle: %c\n", haystack[i], needle[0]);
@@ -29,14 +34,5 @@ char *ft_strnstr(const char *haystack, const char *needle, size_t len)
 		}
 		i++;
 	}
-	return(NULL);
-}
-
-int main (void)
-{
-	char str1[] = "hello world";
-	char str2[] = "wo";
-
-	printf("%s\n", ft_strnstr(str1, str2, 10));
-	return 0;
+	return (NULL);
 }
