@@ -6,13 +6,15 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:35:06 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/22 14:36:53 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 10:07:40 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 int	ft_isalpha(int c)
 {
-	if (ft_isupper(c) || ft_islower(c))
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
 		return(1);
 	else
 		return(0);
