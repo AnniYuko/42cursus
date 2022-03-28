@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 13:33:57 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/25 14:09:26 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 13:30:40 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,17 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	const unsigned char *p_s1;
 	const unsigned char *p_s2;
-	unsigned int i;
+	size_t i;
 
-	p_s1 = s1;
-	p_s2 = s2;
+	p_s1 = (const unsigned char *)s1;
+	p_s2 = (const unsigned char *)s2;
 	i = 0;
-	while (i < n && p_s1[i] == p_s2[i])
+
+	while (n-- > 0)
 	{
+		if (p_s1[i] != p_s2[i])
+			return (p_s1[i] - p_s2[i]);
 		i++;
 	}
-	#ifdef DEBUG_INFO
-	if (n != i)
-		printf("first non-matching byte: %d\n", i);
-	printf("s1: %c = %d, s2: %c = %d\n", p_s1[i], p_s1[i], p_s2[i], p_s2[i]);
-	#endif
-	return (p_s1[i] - p_s2[i]);
+	return (0);
 }
