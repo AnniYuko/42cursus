@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/30 16:18:06 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/28 14:39:38 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/29 12:34:10 by akroll            #+#    #+#             */
+/*   Updated: 2022/03/29 16:25:39 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char *str)
-{
-	int	i;
-	int	sign;
-	int	nb;
+#include "libft.h"
 
-	nb = 0;
-	sign = 1;
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
 	i = 0;
-	while (str[i] != '\0' && (*str == ' ' || *str == '\n' || *str == '\t'
-			|| *str == '\r' || *str == '\v' || *str == '\f'))
+	if (n == 0)
+		return (0);
+	while (i < n && (s1[i] != '\0' && s2[i] != '\0'))
 	{
+		ft_memcmp(&s1[i], &s2[i], 1);
 		i++;
 	}
-	while (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
-	}
-	while (str[i] != '\0' && (str[i] >= '0' && str[i] <= '9'))
-	{
-		nb = nb * 10 + (str[i] - '0');
-		i++;
-	}
-	return (sign * nb);
+	return (0);
 }

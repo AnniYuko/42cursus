@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 15:15:44 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/28 14:52:10 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/28 15:34:30 by akroll            #+#    #+#             */
+/*   Updated: 2022/03/29 11:22:45 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+//char	*ft_itoa(int n)
 
-size_t	ft_strlcat(char *dest, const char *src, size_t destsize)
-{
-	size_t	i;
-	size_t	destlen;
-	size_t	srclen;
+//get size by dividing by 10 and increasing counter
 
-	i = 0;
-	destlen = ft_strlen(dest);
-	srclen = ft_strlen(src);
-	while (i < (destsize - 1))
-	{
-		dest[i++] = *src++;
-	}
-	if (destsize != 0)
-		dest[i] = '\0';
-	return (destlen + srclen);
-}
+//number to ascii by (n)^size-i, i++, use modulo for getting right digit
+

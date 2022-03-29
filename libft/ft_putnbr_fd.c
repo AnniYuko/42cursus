@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 11:09:09 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/29 12:26:03 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/29 10:47:52 by akroll            #+#    #+#             */
+/*   Updated: 2022/03/29 12:21:46 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-	- copies chars from src to dest
-	- returns total length of string it tried to create (src length)
-	- destsize should have room for '\0'
-	- null-termination is guaranteed
-	- undefined behaviour if strings overlap
-*/
-
-size_t	ft_strlcpy(char *dest, const char *src, size_t destsize)
+void	ft_putnbr_fd(int n, int fd)
 {
-	size_t	i;
-
-	i = 0;
-	ft_memcpy(dest, src, destsize - 1);
-	if (destsize != 0)
-		dest[destsize] = '\0';
-	return (ft_strlen(src));
+	if (n < 0)
+	{
+		if (n == -2147483648)
+			write(fd, "-2147483648", 11);
+		else
+			ft_putchar_fd('-', fd);
+	}
+	if (n < 10)
+		ft_putchar_fd((unsigned char)n, fd);
+	else
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putnbr_fd(n % 10, fd);
+	}
 }
