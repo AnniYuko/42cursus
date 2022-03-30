@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:09:43 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/28 14:15:27 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/30 12:45:43 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,19 @@
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	size_t	i;
+	size_t	needle_len;
 
 	i = 0;
+	needle_len = ft_strlen(needle);
+	if (len == 0)
+		return (NULL);
+	if (needle[0] == '\0')
+		return ((char *)haystack);
 	while (haystack[i] && i < len)
 	{
-		if (haystack[i] == needle[0])
+		if (haystack[i] == needle[0] && (needle_len + i) < len)
 		{
-			printf("haystack: %c\nneedle: %c\n", haystack[i], needle[0]);
-			if (ft_memcmp(haystack + i, needle, 1) == 0)
+			if (ft_memcmp(haystack + i, needle, needle_len) == 0)
 				return ((char *)haystack + i);
 		}
 		i++;
