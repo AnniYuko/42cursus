@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 16:18:06 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/28 14:39:38 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/30 16:25:27 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	ft_atoi(const char *str)
 	nb = 0;
 	sign = 1;
 	i = 0;
-	while (str[i] != '\0' && (*str == ' ' || *str == '\n' || *str == '\t'
-			|| *str == '\r' || *str == '\v' || *str == '\f'))
+	while ((str[i] == ' ' || str[i] == '\n' || str[i] == '\t'
+			|| str[i] == '\r' || str[i] == '\v' || str[i] == '\f'))
 	{
 		i++;
 	}
