@@ -6,19 +6,21 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:27:21 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/28 11:23:50 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 14:34:43 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
+#include <string.h>
 
 int main()
 {
-	char str[] = "copy this to .....";
+	char str[] = "copy these overlapping parts";
 
 	puts(str);
-	ft_memmove(str + 13, str + 5, 4);
-	//ft_memmove(str + 3, str, 9);
+	ft_memmove(str + 5, str, 22);
+	//memmove(str + 5, str, 22);
+
 	puts(str);
 	return 0;
 }

@@ -6,18 +6,18 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:04:11 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/28 11:23:38 by akroll           ###   ########.fr       */
+/*   Updated: 2022/03/28 13:22:14 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define DEBUG_INFO
+
 #include "../libft/libft.h"
 
 int main()
 {
 	int return_val;
 
-	return_val = ft_memcmp("\0 erdbeere", "\0 erdbaer", 10);
+	return_val = ft_memcmp("1", "\0", 0);
 
 	if ( return_val > 0)
 		printf("s1 is bigger than s2\n");
