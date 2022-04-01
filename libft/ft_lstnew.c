@@ -12,15 +12,15 @@
 
 #include "ft_list.h"
 
-// t_list *ft_lstnew(void *content)
-// {
-// 	t_list *elem;
+t_list *ft_lstnew(void *content)
+{
+	t_list *elem;
 
-// 	elem = malloc(sizeof(t_list));
-// 	if (elem == NULL)
-// 		return(NULL);
+	elem = malloc(sizeof(t_list));
+	if (elem == NULL)
+		return(NULL);
 
-// 	elem->data = data;
-// 	elem->next = NULL;
-// 	return(elem);
-// }
+	elem->content = content;
+	elem->next = NULL;
+	return(elem);
+}
