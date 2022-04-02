@@ -1,12 +1,10 @@
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
 RM := rm -f
-sources := $(wildcard *.c)
+sources := $(filter-out $(wildcard ft_lst*.c), $(wildcard *.c))
 objects := $(sources:.c=.o)
-#bonusdir := lists
-#bonus_sources := $(wildcard $(bonusdir)/*.c) $(wildcard *.c)
-#problem with folder here
-#bonus_objects := $(bonus_sources:.c=.o)
+bonus_sources := $(wildcard ft_lst*.c)
+bonus_objects := $(bonus_sources:.c=.o)
 NAME := libft.a
 
 all: $(NAME)
@@ -14,18 +12,20 @@ all: $(NAME)
 $(NAME): $(objects)
 	ar cr $@ $^
 
-$(objects): %.o: %.c
-	$(CC) $(CFLAGS) -c $^ -o $@
+$(objects): $(sources)
+	$(CC) $(CFLAGS) -c $^
 
-# bonus: $(bonus_sources)
-# 	$(CC) $(CFLAGS) -c $^
-# 	ar cr $(NAME) $(bonus_objects)
+bonus: $(bonus_objects) $(objects)
+	ar cr $(NAME) $^
+
+$(bonus_objects): $(bonus_sources)
+	$(CC) $(CFLAGS) -c $^
 
 clean:
-	$(RM) $(objects)
+	$(RM) *.o
 
 fclean:
-	$(RM) $(objects) $(NAME)
+	$(RM) *.o $(NAME)
 
 re: fclean all
 
