@@ -6,11 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:01:29 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/01 14:06:56 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/02 10:22:43 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_list.h"
+#include "libft.h"
 
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {

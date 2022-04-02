@@ -6,11 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:08:17 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/01 14:30:46 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/02 10:58:35 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_list.h"
+#include "libft.h"
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
@@ -28,3 +28,5 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	}
 	return (begin_list);
 }
+
+//it's allowed to use free - is it necessary?

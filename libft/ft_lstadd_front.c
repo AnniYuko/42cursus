@@ -6,11 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:09:07 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/01 13:17:49 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/02 10:22:25 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_list.h"
+#include "libft.h"
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {

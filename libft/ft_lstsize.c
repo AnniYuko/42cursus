@@ -6,11 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 13:18:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/01 13:25:00 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/02 10:23:15 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_list.h"
+#include "libft.h"
 
 int	ft_lstsize(t_list *lst)
 {
