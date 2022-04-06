@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:34:30 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/06 15:48:25 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/06 16:35:50 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,36 +30,34 @@ static unsigned int	count_digits(int n)
 	return (digits);
 }
 
-
+static void	put_numbers_into_string(int n, unsigned int digits, char *num_string)
+{
+	if (n < 0)
+	{
+		num_string[0] = '-';
+		n *= -1;
+	}
+	num_string[digits] = '\0';
+	digits--;
+	while (n > 0)
+	{
+		num_string[digits] = (n % 10) + '0';
+		n = n / 10;
+		digits--;
+	}
+}
 
 char	*ft_itoa(int n)
 {
 	unsigned int	digits;
-	char			*numbers_str;
+	char			*num_string;
 
 	if (n == -2147483648)
 			return ("-2147483648");
 	digits = count_digits(n);
-	numbers_str = malloc((digits + 1) * sizeof(char));
-	if (numbers_str == NULL)
+	num_string = malloc((digits + 1) * sizeof(char));
+	if (num_string == NULL)
 		return (NULL);
-	numbers_str[digits] = '\0';
-	if (n < 0)
-	{
-		numbers_str[0] = '-';
-		digits--;
-		n *= -1;
-	}
-	while (digits > 0)
-	{
-		numbers_str[digits] = (n % 10) + '0';
-		n = n / 10;
-		digits--;
-	}
-	return (numbers_str);
-}
-
-int	main()
-{
-	printf("%s\n", ft_itoa(-214748364));
+	put_numbers_into_string(n, digits, num_string);
+	return (num_string);
 }
