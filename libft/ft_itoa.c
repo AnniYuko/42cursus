@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:34:30 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/02 17:25:11 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/06 15:48:25 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ static unsigned int	count_digits(int n)
 	unsigned int	digits;
 
 	digits = 0;
+	if (n < 0)
+	{
+		n *= -1;
+		digits++;
+	}
 	while (n > 0)
 	{
 		n = n / 10;
@@ -29,24 +34,32 @@ static unsigned int	count_digits(int n)
 
 char	*ft_itoa(int n)
 {
-	unsigned int	num_digits;
+	unsigned int	digits;
 	char			*numbers_str;
 
-	num_digits = 0;
 	if (n == -2147483648)
 			return ("-2147483648");
+	digits = count_digits(n);
+	numbers_str = malloc((digits + 1) * sizeof(char));
+	if (numbers_str == NULL)
+		return (NULL);
+	numbers_str[digits] = '\0';
 	if (n < 0)
 	{
-		num_digits++;
+		numbers_str[0] = '-';
+		digits--;
 		n *= -1;
 	}
-	num_digits += count_digits(n);
-	if ((numbers_str = malloc((num_digits + 1) * sizeof(char))) == NULL)
-		return (NULL);
-
+	while (digits > 0)
+	{
+		numbers_str[digits] = (n % 10) + '0';
+		n = n / 10;
+		digits--;
+	}
 	return (numbers_str);
 }
 
-
-//number to ascii by (n)^size-i, i++, use modulo for getting right digit
-
+int	main()
+{
+	printf("%s\n", ft_itoa(-214748364));
+}
