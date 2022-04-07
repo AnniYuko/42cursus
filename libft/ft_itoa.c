@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:34:30 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/07 19:29:01 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/07 19:47:53 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static unsigned int	count_digits(int n)
 	return (digits);
 }
 
-static void	put_numbers_into_string(int n, unsigned int digits, char *num_string)
+static void	put_nums_into_string(int n, unsigned int digits, char *num_string)
 {
 	if (n < 0)
 	{
@@ -55,16 +55,11 @@ char	*ft_itoa(int n)
 	if (n == 0)
 		return (ft_strdup("0"));
 	if (n == -2147483648)
-			return (ft_strdup("-2147483648"));
+		return (ft_strdup("-2147483648"));
 	digits = count_digits(n);
 	num_string = malloc((digits + 1) * sizeof(char));
 	if (num_string == NULL)
 		return (NULL);
-	put_numbers_into_string(n, digits, num_string);
+	put_nums_into_string(n, digits, num_string);
 	return (num_string);
-}
-
-int	main()
-{
-	printf("%s\n", ft_itoa(0));
 }
