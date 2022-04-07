@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:34:30 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/02 17:25:11 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/06 16:51:35 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ static unsigned int	count_digits(int n)
 	unsigned int	digits;
 
 	digits = 0;
+	if (n < 0)
+	{
+		n *= -1;
+		digits++;
+	}
 	while (n > 0)
 	{
 		n = n / 10;
@@ -25,28 +30,41 @@ static unsigned int	count_digits(int n)
 	return (digits);
 }
 
-
+static void	put_numbers_into_string(int n, unsigned int digits, char *num_string)
+{
+	if (n < 0)
+	{
+		num_string[0] = '-';
+		n *= -1;
+	}
+	num_string[digits] = '\0';
+	digits--;
+	while (n > 0)
+	{
+		num_string[digits] = (n % 10) + '0';
+		n = n / 10;
+		digits--;
+	}
+}
 
 char	*ft_itoa(int n)
 {
-	unsigned int	num_digits;
-	char			*numbers_str;
+	unsigned int	digits;
+	char			*num_string;
 
-	num_digits = 0;
+	if (n == 0)
+		return (ft_strdup("0"));
 	if (n == -2147483648)
 			return ("-2147483648");
-	if (n < 0)
-	{
-		num_digits++;
-		n *= -1;
-	}
-	num_digits += count_digits(n);
-	if ((numbers_str = malloc((num_digits + 1) * sizeof(char))) == NULL)
+	digits = count_digits(n);
+	num_string = malloc((digits + 1) * sizeof(char));
+	if (num_string == NULL)
 		return (NULL);
-
-	return (numbers_str);
+	put_numbers_into_string(n, digits, num_string);
+	return (num_string);
 }
 
-
-//number to ascii by (n)^size-i, i++, use modulo for getting right digit
-
+int	main()
+{
+	printf("%s\n", ft_itoa(0));
+}
