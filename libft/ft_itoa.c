@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:34:30 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/06 16:51:35 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/07 19:29:01 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*ft_itoa(int n)
 	if (n == 0)
 		return (ft_strdup("0"));
 	if (n == -2147483648)
-			return ("-2147483648");
+			return (ft_strdup("-2147483648"));
 	digits = count_digits(n);
 	num_string = malloc((digits + 1) * sizeof(char));
 	if (num_string == NULL)
