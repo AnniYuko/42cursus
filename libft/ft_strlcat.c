@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:15:44 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/30 15:35:44 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/01 09:06:38 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,3 +33,10 @@ size_t	ft_strlcat(char *dest, const char *src, size_t destsize)
 		return (destsize);
 	return (destlen + srclen);
 }
+
+/*
+ft_strlcat:    [FAILED] [FAILED] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [FAILED] [OK] [OK]
+[fail]: your strlcat does not work with basic input
+[fail]: your strlcat does not work with basic input
+[fail]: your strlcat return value is false
+*/
