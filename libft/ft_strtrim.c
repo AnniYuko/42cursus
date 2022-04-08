@@ -6,13 +6,13 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:02:22 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/08 11:58:17 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/08 16:52:12 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int	skip_charset_from_start(char const *s1, char const *set)
+static unsigned int	skip_charset_from_start(char const *s1, char const *set)
 {
 	unsigned int	i;
 
