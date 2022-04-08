@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 16:18:06 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/30 16:25:27 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/08 17:16:12 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@ int	ft_atoi(const char *str)
 {
 	int	i;
 	int	sign;
-	int	nb;
+	long long int	nb;
 
 	nb = 0;
 	sign = 1;

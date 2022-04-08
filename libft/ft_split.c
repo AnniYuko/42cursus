@@ -6,12 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:38:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/02 17:47:38 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/08 16:55:39 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 static unsigned int	skip_delimiter_characters(char const *s, char c)
 {
@@ -77,6 +76,8 @@ char	**ft_split(char const *s, char c)
 		i += skip_delimiter_characters(&s[i], c);
 		i += (string_len = iterate_word(&s[i], c));
 		split_array[k] = malloc((string_len + 1) * sizeof(char));
+		if (&split_array[k] == NULL)
+			return (NULL);
 		ft_strlcpy(split_array[k], &s[i] - string_len, string_len + 1);
 		k++;
 	}
