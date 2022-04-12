@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:48:32 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/07 15:49:46 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/12 15:55:24 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 int	main()
 {
-	char str[] = "..,,..mein string..hello....:";
-	char charset[] = ",.:";
-	printf("trimmed string: %s\n", ft_strtrim(str, charset));
+	char str[] = "ete.....petete";
+	char charset[] = "tep";
+	char *trimmed_str;
+
+	trimmed_str = ft_strtrim(str, charset);
+	printf("trimmed string: %s\n", trimmed_str);
+	printf("length: %zu\n", ft_strlen(trimmed_str));
 
 	return 0;
 }

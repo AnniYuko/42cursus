@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:02:22 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/11 16:02:57 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/12 15:58:03 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static unsigned int	skip_charset_from_start(char const *s1, char const *set)
 	unsigned int	i;
 
 	i = 0;
-	while (ft_strchr(set, s1[i]) != NULL)
+	while (ft_strchr(set, s1[i]) != NULL && s1[i] != '\0')
 	{
 		i++;
 	}
@@ -37,11 +37,13 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	len = ft_strlen(s1);
 	i = skip_charset_from_start(s1, set);
-	while (ft_strchr(set, s1[len]) != NULL && len > i)
+	while (ft_strchr(set, s1[len - 1]) != NULL && i < len)
 	{
 		len--;
 	}
-	count = (&s1[len] + 1) - &s1[i];
+	if (i == len)
+		return (ft_strdup(""));
+	count = len - i;
 	str_trimmed = malloc((count + 1) * sizeof(char));
 	if (str_trimmed == NULL)
 		return (NULL);
