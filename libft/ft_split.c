@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:38:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/11 15:39:14 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/12 16:15:37 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,18 @@ static unsigned int	count_strings(char const *s, char c)
 	return (num_words);
 }
 
+static void	free_array(char **array)
+{
+	unsigned int	k;
+
+	k = 0;
+	while (array[k] != NULL)
+	{
+		free(array[k++]);
+	}
+	free(array);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char			**split_array;
@@ -77,8 +89,11 @@ char	**ft_split(char const *s, char c)
 		string_len = iterate_word(&s[i], c);
 		i += string_len;
 		split_array[k] = malloc((string_len + 1) * sizeof(char));
-		if (&split_array[k] == NULL)
+		if (split_array[k] == NULL)
+		{
+			free_array(split_array);
 			return (NULL);
+		}
 		ft_strlcpy(split_array[k], &s[i] - string_len, string_len + 1);
 		k++;
 	}
