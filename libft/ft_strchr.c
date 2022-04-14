@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:49:28 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/29 10:04:06 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/14 13:26:14 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ char	*ft_strchr(const char *s, int c)
 {
 	while (*s != '\0')
 	{
-		if (*s == c)
+		if (*s == (unsigned char)c)
 			break ;
 		s++;
 	}
-	if (*s == c)
+	if (*s == (unsigned char)c)
 		return ((char *)s);
 	return (NULL);
 }
