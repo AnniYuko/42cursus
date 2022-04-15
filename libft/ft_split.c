@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_new.c                                        :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:48:46 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/14 13:15:10 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/15 12:26:20 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static char	*free_array(char **array, unsigned int *k)
 		i = 0;
 		while (array[i] != NULL)
 		{
-			free(array[i++]);
+			free(array[i]);
+			i++;
 		}
 		free(array);
 		return (NULL);
@@ -87,7 +88,6 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	i = 0;
 	k = 0;
-	split_array[count_strings(s, c)] = NULL;
 	while (k < count_strings(s, c))
 	{
 		i += skip_delimiter_characters(&s[i], c);
@@ -99,5 +99,6 @@ char	**ft_split(char const *s, char c)
 		ft_strlcpy(split_array[k], &s[i] - string_len, string_len + 1);
 		k++;
 	}
+	split_array[k] = NULL;
 	return (split_array);
 }

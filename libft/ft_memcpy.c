@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 12:34:16 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/08 16:21:53 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/15 12:50:54 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 
 	if (dest == NULL && src == NULL)
 		return (NULL);
-	p_dest = (unsigned char *)dest;
-	p_src = (const unsigned char *)src;
+	p_dest = dest;
+	p_src = src;
 	i = 0;
 	while (i < n)
 	{

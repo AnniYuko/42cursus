@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 13:33:57 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/28 14:04:10 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/15 12:47:17 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	const unsigned char	*p_s2;
 	size_t				i;
 
-	p_s1 = (const unsigned char *)s1;
-	p_s2 = (const unsigned char *)s2;
+	p_s1 = s1;
+	p_s2 = s2;
 	i = 0;
 	while (n-- > 0)
 	{

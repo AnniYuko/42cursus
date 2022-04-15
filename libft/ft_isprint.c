@@ -6,11 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:45:08 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/29 09:47:40 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/15 12:32:02 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//tests for printable characters incl space
+//tests for printable characters incl space (' ' = 32), DEL excluded (127)
 
 int	ft_isprint(int c)
 {

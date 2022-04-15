@@ -6,11 +6,15 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 12:34:10 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/11 11:43:36 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/15 13:27:09 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+//	- compares null-terminated strings s1 and s2 but only n bytes
+//	- return value is the difference of s1, s2
+//	- using unsigned characters ('\200' > '\0')
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

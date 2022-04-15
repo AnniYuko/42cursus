@@ -6,11 +6,9 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:35:06 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/28 14:00:23 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/15 12:32:22 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "libft.h"
 
 int	ft_isalpha(int c)
 {

@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:02:22 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/01 09:08:03 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/15 13:01:45 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	char			*new_str;
 
 	i = 0;
-	if (s == NULL)
+	if (s == NULL || f == NULL)
 		return (NULL);
 	new_str = malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (!new_str)
