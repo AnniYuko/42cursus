@@ -6,11 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:22:31 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/19 20:47:14 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/19 21:11:29 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprinft.h"
+#include "libftprintf.h"
 
 /*
 • %c Prints a single character.
