@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:22:31 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/19 17:35:54 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/19 20:47:14 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,28 @@
 int	ft_printf(const char *format, ...)
 {
 	va_list	list;
+	int		count_args;
+	int		i;
+
+	count_args = 0;
+	i = 0;
+	while (format[i] != '\0')
+	{
+		if (format[i] == '%' && format[i + 1] != '%')
+			count_args++;
+		i++;
+	}
 
 	//initialize list
 	va_start(list, format);
 
-	// while (/*more_args_expected*/) {
-
-	// 	/* Get next argument value. */
-	// 	this_arg = va_arg(ap, type); /* va_arg() macro expands to an expression that has the type and value of the next argument in the call */
-	// 	process(this_arg);
-	// }
-	// va_end(ap); /* finished argument processing */
+	while (count_args > 0)
+	{
+		/* Get next argument value. */
+		this_arg = va_arg(list, type); /* va_arg() macro expands to an expression that has the type and value of the next argument in the call */
+		process(this_arg);
+		count_args--;
+	}
+	va_end(list); /* finished argument processing */
 
 }
