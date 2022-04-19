@@ -6,11 +6,12 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:22:31 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/19 21:11:29 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/19 21:36:04 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+#include <stdio.h>
 
 /*
 • %c Prints a single character.
@@ -24,31 +25,48 @@
 • %% Prints a percent sign.
 */
 
-int	ft_printf(const char *format, ...)
+int	count_arguments(const char *format)
 {
-	va_list	list;
-	int		count_args;
+	int		num_args;
 	int		i;
 
-	count_args = 0;
+	num_args = 0;
 	i = 0;
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%' && format[i + 1] != '%')
-			count_args++;
+			num_args++;
 		i++;
 	}
+	return (num_args);
+}
+
+int	ft_printf(const char *format, ...)
+{
+	va_list	list;
+	int		num_args;
+	
+	num_args = count_arguments(format);
+	printf("expecting %d arguents\n", num_args);
 
 	//initialize list
 	va_start(list, format);
 
-	while (count_args > 0)
+	while (num_args > 0)
 	{
 		/* Get next argument value. */
-		this_arg = va_arg(list, type); /* va_arg() macro expands to an expression that has the type and value of the next argument in the call */
-		process(this_arg);
-		count_args--;
+		// this_arg = va_arg(list, type); /* va_arg() macro expands to an expression that has the type and value of the next argument in the call */
+		// process(this_arg);
+		num_args--;
 	}
 	va_end(list); /* finished argument processing */
 
+	return (0);
+}
+
+int main()
+{
+	ft_printf("hi%d, %c, %s");
+
+	return (0);
 }
