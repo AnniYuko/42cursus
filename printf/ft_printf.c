@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:22:31 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/19 21:36:04 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/20 14:18:01 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,30 @@ int	count_arguments(const char *format)
 int	ft_printf(const char *format, ...)
 {
 	va_list	list;
-	int		num_args;
-	
-	num_args = count_arguments(format);
-	printf("expecting %d arguents\n", num_args);
+	int		i;
 
+	i = 0;
 	//initialize list
 	va_start(list, format);
 
-	while (num_args > 0)
+	while (format[i] != '\0')
 	{
+		if (format[i] == '%')
+			printf("found %%%c\n", format[i + 1]);
+
 		/* Get next argument value. */
 		// this_arg = va_arg(list, type); /* va_arg() macro expands to an expression that has the type and value of the next argument in the call */
 		// process(this_arg);
-		num_args--;
+		i++;
 	}
 	va_end(list); /* finished argument processing */
 
-	return (0);
+	return (count_arguments(format));
 }
 
 int main()
 {
-	ft_printf("hi%d, %c, %s");
+	ft_printf("hi %d, %c, %s, %x", 6, 'c', "string", 26);
 
 	return (0);
 }
