@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 13:26:55 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/21 16:13:00 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/21 16:44:53 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,6 @@ int	ft_printf2(const char *str, ...)
 
 int	main()
 {
-	ft_printf2("percent %% \ninteger %i \nchar %c \nstring %s \ndecimal %d\nunsigned %u\nhex %x\nHEX %X\n%%x should be: 0xa1b4cd6ef9\n", INT_MIN, '.', "heilbronn", INT_MAX, UINT_MAX, 694523096825, 694523096825);
+	ft_printf2("percent %% \ninteger %i \nchar %c \nstring %s \ndecimal %d\nunsigned %u\nhex %x\nHEX %X\n%%x should be: 0xa1b4cd6ef9\n", INT_MIN, '.', "heilbronn", INT_MAX, UINT_MAX, UINT_MAX, 694523096825);
 	return (0);
 }
