@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:47:32 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/27 19:04:52 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/27 20:06:54 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ size_t	ft_strlen(const char *s)
 void	*ft_calloc(size_t count, size_t size)
 {
 	unsigned char	*mem;
-	unsigned int	i;
+	size_t			i;
 	size_t			n_bytes;
 
 	i = 0;
@@ -43,14 +43,12 @@ void	*ft_calloc(size_t count, size_t size)
 	return (mem);
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_strldup(const char *s1, size_t length)
 {
 	char	*dest;
-	int		i;
-	int		length;
+	size_t	i;
 
 	i = 0;
-	length = ft_strlen(s1);
 	dest = malloc(sizeof(char) * (length + 1));
 	if (dest == NULL)
 		return (NULL);
@@ -59,10 +57,11 @@ char	*ft_strdup(const char *s1)
 		dest[i] = s1[i];
 		i++;
 	}
+	dest[length] = '\0';
 	return (dest);
 }
 
-int	no_newline_found(const char *buffer)
+int	newline_found(const char *buffer, size_t *bytes_til_newl)
 {
 	int i;
 
@@ -70,13 +69,16 @@ int	no_newline_found(const char *buffer)
 	while (buffer[i] != '\0')
 	{
 		if (buffer[i] == '\n')
-			return (0);		/* false */
+		{
+			*bytes_til_newl = i;
+			return (1);		/* true */
+		}
 		i++;
 	}
-	return (1);		/* true */
+	return (0);		/* false */
 }
 
-char *add_buffer_chunk_to_string(const char *buffer, char *string)
+char *add_to_new_string(const char *buffer, char *string)
 {
 	char	*new_joined_str;
 	int		i;
@@ -104,27 +106,28 @@ char *add_buffer_chunk_to_string(const char *buffer, char *string)
 
 char *get_next_line(int fd)
 {
-	char	*buffer;
-	char	*string_out;
-	int		b;
+	//static char *str_after_newl;
+	char		*buffer;
+	char		*string_out;
+	size_t		bytes_til_newl;
+	int			bytes_read;
 
-	b = 0;
-	string_out = ft_strdup("\0");
+	string_out = ft_strldup("\0", 1);
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (buffer == NULL)
 		return (NULL);
 
-	printf("buffer content\n");
-	while (no_newline_found(buffer))
+	while (bytes_read != 0)
 	{
-		/* get return value = */ read(fd, buffer, BUFFER_SIZE);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[BUFFER_SIZE] = '\0';
-		printf("\t%d: %s\n", b, buffer);
-		string_out = add_buffer_chunk_to_string(buffer, string_out);
-		b++;
+		printf("\tbuffer: %s\n", buffer);
+		if (newline_found(buffer, &bytes_til_newl))
+			break ;
+		string_out = add_to_new_string(buffer, string_out);
 	}
-	// newline found:
-
+	string_out = add_to_new_string(ft_strldup(buffer, bytes_til_newl), string_out);
+	// copy rest into static pointer
 
 	return (string_out);
 }
@@ -139,8 +142,6 @@ int	main()
 }
 
 
-
-
 /* issues:
 
 - static char *content_after_newline
@@ -148,5 +149,4 @@ int	main()
 - what if entire file is empty? return empty string?
 - what happens if read returns 0? quit while loop and return (newstring)
 - read has an error -> return NULL
-
 */
