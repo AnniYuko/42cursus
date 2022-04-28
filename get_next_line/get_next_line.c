@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:47:32 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/28 11:18:32 by akroll           ###   ########.fr       */
+/*   Updated: 2022/04/28 14:09:14 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,6 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-// void	*ft_calloc(size_t count, size_t size)
-// {
-// 	unsigned char	*mem;
-// 	size_t			i;
-// 	size_t			n_bytes;
-
-// 	i = 0;
-// 	n_bytes = count * size;
-// 	mem = malloc(n_bytes);
-// 	if (mem == NULL)
-// 		return (NULL);
-// 	while (i < n_bytes)
-// 	{
-// 		mem[i] = '\0';
-// 		i++;
-// 	}
-// 	return (mem);
-// }
-
 char	*ft_strldup(const char *s1, size_t length)
 {
 	char	*dest;
@@ -52,7 +33,7 @@ char	*ft_strldup(const char *s1, size_t length)
 	dest = malloc(sizeof(char) * (length + 1));
 	if (dest == NULL)
 		return (NULL);
-	while (i < length)
+	while (i < length)	/* what if string ends sooner '\0' ? */
 	{
 		dest[i] = s1[i];
 		i++;
@@ -61,12 +42,12 @@ char	*ft_strldup(const char *s1, size_t length)
 	return (dest);
 }
 
-int	newline_found(const char *buffer, size_t *bytes_til_newl)
+int	find_newline(const char *buffer, size_t *bytes_til_newl)
 {
 	int i;
 
 	i = 0;
-	while (buffer[i] != '\0')
+	while (buffer != NULL && buffer[i] != '\0')
 	{
 		if (buffer[i] == '\n')
 		{
@@ -111,29 +92,42 @@ char *get_next_line(int fd)
 	char		*string_out;
 	size_t		bytes_til_newl;
 	size_t		bytes_read;
+	size_t		i;
+	int			newline_found;
 
 	string_out = ft_strldup("\0", 1);
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (buffer == NULL)
 		return (NULL);
 
-	// check static char* for text (til a newline)
-
-	while (bytes_read > 0)
+	i = 0;
+	if ((newline_found = find_newline(str_after_newl, &bytes_til_newl)))
+	{
+		string_out = ft_strljoin(str_after_newl, string_out, bytes_til_newl + 1);
+		str_after_newl += bytes_til_newl + 1;
+	}
+	else if (str_after_newl != NULL)
+	{
+		string_out = ft_strldup(str_after_newl, ft_strlen(str_after_newl));
+		free(str_after_newl);
+		str_after_newl = NULL;
+	}
+	//if no newline found in static go into while loop
+	while (bytes_read > 0 && !newline_found)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[BUFFER_SIZE] = '\0';
 		printf("\tbuffer: %s\n", buffer);
-		if (newline_found(buffer, &bytes_til_newl))
+		if ((newline_found = find_newline(buffer, &bytes_til_newl)))
 		{
 			string_out = ft_strljoin(buffer, string_out, bytes_til_newl + 1);		/* (+ 1) includes newline character */
-			str_after_newl = ft_strldup(&buffer[bytes_til_newl + 1], BUFFER_SIZE - bytes_til_newl);
-			break ;
+			str_after_newl = ft_strldup(&buffer[bytes_til_newl + 1], bytes_read - bytes_til_newl - 1);
 		}
 		else
-			string_out = ft_strljoin(buffer, string_out, BUFFER_SIZE);
+			string_out = ft_strljoin(buffer, string_out, bytes_read);
 	}
-	printf("static: %s\n", str_after_newl);
+	if (str_after_newl != NULL)
+		printf("static: %s\n", str_after_newl);
 	return (string_out);
 }
 
@@ -142,6 +136,8 @@ int	main()
 	int	fd;
 
 	fd = open("test.txt", O_RDONLY);
+	printf("output: %s\n", get_next_line(fd));
+	printf("output: %s\n", get_next_line(fd));
 	printf("output: %s\n", get_next_line(fd));
 	printf("output: %s\n", get_next_line(fd));
 }
