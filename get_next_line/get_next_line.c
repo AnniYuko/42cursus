@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:47:32 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/02 14:19:36 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/02 18:00:51 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,26 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-char	*ft_strldup(const char *s1, size_t length)
+size_t	ft_strlen(const char *s)
+{
+	size_t	len;
+
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
+}
+
+char	*ft_strdup(const char *s1)
 {
 	char	*dest;
 	size_t	i;
 
 	i = 0;
-	dest = malloc(sizeof(char) * (length + 1));
+	dest = malloc(ft_strlen(s1) + 1);
 	if (dest == NULL)
 		return (NULL);
-	while (s1[i] != '\0' && i < length)
+	while (s1[i] != '\0')
 	{
 		dest[i] = s1[i];
 		i++;
@@ -42,24 +52,7 @@ size_t	get_length(const char *string)
 	return (len);
 }
 
-int	find_newline(const char *string, size_t *bytes_til_newl)
-{
-	int i;
-
-	i = 0;
-	while (string != NULL && string[i] != '\0')
-	{
-		if (string[i] == '\n')
-		{
-			*bytes_til_newl = i;
-			return (1);		/* true */
-		}
-		i++;
-	}
-	return (0);		/* false */
-}
-
-char *ft_strljoin(const char *buffer, char *string, size_t length)
+char *ft_strljoin(const char *added, char *string, size_t length)
 {
 	char	*new_joined_str;
 	int		i;
@@ -67,7 +60,9 @@ char *ft_strljoin(const char *buffer, char *string, size_t length)
 
 	i = 0;
 	j = 0;
-	new_joined_str = malloc(get_length(buffer) + length + 1);
+	if (added == NULL)
+		added = ft_strdup("\0");
+	new_joined_str = malloc(ft_strlen(string) + length + 1);
 	if (new_joined_str == NULL)
 		return (NULL);
 	while (string[i] != '\0')
@@ -75,13 +70,14 @@ char *ft_strljoin(const char *buffer, char *string, size_t length)
 		new_joined_str[i] = string[i];
 		i++;
 	}
-	while (buffer[j] != '\0' && j < length)
+	while (added[j] != '\0' && j < length)
 	{
-		new_joined_str[i + j] = buffer[j];
+		new_joined_str[i + j] = added[j];
 		j++;
 	}
 	new_joined_str[i + j] = '\0';
-	free(string);
+	//free(string);
+	string = NULL;
 	return (new_joined_str);
 }
 
@@ -90,46 +86,34 @@ char *get_next_line(int fd)
 	static char *str_after_newl;
 	char		*buffer;
 	char		*string_out;
-	size_t		bytes_til_newl;
-	size_t		bytes_read;
+	size_t		length;
+	//size_t		bytes_read;
 	size_t		i;
 	int			newline_found;
 
-	string_out = malloc(1);
-	string_out[0] = '\0';
-	buffer = malloc(BUFFER_SIZE + 1);
-	if (buffer == NULL)
-		return (NULL);
-
+	string_out = ft_strdup("\0");
+	buffer = ft_strdup("\0");
 	i = 0;
-	if ((newline_found = find_newline(str_after_newl, &bytes_til_newl)))
-	{
-		string_out = ft_strljoin(str_after_newl, string_out, bytes_til_newl + 1);
-		str_after_newl += bytes_til_newl + 1;
-	}
-	else if (str_after_newl != NULL)
-	{
-		string_out = ft_strldup(str_after_newl, get_length(str_after_newl));
-		free(str_after_newl);
-		str_after_newl = NULL;
-	}
 
-	while (bytes_read > 0 && !newline_found)
+	length = get_length(str_after_newl);	/* til \n or \0 */
+	string_out = ft_strljoin(str_after_newl, string_out, length + 1);	/* (+ 1) includes newline character */
+	str_after_newl += length;	/* move pointer to the end of what was read (could be deleted) */
+	if (string_out[length] == '\n')
+		return (string_out);
+
+	while (*buffer != '\n')
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		read(fd, buffer, BUFFER_SIZE);
 		buffer[BUFFER_SIZE] = '\0';
 		printf("\tbuffer: %s\n", buffer);
-		if ((newline_found = find_newline(buffer, &bytes_til_newl)))
-		{
-			string_out = ft_strljoin(buffer, string_out, bytes_til_newl + 1);		/* (+ 1) includes newline character */
-			str_after_newl = ft_strldup(&buffer[bytes_til_newl + 1], bytes_read - bytes_til_newl - 1);
-		}
-		else
-			string_out = ft_strljoin(buffer, string_out, bytes_read);
+		length = get_length(buffer);	/* til \n or \0 */
+		string_out = ft_strljoin(buffer, string_out, length + 1);	/* (+ 1) includes newline character */
+		printf("stored: %s\n", string_out);
+		buffer += length;	/* move pointer to the end of what was read (could be deleted) */
+		str_after_newl = ft_strdup(buffer + 1);
 	}
-	if (str_after_newl != NULL)
-		printf("static: %s\n", str_after_newl);
-	free(buffer);
+	printf("static: %s\n", str_after_newl);
+	//free(buffer);
 	return (string_out);
 }
 
@@ -140,7 +124,7 @@ int	main()
 	fd = open("test.txt", O_RDONLY);
 	printf("output: %s\n", get_next_line(fd));
 	printf("output: %s\n", get_next_line(fd));
-	// printf("output: %s\n", get_next_line(fd));
+	printf("output: %s\n", get_next_line(fd));
 	// printf("output: %s\n", get_next_line(fd));
 }
 
