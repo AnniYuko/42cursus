@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:47:32 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/02 18:00:51 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/03 18:35:02 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,22 @@ size_t	get_length(const char *string)
 	return (len);
 }
 
+int	ft_strchr_bool(const char *s, int c)
+{
+	while (*s != '\0')
+	{
+		if (*s == (unsigned char)c)
+			break ;
+		s++;
+	}
+	return (*s == (unsigned char)c);
+}
+
 char *ft_strljoin(const char *added, char *string, size_t length)
 {
 	char	*new_joined_str;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;
@@ -76,7 +87,7 @@ char *ft_strljoin(const char *added, char *string, size_t length)
 		j++;
 	}
 	new_joined_str[i + j] = '\0';
-	//free(string);
+	free(string);
 	string = NULL;
 	return (new_joined_str);
 }
@@ -87,45 +98,51 @@ char *get_next_line(int fd)
 	char		*buffer;
 	char		*string_out;
 	size_t		length;
-	//size_t		bytes_read;
-	size_t		i;
-	int			newline_found;
+	ssize_t		bytes_read;
 
 	string_out = ft_strdup("\0");
-	buffer = ft_strdup("\0");
-	i = 0;
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (buffer == NULL)
+		return (NULL);
+	bytes_read = 1;
 
-	length = get_length(str_after_newl);	/* til \n or \0 */
+	length = get_length(str_after_newl);								/* til \n or \0 */
 	string_out = ft_strljoin(str_after_newl, string_out, length + 1);	/* (+ 1) includes newline character */
-	str_after_newl += length;	/* move pointer to the end of what was read (could be deleted) */
-	if (string_out[length] == '\n')
-		return (string_out);
-
-	while (*buffer != '\n')
+	str_after_newl += length;	// leaks because of this?
+	while (!ft_strchr_bool(string_out, '\n') && bytes_read != 0)
 	{
-		read(fd, buffer, BUFFER_SIZE);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1)
+		{
+			free(buffer);
+			return (NULL);
+		}
 		buffer[BUFFER_SIZE] = '\0';
-		printf("\tbuffer: %s\n", buffer);
-		length = get_length(buffer);	/* til \n or \0 */
+		length = get_length(buffer);								/* til \n or \0 */
 		string_out = ft_strljoin(buffer, string_out, length + 1);	/* (+ 1) includes newline character */
-		printf("stored: %s\n", string_out);
-		buffer += length;	/* move pointer to the end of what was read (could be deleted) */
-		str_after_newl = ft_strdup(buffer + 1);
+		printf("\tstored: %s\n", string_out);
+		str_after_newl = ft_strdup(buffer + length + 1);
+	//printf("static: %s\n", str_after_newl);
 	}
-	printf("static: %s\n", str_after_newl);
-	//free(buffer);
+	free(buffer);
 	return (string_out);
 }
 
 int	main()
 {
-	int	fd;
+	int		fd;
+	char	*output;
 
 	fd = open("test.txt", O_RDONLY);
-	printf("output: %s\n", get_next_line(fd));
-	printf("output: %s\n", get_next_line(fd));
-	printf("output: %s\n", get_next_line(fd));
+	output = get_next_line(fd);
+
+	printf("output: %s\n", output);
 	// printf("output: %s\n", get_next_line(fd));
+	// printf("output: %s\n", get_next_line(fd));
+	// printf("output: %s\n", get_next_line(fd));
+	free(output);
+	system("leaks a.out");
+	return (0);
 }
 
 
