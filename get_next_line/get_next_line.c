@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:47:32 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/04 16:26:02 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/06 16:35:56 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ size_t	get_length(const char *string)
 	len = 0;
 	while (string != NULL && (string[len] != '\0' && string[len] != '\n'))
 		len++;
-	return (len + 1);	/* (+1) inlcudes '\0' or '\n' */
+	return (len);
 }
 
 int	ft_strchr_bool(const char *s, int c)
@@ -71,8 +71,11 @@ char *ft_strljoin(char *added, char *string, size_t length)
 
 	i = 0;
 	j = 0;
-	if (added == NULL)
-		added = ft_strdup("\0");
+	if (!added)
+		{
+			added = malloc(1);
+			added[0] = '\0';
+		}
 	new_joined_str = malloc(ft_strlen(string) + length + 1);
 	if (new_joined_str == NULL)
 		return (NULL);
@@ -81,19 +84,22 @@ char *ft_strljoin(char *added, char *string, size_t length)
 		new_joined_str[i] = string[i];
 		i++;
 	}
-	while (/* added != NULL && */ added[j] != '\0' && j < length)
+	while (added[j] != '\0' && j < length)
 	{
 		new_joined_str[i + j] = added[j];
 		j++;
 	}
 	new_joined_str[i + j] = '\0';
-	// free(added); //?
+	// if (added != NULL)
+	// {
+	// 	free(added);
+	// 	added = NULL;
+	// }
 	free(string);
-	string = NULL;
 	return (new_joined_str);
 }
 
-char *shorten_string(char *string, size_t start)
+char *update_string(char *string, size_t start)
 {
 	size_t	i;
 	char	*shortened_str;
@@ -122,9 +128,15 @@ char *get_next_line(int fd)
 	ssize_t		length;
 	ssize_t		bytes_read;
 
-	string_out = ft_strdup("\0");
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	string_out = malloc(1);
+	string_out[0] = '\0';
 	if (!str_after_newl)
-		str_after_newl = ft_strdup("\0");
+	{
+		str_after_newl = malloc(1);
+		str_after_newl[0] = '\0';
+	}
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (buffer == NULL)
 		return (NULL);
@@ -132,29 +144,27 @@ char *get_next_line(int fd)
 
 	length = get_length(str_after_newl);						/* til \n or \0 */
 	if (length > 0)
-		string_out = ft_strljoin(str_after_newl, string_out, length);
-		// printf("\tstring_out 1: %s, %p\n", string_out, string_out);
-		str_after_newl = shorten_string(str_after_newl, length);
-		// printf("\tstr_after_newl 1: %s, %p\n", str_after_newl, str_after_newl);
-	while (!ft_strchr_bool(string_out, '\n') && bytes_read != 0)
+		string_out = ft_strljoin(str_after_newl, string_out, length + 1);
+		str_after_newl = update_string(str_after_newl, length + 1);
+	while (!ft_strchr_bool(string_out, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read == -1)
+		if (bytes_read > 0)
 		{
-			free(buffer);
-			return (NULL);
+			buffer[BUFFER_SIZE] = '\0';
+			printf("buffer: %s\n", buffer);
+			length = get_length(buffer);							/* til \n or \0 */
+			if (length > 0)
+			{
+				string_out = ft_strljoin(buffer, string_out, length + 1);
+				if (bytes_read > length)
+					str_after_newl = update_string(buffer, length + 1);
+			}
 		}
-		buffer[BUFFER_SIZE] = '\0';
-		printf("buffer: %s\n", buffer);
-		length = get_length(buffer);							/* til \n or \0 */
-		string_out = ft_strljoin(buffer, string_out, length);
-		// printf("\tstring_out 2: %s, %p\n", string_out, string_out);
-		// printf("\tstatic old: %s, %p\n", str_after_newl, str_after_newl);
-		if (bytes_read > length)
-			str_after_newl = shorten_string(buffer, length);
-		// printf("\tstatic shortened: %s, %p\n", str_after_newl, str_after_newl);
 	}
 	free(buffer);
+	if (bytes_read == -1)
+		return (NULL);
 	return (string_out);
 }
 
@@ -166,7 +176,7 @@ int	main()
 
 	printf("output: %s\n", get_next_line(fd));
 	printf("output: %s\n", get_next_line(fd));
-	printf("output: %s\n", get_next_line(fd));
+	// printf("output: %s\n", get_next_line(fd));
 	system("leaks a.out");
 	return (0);
 }
