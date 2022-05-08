@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 14:37:01 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/08 10:37:13 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/22 10:58:33 by akroll            #+#    #+#             */
+/*   Updated: 2022/03/28 14:15:00 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
+#include "libft.h"
+
+size_t	ft_strlen(const char *s)
 {
-	return (c >= '0' && c <= '9');
+	size_t	len;
+
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
 }

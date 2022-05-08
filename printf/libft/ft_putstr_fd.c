@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 14:37:01 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/08 10:37:13 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/29 10:35:20 by akroll            #+#    #+#             */
+/*   Updated: 2022/04/01 09:09:30 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
+#include "libft.h"
+
+void	ft_putstr_fd(char *s, int fd)
 {
-	return (c >= '0' && c <= '9');
+	if (s == NULL)
+		return ;
+	while (*s != '\0')
+	{
+		write(fd, s, sizeof(char));
+		s++;
+	}
 }

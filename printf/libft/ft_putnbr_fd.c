@@ -1,16 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 14:37:01 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/08 10:37:13 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/29 10:47:52 by akroll            #+#    #+#             */
+/*   Updated: 2022/04/01 09:23:33 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
+#include "libft.h"
+
+void	ft_putnbr_fd(int n, int fd)
 {
-	return (c >= '0' && c <= '9');
+	if (n < 0)
+	{
+		if (n == -2147483648)
+			write(fd, "-2147483648", 11);
+		else
+		{
+			ft_putchar_fd('-', fd);
+			ft_putnbr_fd(-n, fd);
+		}
+	}
+	else if (n < 10)
+		ft_putchar_fd(n + '0', fd);
+	else
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd((n % 10) + '0', fd);
+	}
 }

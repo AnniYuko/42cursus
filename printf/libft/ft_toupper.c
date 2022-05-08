@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 14:37:01 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/08 10:37:13 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/21 20:13:16 by akroll            #+#    #+#             */
+/*   Updated: 2022/03/28 14:16:00 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
+/*
+	- converts lowercase to uppercase (ASCII)
+	- if not a lowercase letter or no uppercase defined (ie: ß) c is returned
+*/
+
+int	ft_toupper(int c)
 {
-	return (c >= '0' && c <= '9');
+	if (c >= 'a' && c <= 'z')
+		c -= 'a' - 'A';
+	return (c);
 }
