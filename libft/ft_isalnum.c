@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:32:00 by akroll            #+#    #+#             */
-/*   Updated: 2022/03/28 14:00:10 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/08 10:36:01 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,5 @@
 
 int	ft_isalnum(int c)
 {
-	if (ft_isalpha(c) || ft_isdigit(c))
-		return (1);
-	else
-		return (0);
+	return (ft_isalpha(c) || ft_isdigit(c));
 }
