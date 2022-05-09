@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_2.c                                  :+:      :+:    :+:   */
+/*   get_next_line-version-char-by-char.c               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:49:48 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/06 14:50:40 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/09 15:55:49 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ int	main()
 	printf("output: %s\n", get_next_line(fd));
 	printf("output: %s\n", get_next_line(fd));
 
-	system("leaks a.out");
+	// system("leaks a.out");
 	return (0);
 }
