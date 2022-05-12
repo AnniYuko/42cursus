@@ -6,11 +6,12 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:47:32 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/09 15:38:28 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/12 15:54:57 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdbool.h>
 #include <fcntl.h>
 #include <stdio.h>
 
@@ -29,12 +30,19 @@ size_t	get_length(const char *string)
 	size_t	len;
 
 	len = 0;
-	while (string != NULL && (string[len] != '\0' && string[len] != '\n'))
+	while (string != NULL && string[len] != '\0')
+	{
+		if (string[len] == '\n')
+		{
+			len++;
+			break ;
+		}
 		len++;
+	}
 	return (len);
 }
 
-int	ft_strchr_bool(const char *s, int c)
+bool	ft_strchr_bool(const char *s, int c)
 {
 	if (!s)
 		return (0);
@@ -47,110 +55,104 @@ int	ft_strchr_bool(const char *s, int c)
 	return (*s == (unsigned char)c);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char	*concat_str;
-	int		i;
-	int		j;
+	const unsigned char	*p_src;
+	unsigned char		*p_dest;
+	size_t				i;
 
-	i = 0;
-	j = 0;
-	if (!s1)
-	{
-		s1 = malloc(1);
-		s1[0] = '\0';
-	}
-	concat_str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
-	if (!concat_str)
+	if (dest == NULL && src == NULL)
 		return (NULL);
-	while (s1[i] != '\0')
+	p_dest = dest;
+	p_src = src;
+	i = 0;
+	while (i < n)
 	{
-		concat_str[i] = s1[i];
+		p_dest[i] = p_src[i];
 		i++;
 	}
-	while (s2[j] != '\0')
-	{
-		concat_str[i] = s2[j];
-		i++;
-		j++;
-	}
-	concat_str[i] = '\0';
-	free(s1);
-	return (concat_str);
+	return (dest);
 }
 
-char *update_string(char *string)
+char	*ft_string_move(char *dest, char *src, size_t len)
 {
 	size_t	i;
-	size_t	j;
-	char	*shortened_str;
 
 	i = 0;
-	j = 0;
-	while (string[i] != '\0' && string[i] != '\n')
+	if (dest == NULL && src == NULL)
+		return (NULL);
+
+	while (i < len)
+	{
+		dest[i] = src[i];
 		i++;
-	if (string[i] == '\0')
-	{
-		free(string);
-		return (NULL);
 	}
-	shortened_str = malloc(ft_strlen(string + i) + 1);
-	if (shortened_str == NULL)
-		return (NULL);
-	while (string[++i] != '\0')
-	{
-		shortened_str[j] = string[i];
-		j++;
-	}
-	shortened_str[j] = '\0';
-	free(string);
-	return (shortened_str);
+	while (dest[i] != '\0')
+		dest[i++] = '\0';
+	return (dest);
 }
 
-static char	*copy_line(char *static_string)
+static char	*split_line_from_static(char *static_string)
 {
 	size_t	length;
-	size_t	i;
 	char	*string_out;
 
-	i = 0;
 	length = get_length(static_string);
 	string_out = malloc(length * sizeof(char) + 1);
 	if (string_out == NULL)
 		return (NULL);
-	while (i < length)
-	{
-		string_out[i] = static_string[i];
-		i++;
-	}
-	if (static_string[i] == '\n')
-		string_out[i] = '\n';
-	string_out[++i] = '\0';
+	ft_memcpy(string_out, static_string, length);
+	string_out[length] = '\0';
+	ft_string_move(static_string, &static_string[length], ft_strlen(&static_string[length]));
 	return (string_out);
 }
 
-static char	*read_to_static(int fd, char *static_string)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*buffer;
+	char	*concat_str;
+	int		length_s1;
+	int		length_s2;
+
+	if (!s1)
+	{
+		s1 = malloc(sizeof(char));
+		*s1 = '\0';
+	}
+	if (s1 == NULL || s2[0] == '\0')
+	{
+		free(s1);
+		return (NULL);
+	}
+	length_s1 = ft_strlen(s1);
+	length_s2 = ft_strlen(s2);
+	concat_str = malloc(sizeof(char) * (length_s1 + length_s2) + 1);
+	if (!concat_str)
+		return (NULL);
+	ft_memcpy(concat_str, s1, length_s1);
+	ft_memcpy(concat_str + length_s1, s2, length_s2 + 1);
+	free(s1);
+	return (concat_str);
+}
+
+static char	*read_line(int fd, char *static_string)
+{
+	char	buffer[BUFFER_SIZE + 1];
 	int		bytes_read;
 
-	buffer = malloc(BUFFER_SIZE + 1);
-	if (buffer == NULL)
-		return (NULL);
 	bytes_read = 1;
 	while (!ft_strchr_bool(static_string, '\n') && bytes_read != 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
-		{
-			free(buffer);
-			return (NULL);
-		}
-		buffer[BUFFER_SIZE] = '\0';
-		// printf("buffer: %s\n", buffer);
+				return (NULL);
+		buffer[bytes_read] = '\0';
+		printf("buffer: %s\n", buffer);
 		static_string = ft_strjoin(static_string, buffer);
+		if (static_string == NULL)
+			return (NULL);
 	}
-	free(buffer);
+	if (bytes_read == 0)
+		return (NULL);
 	return (static_string);
 }
 
@@ -158,36 +160,45 @@ char *get_next_line(int fd)
 {
 	static char *static_string;
 	char		*string_out;
-	// ssize_t		length;
-	// ssize_t		bytes_read;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 
-	static_string = read_to_static(fd, static_string);
+	static_string = read_line(fd, static_string);
 	if (static_string == NULL)
 		return (NULL);
-	string_out = copy_line(static_string);
-	static_string = update_string(static_string);
-	// printf("out: %s, %p\n", string_out, string_out);
+	printf("after reading: %s\n", static_string);
+	string_out = split_line_from_static(static_string);
+	if (string_out == NULL)
+		return (NULL);
+	if (*static_string == '\0')
+	{
+		free(static_string);
+		static_string = NULL;
 
+	}
+	printf("static after split: %s\n", static_string);
 	return (string_out);
 }
 
-// int	main()
-// {
-// 	int		fd;
-// 	char	*output;
+int	main()
+{
+	int		fd;
+	char	*output;
 
-// 	fd = open("test.txt", O_RDONLY);
-// 	output = get_next_line(fd);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	fd = open("test.txt", O_RDONLY);
+	output = get_next_line(fd);
+	printf("output: %s\n", output);
+	free(output);
 
-// 	output = get_next_line(fd);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd);
+	printf("output: %s\n", output);
+	free(output);
 
-// 	system("leaks a.out");
-// 	return (0);
-// }
+	output = get_next_line(fd);
+	printf("output: %s\n", output);
+	free(output);
+
+	system("leaks a.out");
+	return (0);
+}
