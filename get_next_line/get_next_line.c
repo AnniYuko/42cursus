@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:47:32 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/12 15:54:57 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/12 16:42:09 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ static char	*split_line_from_static(char *static_string)
 	size_t	length;
 	char	*string_out;
 
+	if (static_string == NULL)
+		return (NULL);
 	length = get_length(static_string);
 	string_out = malloc(length * sizeof(char) + 1);
 	if (string_out == NULL)
@@ -116,13 +118,12 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1)
 	{
 		s1 = malloc(sizeof(char));
+		if (s1 == NULL)
+			return (NULL);
 		*s1 = '\0';
 	}
-	if (s1 == NULL || s2[0] == '\0')
-	{
-		free(s1);
-		return (NULL);
-	}
+	if (*s2 == '\0')
+		return (s1);
 	length_s1 = ft_strlen(s1);
 	length_s2 = ft_strlen(s2);
 	concat_str = malloc(sizeof(char) * (length_s1 + length_s2) + 1);
@@ -143,16 +144,16 @@ static char	*read_line(int fd, char *static_string)
 	while (!ft_strchr_bool(static_string, '\n') && bytes_read != 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == 0)
+			break ;
 		if (bytes_read == -1)
 				return (NULL);
 		buffer[bytes_read] = '\0';
-		printf("buffer: %s\n", buffer);
+		// printf("buffer: %s\n", buffer);
 		static_string = ft_strjoin(static_string, buffer);
 		if (static_string == NULL)
 			return (NULL);
 	}
-	if (bytes_read == 0)
-		return (NULL);
 	return (static_string);
 }
 
@@ -167,7 +168,7 @@ char *get_next_line(int fd)
 	static_string = read_line(fd, static_string);
 	if (static_string == NULL)
 		return (NULL);
-	printf("after reading: %s\n", static_string);
+	// printf("after reading: %s\n", static_string);
 	string_out = split_line_from_static(static_string);
 	if (string_out == NULL)
 		return (NULL);
@@ -175,30 +176,29 @@ char *get_next_line(int fd)
 	{
 		free(static_string);
 		static_string = NULL;
-
 	}
-	printf("static after split: %s\n", static_string);
+	// printf("static after split: %s\n", static_string);
 	return (string_out);
 }
 
-int	main()
-{
-	int		fd;
-	char	*output;
+// int	main()
+// {
+// 	int		fd;
+// 	char	*output;
 
-	fd = open("test.txt", O_RDONLY);
-	output = get_next_line(fd);
-	printf("output: %s\n", output);
-	free(output);
+// 	fd = open("test.txt", O_RDONLY);
+// 	output = get_next_line(fd);
+// 	printf("output: %s\n", output);
+// 	free(output);
 
-	output = get_next_line(fd);
-	printf("output: %s\n", output);
-	free(output);
+// 	output = get_next_line(fd);
+// 	printf("output: %s\n", output);
+// 	free(output);
 
-	output = get_next_line(fd);
-	printf("output: %s\n", output);
-	free(output);
+// 	output = get_next_line(fd);
+// 	printf("output: %s\n", output);
+// 	free(output);
 
-	system("leaks a.out");
-	return (0);
-}
+// 	system("leaks a.out");
+// 	return (0);
+// }
