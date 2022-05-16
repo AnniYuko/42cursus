@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 11:53:49 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/16 16:56:57 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/16 17:28:49 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,59 +117,68 @@ char	*get_next_line(int fd)
 	return (string_out);
 }
 
-// int	main()
-// {
-// 	int		fd_1;
-// 	int		fd_2;
-// 	char	*output;
+int	main()
+{
+	int		fd_3;
+	int		fd_4;
+	char	*output;
 
-// 	fd_1 = open("test.txt", O_RDONLY);
-// 	fd_2 = open("alternate_line_nl_no_nl", O_RDONLY);
+	fd_3 = open("test.txt", O_RDONLY);
+	fd_4 = open("OpenOffice.odt", O_RDONLY);
+	// fd_4 = open("alternate_line_nl_no_nl", O_RDONLY);
 
-// 	output = get_next_line(fd_1);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd_3);
+	printf("output %d: %s\n", fd_3, output);
+	free(output);
 
-// 	output = get_next_line(fd_2);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd_4);
+	printf("output %d: %s\n", fd_4, output);
+	free(output);
 
-// 	output = get_next_line(fd_1);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd_3);
+	printf("output %d: %s\n", fd_3, output);
+	free(output);
 
-// 	output = get_next_line(fd_2);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd_4);
+	printf("output %d: %s\n", fd_4, output);
+	free(output);
 
-// 	output = get_next_line(fd_1);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd_3);
+	printf("output %d: %s\n", fd_3, output);
+	free(output);
 
-// 	output = get_next_line(fd_2);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd_4);
+	printf("output %d: %s\n", fd_4, output);
+	free(output);
 
-// 	output = get_next_line(fd_1);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd_3);
+	printf("output %d: %s\n", fd_3, output);
+	free(output);
 
-// 	output = get_next_line(fd_2);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd_3);
+	printf("output %d: %s\n", fd_3, output);
+	free(output);
 
-// 	output = get_next_line(fd_2);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd_3);
+	printf("output %d: %s\n", fd_3, output);
+	free(output);
 
-// 	output = get_next_line(fd_2);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd_4);
+	printf("output %d: %s\n", fd_4, output);
+	free(output);
 
-// 	output = get_next_line(fd_2);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd_4);
+	printf("output %d: %s\n", fd_4, output);
+	free(output);
 
-// 	system("leaks a.out");
-// 	return (0);
-// }
+	output = get_next_line(fd_4);
+	printf("output %d: %s\n", fd_4, output);
+	free(output);
+
+	output = get_next_line(fd_4);
+	printf("output %d: %s\n", fd_4, output);
+	free(output);
+
+	system("leaks a.out");
+	return (0);
+}
