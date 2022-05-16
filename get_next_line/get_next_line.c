@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:47:32 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/16 20:24:02 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/16 23:37:52 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,23 +74,26 @@ char	*ft_strjoin(char *s1, char *s2)
 
 char	*read_line(int fd, char *static_string)
 {
-	char	buffer[BUFFER_SIZE + 1];
+	char	*buffer;
 	int		bytes_read;
 
-	bytes_read = 1;
-	while (!ft_strchr_bool(static_string, '\n') && bytes_read != 0)
+	buffer = malloc(BUFFER_SIZE * sizeof(char) + 1);
+	if (buffer == NULL)
+		return (NULL);
+	while (!ft_strchr_bool(static_string, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == 0)
 			break ;
 		if (bytes_read == -1)
-			return (NULL);
+			return (free(buffer), NULL);
 		buffer[bytes_read] = '\0';
 		// printf("buffer: %s\n", buffer);
 		static_string = ft_strjoin(static_string, buffer);
 		if (static_string == NULL)
-			return (NULL);
+			return (free(buffer), NULL);
 	}
+	free(buffer);
 	return (static_string);
 }
 
@@ -99,7 +102,7 @@ char	*get_next_line(int fd)
 	static char	*static_string;
 	char		*string_out;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > 5000000)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	static_string = read_line(fd, static_string);
 	if (static_string == NULL)
@@ -117,24 +120,24 @@ char	*get_next_line(int fd)
 	return (string_out);
 }
 
-int	main()
-{
-	int		fd;
-	char	*output;
+// int	main()
+// {
+// 	int		fd;
+// 	char	*output;
 
-	fd = open("alternate_line_nl_no_nl", O_RDONLY);
-	output = get_next_line(fd);
-	printf("output: %s\n", output);
-	free(output);
+// 	fd = open("alternate_line_nl_no_nl", O_RDONLY);
+// 	output = get_next_line(fd);
+// 	printf("output: %s\n", output);
+// 	free(output);
 
-	output = get_next_line(fd);
-	printf("output: %s\n", output);
-	free(output);
+// 	output = get_next_line(fd);
+// 	printf("output: %s\n", output);
+// 	free(output);
 
-	output = get_next_line(fd);
-	printf("output: %s\n", output);
-	free(output);
+// 	output = get_next_line(fd);
+// 	printf("output: %s\n", output);
+// 	free(output);
 
-	system("leaks a.out");
-	return (0);
-}
+// 	system("leaks a.out");
+// 	return (0);
+// }

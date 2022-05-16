@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 11:53:49 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/16 20:27:56 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/16 23:39:15 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,23 +74,26 @@ char	*ft_strjoin(char *s1, char *s2)
 
 char	*read_line(int fd, char *static_string)
 {
-	char	buffer[BUFFER_SIZE + 1];
+	char	*buffer;
 	int		bytes_read;
 
-	bytes_read = 1;
-	while (!ft_strchr_bool(static_string, '\n') && bytes_read != 0)
+	buffer = malloc(BUFFER_SIZE * sizeof(char) + 1);
+	if (buffer == NULL)
+		return (NULL);
+	while (!ft_strchr_bool(static_string, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == 0)
 			break ;
 		if (bytes_read == -1)
-			return (NULL);
+			return (free(buffer), NULL);
 		buffer[bytes_read] = '\0';
 		// printf("buffer: %s\n", buffer);
 		static_string = ft_strjoin(static_string, buffer);
 		if (static_string == NULL)
-			return (NULL);
+			return (free(buffer), NULL);
 	}
+	free(buffer);
 	return (static_string);
 }
 
@@ -99,7 +102,7 @@ char	*get_next_line(int fd)
 	static char	*static_string[OPEN_MAX];
 	char		*string_out;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX || BUFFER_SIZE > 5000000)
+	if ((fd < 0 || BUFFER_SIZE <= 0) || fd > OPEN_MAX)
 		return (NULL);
 	static_string[fd] = read_line(fd, static_string[fd]);
 	if (static_string[fd] == NULL)
@@ -117,68 +120,68 @@ char	*get_next_line(int fd)
 	return (string_out);
 }
 
-int	main()
-{
-	int		fd_3;
-	int		fd_4;
-	char	*output;
+// int	main()
+// {
+// 	int		fd_3;
+// 	int		fd_4;
+// 	char	*output;
 
-	fd_3 = open("test.txt", O_RDONLY);
-	fd_4 = open("OpenOffice.odt", O_RDONLY);
-	// fd_4 = open("alternate_line_nl_no_nl", O_RDONLY);
+// 	fd_3 = open("test.txt", O_RDONLY);
+// 	// fd_4 = open("OpenOffice.odt", O_RDONLY);
+// 	fd_4 = open("alternate_line_nl_no_nl", O_RDONLY);
 
-	output = get_next_line(fd_3);
-	printf("output %d: %s\n", fd_3, output);
-	free(output);
+// 	output = get_next_line(fd_3);
+// 	printf("output %d: %s\n", fd_3, output);
+// 	free(output);
 
-	output = get_next_line(fd_4);
-	printf("output %d: %s\n", fd_4, output);
-	free(output);
+// 	output = get_next_line(fd_4);
+// 	printf("output %d: %s\n", fd_4, output);
+// 	free(output);
 
-	output = get_next_line(fd_3);
-	printf("output %d: %s\n", fd_3, output);
-	free(output);
+// 	output = get_next_line(fd_3);
+// 	printf("output %d: %s\n", fd_3, output);
+// 	free(output);
 
-	output = get_next_line(fd_4);
-	printf("output %d: %s\n", fd_4, output);
-	free(output);
+// 	output = get_next_line(fd_4);
+// 	printf("output %d: %s\n", fd_4, output);
+// 	free(output);
 
-	output = get_next_line(fd_3);
-	printf("output %d: %s\n", fd_3, output);
-	free(output);
+// 	output = get_next_line(fd_3);
+// 	printf("output %d: %s\n", fd_3, output);
+// 	free(output);
 
-	output = get_next_line(fd_4);
-	printf("output %d: %s\n", fd_4, output);
-	free(output);
+// 	output = get_next_line(fd_4);
+// 	printf("output %d: %s\n", fd_4, output);
+// 	free(output);
 
-	output = get_next_line(fd_3);
-	printf("output %d: %s\n", fd_3, output);
-	free(output);
+// 	output = get_next_line(fd_3);
+// 	printf("output %d: %s\n", fd_3, output);
+// 	free(output);
 
-	output = get_next_line(fd_3);
-	printf("output %d: %s\n", fd_3, output);
-	free(output);
+// 	output = get_next_line(fd_3);
+// 	printf("output %d: %s\n", fd_3, output);
+// 	free(output);
 
-	output = get_next_line(fd_3);
-	printf("output %d: %s\n", fd_3, output);
-	free(output);
+// 	output = get_next_line(fd_3);
+// 	printf("output %d: %s\n", fd_3, output);
+// 	free(output);
 
-	output = get_next_line(fd_4);
-	printf("output %d: %s\n", fd_4, output);
-	free(output);
+// 	output = get_next_line(fd_4);
+// 	printf("output %d: %s\n", fd_4, output);
+// 	free(output);
 
-	output = get_next_line(fd_4);
-	printf("output %d: %s\n", fd_4, output);
-	free(output);
+// 	output = get_next_line(fd_4);
+// 	printf("output %d: %s\n", fd_4, output);
+// 	free(output);
 
-	output = get_next_line(fd_4);
-	printf("output %d: %s\n", fd_4, output);
-	free(output);
+// 	output = get_next_line(fd_4);
+// 	printf("output %d: %s\n", fd_4, output);
+// 	free(output);
 
-	output = get_next_line(fd_4);
-	printf("output %d: %s\n", fd_4, output);
-	free(output);
+// 	output = get_next_line(fd_4);
+// 	printf("output %d: %s\n", fd_4, output);
+// 	free(output);
 
-	system("leaks a.out");
-	return (0);
-}
+// 	system("leaks a.out");
+// 	return (0);
+// }
