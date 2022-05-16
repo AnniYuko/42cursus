@@ -6,20 +6,19 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:47:32 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/13 11:54:33 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/16 16:55:24 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_string_move(char *dest, char *src, size_t len)
+char	*move_str(char *dest, char *src, size_t len)
 {
 	size_t	i;
 
 	i = 0;
 	if (dest == NULL && src == NULL)
 		return (NULL);
-
 	while (i < len)
 	{
 		dest[i] = src[i];
@@ -30,20 +29,20 @@ char	*ft_string_move(char *dest, char *src, size_t len)
 	return (dest);
 }
 
-char	*split_line_from_static(char *static_string)
+char	*split_line_from_static(char *static_str)
 {
 	size_t	length;
 	char	*string_out;
 
-	if (static_string == NULL)
+	if (static_str == NULL)
 		return (NULL);
-	length = get_length(static_string);
+	length = get_length(static_str);
 	string_out = malloc(length * sizeof(char) + 1);
 	if (string_out == NULL)
 		return (NULL);
-	ft_memcpy(string_out, static_string, length);
+	ft_memcpy(string_out, static_str, length);
 	string_out[length] = '\0';
-	ft_string_move(static_string, &static_string[length], ft_strlen(&static_string[length]));
+	move_str(static_str, &static_str[length], ft_strlen(&static_str[length]));
 	return (string_out);
 }
 
@@ -85,7 +84,7 @@ char	*read_line(int fd, char *static_string)
 		if (bytes_read == 0)
 			break ;
 		if (bytes_read == -1)
-				return (NULL);
+			return (NULL);
 		buffer[bytes_read] = '\0';
 		// printf("buffer: %s\n", buffer);
 		static_string = ft_strjoin(static_string, buffer);
@@ -97,12 +96,11 @@ char	*read_line(int fd, char *static_string)
 
 char	*get_next_line(int fd)
 {
-	static char *static_string;
+	static char	*static_string;
 	char		*string_out;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-
 	static_string = read_line(fd, static_string);
 	if (static_string == NULL)
 		return (NULL);
