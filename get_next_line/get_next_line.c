@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:47:32 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/16 16:55:24 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/16 20:24:02 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*get_next_line(int fd)
 	static char	*static_string;
 	char		*string_out;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > 5000000)
 		return (NULL);
 	static_string = read_line(fd, static_string);
 	if (static_string == NULL)
@@ -117,24 +117,24 @@ char	*get_next_line(int fd)
 	return (string_out);
 }
 
-// int	main()
-// {
-// 	int		fd;
-// 	char	*output;
+int	main()
+{
+	int		fd;
+	char	*output;
 
-// 	fd = open("test.txt", O_RDONLY);
-// 	output = get_next_line(fd);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	fd = open("alternate_line_nl_no_nl", O_RDONLY);
+	output = get_next_line(fd);
+	printf("output: %s\n", output);
+	free(output);
 
-// 	output = get_next_line(fd);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd);
+	printf("output: %s\n", output);
+	free(output);
 
-// 	output = get_next_line(fd);
-// 	printf("output: %s\n", output);
-// 	free(output);
+	output = get_next_line(fd);
+	printf("output: %s\n", output);
+	free(output);
 
-// 	system("leaks a.out");
-// 	return (0);
-// }
+	system("leaks a.out");
+	return (0);
+}

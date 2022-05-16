@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 11:53:49 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/16 17:28:49 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/16 20:27:56 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*get_next_line(int fd)
 	static char	*static_string[OPEN_MAX];
 	char		*string_out;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX || BUFFER_SIZE > 5000000)
 		return (NULL);
 	static_string[fd] = read_line(fd, static_string[fd]);
 	if (static_string[fd] == NULL)
