@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:47:32 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/16 23:37:52 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/17 09:03:43 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ char	*read_line(int fd, char *static_string)
 		if (bytes_read == -1)
 			return (free(buffer), NULL);
 		buffer[bytes_read] = '\0';
-		// printf("buffer: %s\n", buffer);
 		static_string = ft_strjoin(static_string, buffer);
 		if (static_string == NULL)
 			return (free(buffer), NULL);
@@ -107,7 +106,6 @@ char	*get_next_line(int fd)
 	static_string = read_line(fd, static_string);
 	if (static_string == NULL)
 		return (NULL);
-	// printf("after reading: %s\n", static_string);
 	string_out = split_line_from_static(static_string);
 	if (string_out == NULL)
 		return (NULL);
@@ -116,7 +114,6 @@ char	*get_next_line(int fd)
 		free(static_string);
 		static_string = NULL;
 	}
-	// printf("static after split: %s\n", static_string);
 	return (string_out);
 }
 
