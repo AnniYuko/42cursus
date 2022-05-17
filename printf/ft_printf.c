@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf2.c                                       :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 13:26:55 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/21 18:07:26 by akroll           ###   ########.fr       */
+/*   Updated: 2022/05/17 18:45:39 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 #include "libft/libft.h"
-#include <stdio.h>
-#include <limits.h>
 
 void	ft_putnbr_unsigned_fd(unsigned int n, int fd)
 {
@@ -55,7 +53,7 @@ void	ft_put_next_arg(char option, va_list ap)
 		ft_putnbr_unsigned_fd(va_arg(ap, unsigned int), 1);
 	else if (option == 'x' || option == 'X' || option == 'p')
 	{
-		ft_putstr_fd("0x", 1);
+		// ft_putstr_fd("0x", 1);
 		ft_puthex_fd(va_arg(ap, unsigned long), option, 1);
 	}
 }
@@ -79,16 +77,5 @@ int	ft_printf(const char *str, ...)
 		i++;
 	}
 	va_end(ap);
-	return (0);
-}
-
-int	main()
-{
-	int *p;
-
-	p = malloc(sizeof(int));
-	ft_printf("percent %% \ninteger %%i %i \nchar %%c %c \nstring %%s %s \ndecimal %%d %d\nunsigned %%u %u\nhex %%x %x\nhex %%X %X\n", INT_MIN, 'w', "heilbronn", INT_MAX, UINT_MAX, 180150004, 180150004);
-	ft_printf("%%p %p\n", &p);
-	printf("printf %%p %p\n", &p);
 	return (0);
 }
