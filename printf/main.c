@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:32:35 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/17 18:41:36 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/15 14:24:38 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,21 @@
 int	main()
 {
 	int *p;
+	int	printed_chars;
 
+	printed_chars = 0;
 	p = malloc(sizeof(int));
-	ft_printf("percent %% \ninteger %%i %i \nchar %%c %c \nstring %%s %s \n", INT_MIN, 'w', "heilbronn");
-	ft_printf("decimal %%d %d\nunsigned %%u %u\nhex %%x %x\nhex %%X %X\n", INT_MAX, UINT_MAX, 180150004, 180150004);
-	ft_printf("%%p %p\n", &p);
+	printed_chars = ft_printf("percent %% \ninteger %%i %i \nchar %%c %c \nstring %%s %s \n", INT_MIN, 'w', "hi\nheilbronn");
+	printed_chars += ft_printf("decimal %%d %d\nunsigned %%u %u\nhex %%x %x\nhex %%X %X\n", INT_MAX, UINT_MAX, 256, 256);
+	printed_chars += ft_printf("%%p %p\n", &p);
+	printf("------\n\t counted: %d\n", printed_chars);
 
-	printf("\nPRINTF: ----------- \n");
-	printf("percent %% \ninteger %%i %i \nchar %%c %c \nstring %%s %s \n", INT_MIN, 'w', "heilbronn");
-	printf("decimal %%d %d\nunsigned %%u %u\nhex %%x %x\nhex %%X %X\n", INT_MAX, UINT_MAX, 180150004, 180150004);
-	printf("%%p %p\n", &p);
+	printf("\n-----PRINTF------ \n");
+	printed_chars = printf("percent %% \ninteger %%i %i \nchar %%c %c \nstring %%s %s \n", INT_MIN, 'w', "hi\nheilbronn");
+	printed_chars += printf("decimal %%d %d\nunsigned %%u %u\nhex %%x %x\nhex %%X %X\n", INT_MAX, UINT_MAX, 256, 256);
+	printed_chars += printf("%%p %p\n", &p);
+	printf("------\n\t counted: %d\n", printed_chars);
+
+	// printf("\n\ntest: %#x\n%#X\n%x\n", 180150004, 180150004, 180150004);
 	return (0);
 }
