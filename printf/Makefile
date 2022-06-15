@@ -2,7 +2,7 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror
 NAME := libftprintf.a
 NAMELFT := libft.a
-sources :=  ft_printf.c
+sources :=  ft_printf.c ft_printf_utils.c
 objects := $(sources:.c=.o)
 LIBDIR := libft
 
@@ -12,9 +12,10 @@ $(NAME): $(objects)
 	make bonus -C $(LIBDIR)
 	cp -v $(LIBDIR)/$(NAMELFT) $(NAME)
 	ar cr $@ $^
+# cp -v (verbose = explain what is being dong) - not necessary ?
 
-$(objects): $(sources)
-	$(CC) $(CFLAGS) -c -o $@ $^
+$(objects): %.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	$(RM) $(objects)
