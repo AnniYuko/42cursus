@@ -6,13 +6,13 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:46:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/15 14:40:01 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/15 15:09:05 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int	ft_putstr_fd_count(char *s, int fd, int* count)
+int	ft_putstr_fd_count(char *s, int fd, int* count, char option)
 {
 	int	i;
 
@@ -29,6 +29,8 @@ int	ft_putstr_fd_count(char *s, int fd, int* count)
 		i++;
 	}
 	*count += i;
+	if (option == 'd' || option == 'i')
+		free(s);
 	return (i);
 }
 

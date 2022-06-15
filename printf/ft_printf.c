@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 13:26:55 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/15 14:37:05 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/15 15:12:03 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ void	ft_put_next_arg(char option, va_list ap, int* count)
 	else if (option == 'c')
 		ft_putchar_fd_count((char)va_arg(ap, int), 1, count);
 	else if (option == 's')
-		ft_putstr_fd_count(va_arg(ap, char *), 1, count);
+		ft_putstr_fd_count(va_arg(ap, char *), 1, count, option);
 	else if (option == 'd' || option == 'i')
-		ft_putstr_fd_count(ft_itoa(va_arg(ap, int)), 1, count);
+		ft_putstr_fd_count(ft_itoa(va_arg(ap, int)), 1, count, option);
 	else if (option == 'u')
 		ft_putnbr_fd_unsigned(va_arg(ap, unsigned int), 1, count);
 	else if (option == 'x' || option == 'X' || option == 'p')
 	{
 		if (option == 'p')
-			ft_putstr_fd_count("0x", 1, count);
+			ft_putstr_fd_count("0x", 1, count, option);
 		ft_puthex_fd(va_arg(ap, unsigned long), option, 1, count);
 	}
 }
