@@ -6,14 +6,13 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 13:26:55 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/15 15:12:03 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/15 15:39:24 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-
-void	ft_put_next_arg(char option, va_list ap, int* count)
+void	ft_put_next_arg(char option, va_list ap, int *count)
 {
 	if (option == '%')
 		ft_putchar_fd_count('%', 1, count);

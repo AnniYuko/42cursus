@@ -6,13 +6,13 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:46:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/15 15:09:05 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/15 15:39:54 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int	ft_putstr_fd_count(char *s, int fd, int* count, char option)
+int	ft_putstr_fd_count(char *s, int fd, int *count, char option)
 {
 	int	i;
 
@@ -34,7 +34,7 @@ int	ft_putstr_fd_count(char *s, int fd, int* count, char option)
 	return (i);
 }
 
-int	ft_putchar_fd_count(char c, int fd, int* count)
+int	ft_putchar_fd_count(char c, int fd, int *count)
 {
 	if (write(fd, &c, 1) != -1)
 	{
@@ -44,7 +44,7 @@ int	ft_putchar_fd_count(char c, int fd, int* count)
 	return (0);
 }
 
-void	ft_putnbr_fd_unsigned(unsigned int n, int fd, int* count)
+void	ft_putnbr_fd_unsigned(unsigned int n, int fd, int *count)
 {
 	if (n < 10)
 		ft_putchar_fd_count(n + '0', fd, count);
@@ -55,7 +55,7 @@ void	ft_putnbr_fd_unsigned(unsigned int n, int fd, int* count)
 	}
 }
 
-void	ft_puthex_fd(unsigned long n, char option, int fd, int* count)
+void	ft_puthex_fd(unsigned long n, char option, int fd, int *count)
 {
 	if (n < 10)
 		ft_putchar_fd_count(n + '0', fd, count);

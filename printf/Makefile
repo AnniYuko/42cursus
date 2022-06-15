@@ -12,7 +12,7 @@ $(NAME): $(objects)
 	make bonus -C $(LIBDIR)
 	cp -v $(LIBDIR)/$(NAMELFT) $(NAME)
 	ar cr $@ $^
-# cp -v (verbose = explain what is being dong) - not necessary ?
+# cp -v (verbose = explain what is being dong)
 
 $(objects): %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
