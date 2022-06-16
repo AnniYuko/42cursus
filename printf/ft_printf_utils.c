@@ -6,11 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:46:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/15 15:39:54 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/16 14:40:23 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 int	ft_putstr_fd_count(char *s, int fd, int *count, char option)
 {

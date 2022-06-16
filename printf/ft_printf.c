@@ -6,11 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 13:26:55 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/15 15:39:24 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/16 14:40:13 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 void	ft_put_next_arg(char option, va_list ap, int *count)
 {
@@ -24,12 +24,13 @@ void	ft_put_next_arg(char option, va_list ap, int *count)
 		ft_putstr_fd_count(ft_itoa(va_arg(ap, int)), 1, count, option);
 	else if (option == 'u')
 		ft_putnbr_fd_unsigned(va_arg(ap, unsigned int), 1, count);
-	else if (option == 'x' || option == 'X' || option == 'p')
+	else if (option == 'p')
 	{
-		if (option == 'p')
-			ft_putstr_fd_count("0x", 1, count, option);
+		ft_putstr_fd_count("0x", 1, count, option);
 		ft_puthex_fd(va_arg(ap, unsigned long), option, 1, count);
 	}
+	else if (option == 'x' || option == 'X')
+		ft_puthex_fd(va_arg(ap, unsigned int), option, 1, count);
 }
 
 int	ft_printf(const char *str, ...)
