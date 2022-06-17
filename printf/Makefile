@@ -23,6 +23,7 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(LIBDIR)/$(NAMELFT)
 
 re: fclean all
 .PHONY: all clean fclean re
