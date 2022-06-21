@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:08:17 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/12 11:56:29 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/20 23:53:52 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		if (new_node == NULL)
 		{
 			ft_lstclear(&new_list_begin, del);
-			ft_lstdelone(new_node, del);
 			return (NULL);
 		}
 		else
