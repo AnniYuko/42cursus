@@ -6,23 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:48:46 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/15 12:26:20 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/21 12:09:50 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static unsigned int	skip_delimiter_characters(char const *s, char c)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (s[i] == c)
-	{
-		i++;
-	}
-	return (i);
-}
 
 static unsigned int	iterate_word(char const *s, char c)
 {
@@ -36,6 +24,25 @@ static unsigned int	iterate_word(char const *s, char c)
 	return (i);
 }
 
+char	*ft_strldup(const char *s1, int len)
+{
+	char	*dest;
+	int		i;
+
+	i = 0;
+	dest = malloc(sizeof(char) * (len + 1));
+	if (!dest)
+		return (NULL);
+	while (i < len)
+	{
+		dest[i] = s1[i];
+		i++;
+	}
+	dest[len] = '\0';
+	return (dest);
+}
+
+
 static unsigned int	count_strings(char const *s, char c)
 {
 	unsigned int	i;
@@ -44,10 +51,10 @@ static unsigned int	count_strings(char const *s, char c)
 
 	i = 0;
 	num_words = 0;
-	len = 0;
 	while (s[i] != '\0')
 	{
-		i += skip_delimiter_characters(&s[i], c);
+		while (s[i] == c)
+			i++;
 		len = iterate_word(&s[i], c);
 		i += len;
 		if (len > 0)
@@ -80,25 +87,48 @@ char	**ft_split(char const *s, char c)
 	unsigned int	string_len;
 	unsigned int	i;
 	unsigned int	k;
+	unsigned int	num_of_strings;
 
 	if (s == NULL)
 		return (NULL);
-	split_array = malloc((count_strings(s, c) + 1) * sizeof(char *));
+	num_of_strings = count_strings(s, c);
+	split_array = malloc((num_of_strings + 1) * sizeof(char *));
 	if (split_array == NULL)
 		return (NULL);
 	i = 0;
 	k = 0;
-	while (k < count_strings(s, c))
+	while (k < num_of_strings)
 	{
-		i += skip_delimiter_characters(&s[i], c);
+		while (s[i] == c)
+			i++;
 		string_len = iterate_word(&s[i], c);
-		i += string_len;
-		split_array[k] = malloc((string_len + 1) * sizeof(char));
+		split_array[k] = ft_strldup(&s[i], string_len);
 		if (free_array(split_array, &k) == NULL)
 			return (NULL);
-		ft_strlcpy(split_array[k], &s[i] - string_len, string_len + 1);
+		i += string_len;
 		k++;
 	}
 	split_array[k] = NULL;
 	return (split_array);
+}
+
+int	main()
+{
+	char *s;
+	char **arr;
+	int	i;
+
+	i = 0;
+	s = "_42_is a cool !_place to be__";
+	printf("input:\n\t\"%s\"\n", s);
+
+	arr = ft_split(s, '_');
+
+	printf("\noutput:\n");
+	while (arr[i] != NULL)
+	{
+		printf("\tstring %d: %s\n", i, arr[i]);
+		i++;
+	}
+	return 0;
 }
