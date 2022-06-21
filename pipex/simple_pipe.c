@@ -6,15 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:48:24 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/20 16:09:54 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/21 14:01:19 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <stdlib.h>
-#include <string.h>
+#include "pipex.h"
 
 int	main(void)
 {
@@ -24,7 +20,8 @@ int	main(void)
 	char	readbuffer[30];
 
 // The pipe() call must be made BEFORE a call to fork(), or the descriptors will not be inherited by the child!
-	pipe(fd);
+	if (pipe(fd) == -1)
+		return (1);
 	pid = fork();	// a child process inherits any open file descriptors from the parent
 	printf("%d\n", pid);
 	if (pid == -1)
