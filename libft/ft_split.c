@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:48:46 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/21 23:03:22 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/21 23:25:56 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,16 @@ static unsigned int	count_strings(char const *s, char c)
 	return (num_words);
 }
 
+static void	free_array(char **split_array)
+{
+	while (*split_array != NULL)
+	{
+		free(*split_array);
+		split_array++;
+	}
+	free(split_array);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char			**split_array;
@@ -70,27 +80,19 @@ char	**ft_split(char const *s, char c)
 	unsigned int	k;
 	unsigned int	num_of_strings;
 
+	k = 0;
 	if (s == NULL)
 		return (NULL);
 	num_of_strings = count_strings(s, c);
-	split_array = malloc((num_of_strings + 1) * sizeof(char *));
-	if (split_array == NULL)
+	if (!(split_array = malloc((num_of_strings + 1) * sizeof(char *))))
 		return (NULL);
-	k = 0;
 	while (k < num_of_strings)
 	{
 		while (*s == c)
 			s++;
 		string_len = iterate_word(s, c);
-		split_array[k] = ft_strldup(s, string_len);
-		if (split_array[k] == NULL)
-		{
-			while (*split_array != NULL)
-			{
-				free(*split_array);
-				split_array++;
-			}
-			free(split_array);
+		if (!(split_array[k] = ft_strldup(s, string_len))) {
+			free_array(split_array);
 			return (NULL);
 		}
 		s += string_len;
@@ -107,7 +109,7 @@ char	**ft_split(char const *s, char c)
 // 	int	i;
 
 // 	i = 0;
-// 	s = "_42_is a cool !_place to be__";
+// 	s = "_keep learning !_learn.code_repeat__";
 // 	printf("input:\n\t\"%s\"\n", s);
 
 // 	arr = ft_split(s, '_');
