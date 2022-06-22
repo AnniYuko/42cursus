@@ -1,0 +1,9 @@
+total 88
+-rw-r--r--   1 akroll  2021_heilbronn  1309 22 Jun 12:55 Makefile
+-rwxr-xr-x   1 akroll  2021_heilbronn  8884 20 Jun 16:23 a.out
+drwxr-xr-x  92 akroll  2021_heilbronn  3128 22 Jun 13:03 libft
+-rw-r--r--   1 akroll  2021_heilbronn  2006 22 Jun 13:03 main.c
+-rw-r--r--   1 akroll  2021_heilbronn  1972 22 Jun 13:03 main.o
+-rwxr-xr-x   1 akroll  2021_heilbronn  8964 22 Jun 13:03 pipex
+-rw-r--r--   1 akroll  2021_heilbronn  1084 22 Jun 13:01 pipex.h
+-rw-r--r--   1 akroll  2021_heilbronn  1584 22 Jun 12:23 simple_pipe.c
