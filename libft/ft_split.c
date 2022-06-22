@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:48:46 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/21 12:09:50 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/21 23:25:56 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static unsigned int	iterate_word(char const *s, char c)
 	return (i);
 }
 
-char	*ft_strldup(const char *s1, int len)
+static char	*ft_strldup(const char *s1, int len)
 {
 	char	*dest;
 	int		i;
@@ -63,72 +63,62 @@ static unsigned int	count_strings(char const *s, char c)
 	return (num_words);
 }
 
-static char	*free_array(char **array, unsigned int *k)
+static void	free_array(char **split_array)
 {
-	unsigned int	i;
-
-	if (array[*k] == NULL)
+	while (*split_array != NULL)
 	{
-		i = 0;
-		while (array[i] != NULL)
-		{
-			free(array[i]);
-			i++;
-		}
-		free(array);
-		return (NULL);
+		free(*split_array);
+		split_array++;
 	}
-	return (array[*k]);
+	free(split_array);
 }
 
 char	**ft_split(char const *s, char c)
 {
 	char			**split_array;
 	unsigned int	string_len;
-	unsigned int	i;
 	unsigned int	k;
 	unsigned int	num_of_strings;
 
+	k = 0;
 	if (s == NULL)
 		return (NULL);
 	num_of_strings = count_strings(s, c);
-	split_array = malloc((num_of_strings + 1) * sizeof(char *));
-	if (split_array == NULL)
+	if (!(split_array = malloc((num_of_strings + 1) * sizeof(char *))))
 		return (NULL);
-	i = 0;
-	k = 0;
 	while (k < num_of_strings)
 	{
-		while (s[i] == c)
-			i++;
-		string_len = iterate_word(&s[i], c);
-		split_array[k] = ft_strldup(&s[i], string_len);
-		if (free_array(split_array, &k) == NULL)
+		while (*s == c)
+			s++;
+		string_len = iterate_word(s, c);
+		if (!(split_array[k] = ft_strldup(s, string_len))) {
+			free_array(split_array);
 			return (NULL);
-		i += string_len;
+		}
+		s += string_len;
 		k++;
 	}
 	split_array[k] = NULL;
 	return (split_array);
 }
 
-int	main()
-{
-	char *s;
-	char **arr;
-	int	i;
+// int	main()
+// {
+// 	char *s;
+// 	char **arr;
+// 	int	i;
 
-	i = 0;
-	s = "_42_is a cool !_place to be__";
-	printf("input:\n\t\"%s\"\n", s);
+// 	i = 0;
+// 	s = "_keep learning !_learn.code_repeat__";
+// 	printf("input:\n\t\"%s\"\n", s);
 
-	arr = ft_split(s, '_');
+// 	arr = ft_split(s, '_');
 
-	printf("\noutput:\n");
-	while (arr[i] != NULL)
-	{
-		printf("\tstring %d: %s\n", i, arr[i]);
-		i++;
-	}
-	return 0;
-}
+// 	printf("\noutput:\n");
+// 	while (arr[i] != NULL)
+// 	{
+// 		printf("\tstring %d: %s\n", i, arr[i]);
+// 		i++;
+// 	}
+// 	return 0;
+// }
