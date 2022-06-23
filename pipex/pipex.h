@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:07:37 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/21 14:01:52 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/22 13:01:13 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
-
+# include <fcntl.h>
 
 #endif
