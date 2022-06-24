@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memcpy_test.c                                      :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 14:45:52 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/19 17:33:08 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/23 12:34:16 by akroll            #+#    #+#             */
+/*   Updated: 2022/04/15 12:50:54 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
-int main()
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char const *src = "happy birthday";
-	int nums[6] = {1, 5, -3, 18, 128, -994};
-	char dest[16];
-	int dest_nums[6] = {0};
-	unsigned int i;
-	unsigned int n;
+	const unsigned char	*p_src;
+	unsigned char		*p_dest;
+	size_t				i;
 
+	if (dest == NULL && src == NULL)
+		return (NULL);
+	p_dest = dest;
+	p_src = src;
 	i = 0;
-	n = sizeof(dest_nums)/sizeof(int);
-	ft_memcpy(dest_nums, nums, 8);
-	printf("copied numbers:\n");
-	while (i++ < n)
+	while (i < n)
 	{
-		printf("%d\n", dest_nums[i]);
+		p_dest[i] = p_src[i];
+		i++;
 	}
-
-	ft_memcpy(dest, src, ft_strlen(src));
-	printf("copied string: %s\n", dest);
-	return 0;
+	return (dest);
 }

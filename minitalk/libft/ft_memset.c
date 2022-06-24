@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memmove_test.c                                     :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/25 14:27:21 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/19 17:33:12 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/22 16:25:34 by akroll            #+#    #+#             */
+/*   Updated: 2022/04/15 12:54:14 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
-#include <string.h>
+/*
+	- len is the amount of bytes
+	- c is converted to unsigned char
+	- len amount of chars are written to string b
+*/
 
-int main()
+#include "libft.h"
+
+void	*ft_memset(void *b, int c, size_t len)
 {
-	char str[] = "copy these overlapping parts";
+	unsigned char	*p;
+	size_t			i;
 
-	puts(str);
-	ft_memmove(str + 5, str, 22);
-	//memmove(str + 5, str, 22);
-
-	puts(str);
-	return 0;
+	p = b;
+	i = 0;
+	while (i < len)
+	{
+		p[i] = (unsigned char)c;
+		i++;
+	}
+	return (b);
 }

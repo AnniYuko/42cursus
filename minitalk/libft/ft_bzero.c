@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memchr_test.c                                      :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 11:00:36 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/19 17:32:59 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/22 16:12:04 by akroll            #+#    #+#             */
+/*   Updated: 2022/04/15 12:27:50 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
-int main()
+void	ft_bzero(void *s, size_t n)
 {
-	char str[] = "happy birthday";
-	char *p;
-
-	p = ft_memchr(str, 'y', sizeof(str));
-	printf("found at position %ld\n", (p - str + 1));
-	printf("character: %c\n", *p);
-	return 0;
+	ft_memset(s, '\0', n);
 }

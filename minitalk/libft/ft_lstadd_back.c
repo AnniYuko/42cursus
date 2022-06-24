@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bzero_test.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 09:57:45 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/19 17:32:09 by akroll           ###   ########.fr       */
+/*   Created: 2022/04/01 13:30:09 by akroll            #+#    #+#             */
+/*   Updated: 2022/04/02 10:22:20 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "../libft.h"
+#include "libft.h"
 
-int main()
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	char str1[] = "tree";
-	char str2[] = "arbol";
+	t_list	*last;
 
-	ft_bzero(str1, 10);
-
-	printf("%s", str1);
-	printf("%s", str2);
-
-	return 0;
+	if (*lst == NULL)
+		*lst = new;
+	else
+	{
+		last = ft_lstlast(*lst);
+		last->next = new;
+	}
 }

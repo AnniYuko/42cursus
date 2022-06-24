@@ -1,23 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   atoi_test.c                                        :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 11:24:39 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/11 11:25:24 by akroll           ###   ########.fr       */
+/*   Created: 2022/03/22 14:37:01 by akroll            #+#    #+#             */
+/*   Updated: 2022/05/08 10:37:13 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-
-int	main()
+int	ft_isdigit(int c)
 {
-	const char	*s;
-
-	s = " 	 	    +409j300 ";
-	printf("ft_atoi: %d\n", ft_atoi(s));
-	printf("atoi:    %d\n", atoi(s));
+	return (c >= '0' && c <= '9');
 }
