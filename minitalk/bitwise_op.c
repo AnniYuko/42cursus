@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 13:35:42 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/27 13:37:18 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/27 13:40:23 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,16 @@ void	show_bits(unsigned int num, int num_of_bytes)
 	putchar('\n');
 }
 
-unsigned int	reverse_bytes(unsigned int original, unsigned int num_of_bytes)
+unsigned char	reverse_byte(unsigned char original)
 {
 	unsigned int	i;
-	unsigned int	bits;
-	unsigned int	reversed;
+	unsigned char	reversed;
 
 	i = 0;
 	reversed = 0;
-	bits = 8 * num_of_bytes;
-	while (i < bits)
+	while (i < 8)
 	{
-		reversed |= ((original >> i) & 1) << ((bits - 1) - i);
+		reversed |= ((original >> i) & 1) << (7 - i);
 		i++;
 	}
 	return (reversed);
@@ -68,10 +66,6 @@ int main()
 	printf("5 in binary \t");
 	show_bits(c, 1);
 	printf("reversed \t");
-	show_bits(reverse_bytes(c, 1), 1);
-
-	j = 3871189;
-	show_bits(j, 4);
-	show_bits(reverse_bytes(j, 4), 4);
+	show_bits(reverse_byte(c), 1);
 	return 0;
 }
