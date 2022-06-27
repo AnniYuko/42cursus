@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 09:28:26 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/27 15:01:16 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/27 16:04:09 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 	{
-		write(1, "Please enter 3 arguments:\n./client (server_pid) (string)\n", 60);
+		write(1, "Please enter 3 arguments:\n./client <server_pid> <string>\n", 60);
 		return (1);
 	}
 	server_pid = atoi(argv[1]);

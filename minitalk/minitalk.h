@@ -1,37 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/23 09:28:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/27 15:55:14 by akroll           ###   ########.fr       */
+/*   Created: 2022/06/27 12:48:50 by akroll            #+#    #+#             */
+/*   Updated: 2022/06/27 12:57:00 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#ifndef MINITALK_H
+#define MINITALK_H
 
-void	sighandler(int signum)
-{
-	printf("SIGUSR1 received!\n");
-}
+#include <unistd.h>
+#include <stdio.h>
+#include <signal.h>
 
-int main()
-{
-	pid_t my_pid;
-	struct sigaction sigact;
-
-	my_pid = getpid();
-	printf("pid: %d\n", my_pid);
-	sigact.sa_handler = sighandler;
-
-	if (sigaction(SIGUSR1, &sigact, NULL) == -1)
-		perror("signal");
-
-	while (1)
-		pause();
-	// while (!usr_interrupt)
-		// sleep (1);
-
-}
+#endif
