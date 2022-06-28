@@ -6,15 +6,46 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 09:28:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/27 15:55:14 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/28 16:14:33 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	sighandler(int signum)
+unsigned int	convert_bits_to_byte(int b, int i)
 {
-	printf("SIGUSR1 received!\n");
+	static unsigned char	byte;
+
+	if (b == -1)
+	{
+		write(1, "Error: Not SIGUSR1 or SIGUSR2", 30);
+		return (0);
+	}
+	if (i == 0)
+		byte = 0;
+	if (i < 8)
+		byte |= b << (7 - i);
+	return (byte);
+}
+
+void	signal_catcher(int signum, siginfo_t *info, void *context)
+{
+	int	b;
+	static unsigned int	i;
+	unsigned int	character;
+
+	b = -1;
+	if (signum == SIGUSR1)
+		b = 1;
+	else if (signum == SIGUSR2)
+		b = 0;
+	character = convert_bits_to_byte(b, i);
+	i += 1;
+	if (i == 8)
+	{
+		show_bits(character, 1);
+		i = 0;
+	}
 }
 
 int main()
@@ -24,14 +55,15 @@ int main()
 
 	my_pid = getpid();
 	printf("pid: %d\n", my_pid);
-	sigact.sa_handler = sighandler;
+	sigact.sa_sigaction = signal_catcher;
+	sigact.sa_flags = SA_SIGINFO;
 
 	if (sigaction(SIGUSR1, &sigact, NULL) == -1)
-		perror("signal");
+		perror("USR1 signal");
+	if (sigaction(SIGUSR2, &sigact, NULL) == -1)
+		perror("USR2 signal");
 
 	while (1)
 		pause();
-	// while (!usr_interrupt)
-		// sleep (1);
-
+	return 0;
 }
