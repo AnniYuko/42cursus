@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 09:28:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/28 16:14:33 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/29 13:57:39 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ void	signal_catcher(int signum, siginfo_t *info, void *context)
 {
 	int	b;
 	static unsigned int	i;
-	unsigned int	character;
+	unsigned char	character;
 
-	b = -1;
 	if (signum == SIGUSR1)
 		b = 1;
 	else if (signum == SIGUSR2)
@@ -43,7 +42,7 @@ void	signal_catcher(int signum, siginfo_t *info, void *context)
 	i += 1;
 	if (i == 8)
 	{
-		show_bits(character, 1);
+		write(1, &character, 1);
 		i = 0;
 	}
 }
@@ -55,8 +54,9 @@ int main()
 
 	my_pid = getpid();
 	printf("pid: %d\n", my_pid);
+	sigemptyset(&sigact.sa_mask);
 	sigact.sa_sigaction = signal_catcher;
-	sigact.sa_flags = SA_SIGINFO;
+	sigact.sa_flags = SA_SIGINFO | SA_RESTART;
 
 	if (sigaction(SIGUSR1, &sigact, NULL) == -1)
 		perror("USR1 signal");
