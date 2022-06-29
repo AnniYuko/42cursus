@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 09:28:26 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/28 14:25:18 by akroll           ###   ########.fr       */
+/*   Updated: 2022/06/29 14:01:40 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,37 +31,39 @@ void	show_bits(unsigned int num, int num_of_bytes)
 	putchar('\n');
 }
 
-int	main(int argc, char **argv)
+void	send_str_as_signals(pid_t pid, char *str)
 {
-	pid_t	server_pid;
-	char	*str;
-	int		i;
-	int		j;
-
-	if (argc != 3)
-	{
-		write(1, "Please enter 3 arguments:\n./client <server_pid> <string>\n", 58);
-		return (1);
-	}
-	str = argv[2];
-	server_pid = atoi(argv[1]);
+	int	i;
+	int	position;
 
 	i = 0;
 	while (str[i] != '\0')
 	{
-		show_bits(str[i], 1);
-		j = 7;
-		while (j >= 0)
+		position = 7;
+		while (position >= 0)
 		{
-			if ((str[i] >> j) & 1)
-				kill(server_pid, SIGUSR1);
+			if ((str[i] >> position) & 1)
+				kill(pid, SIGUSR1);
 			else
-				kill(server_pid, SIGUSR2);
+				kill(pid, SIGUSR2);
 			usleep(10);
-			j--;
+			position--;
 		}
 		i++;
 	}
+}
+
+int	main(int argc, char **argv)
+{
+	pid_t	server_pid;
+
+	if (argc != 3)
+	{
+		write(1, "Please enter 3 arguments:\n./client <server_pid> \"string\"\n", 58);
+		return (1);
+	}
+	server_pid = atoi(argv[1]);
+	send_str_as_signals(server_pid, argv[2]);
 
 	return (0);
 }
