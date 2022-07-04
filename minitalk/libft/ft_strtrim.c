@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:02:22 by akroll            #+#    #+#             */
-/*   Updated: 2022/05/08 11:06:04 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/04 14:25:54 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 	i = 0;
 	bytes_to_copy = 0;
-
 	if (s1 == NULL || set == NULL)
 		return (NULL);
 	len = ft_strlen(s1);

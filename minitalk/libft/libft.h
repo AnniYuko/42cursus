@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:02:47 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/15 13:21:46 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/04 14:42:26 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdarg.h>
 
 typedef struct s_list
 {
@@ -72,4 +73,11 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+//printf
+int		ft_printf(const char *str, ...);
+int		ft_putstr_fd_count(char *s, int fd, int *count, char option);
+int		ft_putchar_fd_count(char c, int fd, int *count);
+void	ft_putnbr_fd_unsigned(unsigned int n, int fd, int *count);
+void	ft_puthex_fd(unsigned long n, char option, int fd, int *count);
+void	ft_put_next_arg(char option, va_list ap, int *count);
 #endif
