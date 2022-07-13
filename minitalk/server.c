@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 09:28:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/07/04 14:47:36 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/13 17:53:05 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,25 @@
 void	signal_catcher(int signum, siginfo_t *info, void *context)
 {
 	static unsigned int		position;
-	unsigned int			bit;
 	static unsigned char	character;
 
-	(void)info;
 	(void)context;
 	character <<= 1;
-	bit = 0;
 	if (signum == SIGUSR1)
-	{
-		bit = 1;
-		character += bit;
-	}
+		character += 1;
 	if (++position == 8)
 	{
-		write(1, &character, 1);
+		if (!character)
+		{
+			if (kill(info->si_pid, SIGUSR2))
+				perror("Error: sending SIGUSR2");
+			write(1, "\n", 1);
+		}
+		else
+		{
+			write(1, &character, 1);
+			kill(info->si_pid, SIGUSR1);
+		}
 		position = 0;
 		character = 0;
 	}
