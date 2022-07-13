@@ -6,11 +6,24 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 09:28:26 by akroll            #+#    #+#             */
-/*   Updated: 2022/07/13 17:49:33 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/13 19:08:15 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+void	send_end_of_message(pid_t pid)
+{
+	int	i;
+
+	i = 8;
+	while (i > 0)
+	{
+		kill(pid, SIGUSR2);
+		usleep(50);
+		i--;
+	}
+}
 
 void	send_str_as_signals(pid_t pid, char *str)
 {
@@ -33,21 +46,15 @@ void	send_str_as_signals(pid_t pid, char *str)
 				if (kill(pid, SIGUSR2) != 0)
 					perror("Error: sending SIGUSR2");
 			}
-			usleep(10);
 			position--;
+			usleep(50);
 		}
 		i++;
 	}
-	i = 8;
-	while (i > 0)
-	{
-		kill(pid, SIGUSR2);
-		usleep(10);
-		i--;
-	}
+	send_end_of_message(pid);
 }
 
-void	message_success_info(int signum)
+void	server_feedback(int signum)
 {
 	static int	count;
 
@@ -55,7 +62,7 @@ void	message_success_info(int signum)
 		count++;
 	else
 	{
-		ft_printf("successfully sent %d to server\n", count);
+		ft_printf("Server received %d characters\n", count);
 		count = 0;
 	}
 }
@@ -71,7 +78,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	server_pid = ft_atoi(argv[1]);
-	sigact_c.sa_handler = message_success_info;
+	sigact_c.sa_handler = server_feedback;
 	if (sigaction(SIGUSR1, &sigact_c, NULL) == -1)
 		perror("USR1 signal");
 	if (sigaction(SIGUSR2, &sigact_c, NULL) == -1)
@@ -79,4 +86,5 @@ int	main(int argc, char **argv)
 	send_str_as_signals(server_pid, argv[2]);
 	while (1)
 		pause();
+	return (0);
 }
