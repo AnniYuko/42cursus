@@ -6,13 +6,13 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 09:28:26 by akroll            #+#    #+#             */
-/*   Updated: 2022/07/14 13:27:35 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/14 14:19:31 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-int	g_received;
+static int	g_received;
 
 void	send_str_as_signals(pid_t server_pid, char *str)
 {
@@ -63,19 +63,18 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 	{
-		write(1, "Please enter 3 arguments:\n./client <pid> \"string\"\n", 51);
+		write(1, "Please enter 3 arguments:\n./client <PID> \"message\"\n", 51);
 		return (1);
 	}
 	server_pid = ft_atoi(argv[1]);
 	if (kill(server_pid, 0) != 0 || server_pid <= 0)
 	{
-		write(1, "Error: pid invalid\n", 20);
+		write(1, "PID error\n", 11);
 		return (1);
 	}
 	sigact_c.sa_handler = server_feedback;
-	if (sigaction(SIGUSR1, &sigact_c, NULL) == -1)
-		return (1);
-	if (sigaction(SIGUSR2, &sigact_c, NULL) == -1)
+	if (sigaction(SIGUSR1, &sigact_c, NULL) == -1
+		|| sigaction(SIGUSR2, &sigact_c, NULL) == -1)
 		return (1);
 	send_str_as_signals(server_pid, argv[2]);
 	while (!g_received)

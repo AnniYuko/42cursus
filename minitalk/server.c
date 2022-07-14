@@ -6,13 +6,13 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 09:28:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/07/14 12:53:32 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/14 14:27:54 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	signal_catcher(int signum, siginfo_t *info, void *context)
+void	signal_handler(int signum, siginfo_t *info, void *context)
 {
 	static unsigned int		position;
 	static char				character;
@@ -50,11 +50,10 @@ int	main(void)
 	sigemptyset(&sigact.sa_mask);
 	sigaddset(&sigact.sa_mask, SIGUSR1);
 	sigaddset(&sigact.sa_mask, SIGUSR2);
-	sigact.sa_sigaction = signal_catcher;
+	sigact.sa_sigaction = signal_handler;
 	sigact.sa_flags = SA_SIGINFO | SA_RESTART;
-	if (sigaction(SIGUSR1, &sigact, NULL) == -1)
-		return (1);
-	if (sigaction(SIGUSR2, &sigact, NULL) == -1)
+	if (sigaction(SIGUSR1, &sigact, NULL) == -1
+		|| sigaction(SIGUSR2, &sigact, NULL) == -1)
 		return (1);
 	while (1)
 		pause();
