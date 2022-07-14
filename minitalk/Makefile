@@ -6,7 +6,7 @@
 #    By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 09:28:51 by akroll            #+#    #+#              #
-#    Updated: 2022/07/14 15:06:12 by akroll           ###   ########.fr        #
+#    Updated: 2022/07/14 17:16:04 by akroll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,11 @@ OBJ := $(SRC:.c=.o)
 
 all: $(EXEC)
 
-$(EXEC): $(OBJ)
+% : %.o
+	make -C $(LIBDIR)
 	$(CC) $(CFLAGS) $< -o $@ -L./$(LIBDIR) -lft
 
-$(NAMELFT):
-	make -C $(LIBDIR)
-
-%.o: %.c
+$(OBJ): %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
