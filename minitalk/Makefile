@@ -6,7 +6,7 @@
 #    By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 09:28:51 by akroll            #+#    #+#              #
-#    Updated: 2022/07/14 11:40:32 by akroll           ###   ########.fr        #
+#    Updated: 2022/07/14 14:46:21 by akroll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ $(OBJ): %.o: %.c
 
 clean:
 	make clean -C $(LIBDIR)
-	$(RM) $(OBJ) $(EXEC)
+	$(RM) $(OBJ)
 
 fclean: clean
 	$(RM) $(LIBDIR)/$(NAMELFT) $(EXEC)
