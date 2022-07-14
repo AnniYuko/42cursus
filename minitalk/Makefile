@@ -6,7 +6,7 @@
 #    By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 09:28:51 by akroll            #+#    #+#              #
-#    Updated: 2022/07/04 14:35:57 by akroll           ###   ########.fr        #
+#    Updated: 2022/07/14 11:40:32 by akroll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,4 +38,4 @@ fclean: clean
 	$(RM) $(LIBDIR)/$(NAMELFT) $(EXEC)
 
 re: fclean all
-.PHONY: all clean fclean
+.PHONY: all clean fclean re
