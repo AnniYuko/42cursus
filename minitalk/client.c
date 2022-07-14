@@ -6,26 +6,15 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 09:28:26 by akroll            #+#    #+#             */
-/*   Updated: 2022/07/13 19:08:15 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/14 13:27:35 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	send_end_of_message(pid_t pid)
-{
-	int	i;
+int	g_received;
 
-	i = 8;
-	while (i > 0)
-	{
-		kill(pid, SIGUSR2);
-		usleep(50);
-		i--;
-	}
-}
-
-void	send_str_as_signals(pid_t pid, char *str)
+void	send_str_as_signals(pid_t server_pid, char *str)
 {
 	int	i;
 	int	position;
@@ -37,21 +26,20 @@ void	send_str_as_signals(pid_t pid, char *str)
 		while (position >= 0)
 		{
 			if ((str[i] >> position) & 1)
-			{
-				if (kill(pid, SIGUSR1) != 0)
-					perror("Error: sending SIGUSR1");
-			}
+				kill(server_pid, SIGUSR1);
 			else
-			{
-				if (kill(pid, SIGUSR2) != 0)
-					perror("Error: sending SIGUSR2");
-			}
+				kill(server_pid, SIGUSR2);
 			position--;
 			usleep(50);
 		}
 		i++;
 	}
-	send_end_of_message(pid);
+	i = 8;
+	while (i-- > 0)
+	{
+		kill(server_pid, SIGUSR2);
+		usleep(50);
+	}
 }
 
 void	server_feedback(int signum)
@@ -63,6 +51,7 @@ void	server_feedback(int signum)
 	else
 	{
 		ft_printf("Server received %d characters\n", count);
+		g_received = 1;
 		count = 0;
 	}
 }
@@ -78,13 +67,18 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	server_pid = ft_atoi(argv[1]);
+	if (kill(server_pid, 0) != 0 || server_pid <= 0)
+	{
+		write(1, "Error: pid invalid\n", 20);
+		return (1);
+	}
 	sigact_c.sa_handler = server_feedback;
 	if (sigaction(SIGUSR1, &sigact_c, NULL) == -1)
-		perror("USR1 signal");
+		return (1);
 	if (sigaction(SIGUSR2, &sigact_c, NULL) == -1)
-		perror("USR2 signal");
+		return (1);
 	send_str_as_signals(server_pid, argv[2]);
-	while (1)
+	while (!g_received)
 		pause();
 	return (0);
 }

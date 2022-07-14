@@ -6,20 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 09:28:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/07/13 19:13:06 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/14 12:53:32 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
-// void	error_handling(int status)
-// {
-// 	if (status != 0)
-// 	{
-// 		perror()
-// 		exit
-// 	}
-// }
 
 void	signal_catcher(int signum, siginfo_t *info, void *context)
 {
@@ -35,14 +26,14 @@ void	signal_catcher(int signum, siginfo_t *info, void *context)
 		if (!character)
 		{
 			if (kill(info->si_pid, SIGUSR2) != 0)
-				perror("Error: sending SIGUSR2");
+				exit(EXIT_FAILURE);
 			write(1, "\n", 1);
 		}
 		else
 		{
 			write(1, &character, 1);
 			if (kill(info->si_pid, SIGUSR1) != 0)
-				perror("Error: sending SIGUSR1");
+				exit(EXIT_FAILURE);
 		}
 		position = 0;
 		character = 0;
@@ -62,9 +53,9 @@ int	main(void)
 	sigact.sa_sigaction = signal_catcher;
 	sigact.sa_flags = SA_SIGINFO | SA_RESTART;
 	if (sigaction(SIGUSR1, &sigact, NULL) == -1)
-		perror("USR1 signal");
+		return (1);
 	if (sigaction(SIGUSR2, &sigact, NULL) == -1)
-		perror("USR2 signal");
+		return (1);
 	while (1)
 		pause();
 	return (0);
