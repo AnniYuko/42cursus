@@ -6,11 +6,13 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 09:28:34 by akroll            #+#    #+#             */
-/*   Updated: 2022/07/18 19:33:50 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/19 12:11:11 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+volatile int	cli_received[2];
 
 void	signal_handler(int signum, siginfo_t *info, void *context)
 {
@@ -23,22 +25,15 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
 		character += 1;
 	if (++position == 8)
 	{
-		// if '\0' is received, send a "End of Message" signal to client
+		ft_printf("%c", character);
+		// if '\0' is received => "End of Message"
 		if (!character)
-		{
-			if (kill(info->si_pid, SIGUSR2) != 0)
-				exit(EXIT_FAILURE);
-			write(1, "\n", 1);
-		}
-		else
-		{
-			write(1, &character, 1);
-			// if (kill(info->si_pid, SIGUSR1) != 0)
-			// 	exit(EXIT_FAILURE);
-		}
+			ft_printf("\n");
 		position = 0;
 		character = 0;
 	}
+	cli_received[0] = 1;
+	cli_received[1] = info->si_pid;
 }
 
 int	main(void)
@@ -52,6 +47,12 @@ int	main(void)
 	my_pid = getpid();
 	ft_printf("pid: %d\n", my_pid);
 	while (1)
-		pause();
+	{
+		while (cli_received[0] != 1)
+			;
+		cli_received[0] = 0;
+		if (kill(cli_received[1], SIGUSR1) != 0)
+				exit(EXIT_FAILURE);
+	}
 	return (0);
 }
