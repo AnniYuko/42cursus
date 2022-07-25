@@ -22,7 +22,7 @@ NAME := fractol
 SRCS := $(wildcard *.c)
 OBJS := $(SRCS:.c=.o)
 
-all: libft libmlx $(NAME)
+all: libmlx $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $< -o $@ $(HEADERS) $(LIBS)
