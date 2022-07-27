@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/07/27 15:13:37 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/27 15:17:29 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	hook(void *param)
 			n = 0;
 			while (n < MaxIterations)
 			{
+				// optimization & important to save value for calculating Z
 				Z_im2 = Z_im*Z_im;
 				if ((Z_re * Z_re + Z_im2) > 4)
 				// if(Z_re2 + Z_im2 > 4)
@@ -69,7 +70,6 @@ void	hook(void *param)
 				Z_re = (Z_re * Z_re) - Z_im2 + c_re;
 				n++;
 			}
-				// printf("x = %d, y = %d\n", x, y);
 				if (isInside)
 					mlx_put_pixel(g_img, x, y, 0);
 				x++;
