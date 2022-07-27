@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/07/27 15:17:29 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/27 15:29:04 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,14 @@ void	hook(void *param)
 					isInside = false;
 					break ;
 				}
+				mlx_put_pixel(g_img, x, y, n*50);
 				// calculate Z = Z * Z + c
 				Z_im = 2 * Z_re * Z_im + c_im;
 				Z_re = (Z_re * Z_re) - Z_im2 + c_re;
 				n++;
 			}
 				if (isInside)
-					mlx_put_pixel(g_img, x, y, 0);
+					mlx_put_pixel(g_img, x, y, 255);
 				x++;
 		}
 		y++;
