@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/07/28 11:15:29 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/28 11:24:15 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ int	get_color(unsigned n, unsigned MaxIterations)
 	else if (n > MaxIterations*5/10)
 		color = 0x0033FFFF;
 	else if (n > MaxIterations*4/10)
-		color = 0x0024B5FF;
+		color = 0x0025B7FF;
 	else if (n > MaxIterations*3/10)
-		color = 0x0013C3FF;
+		color = 0x001F9BFF;
 	else if (n > MaxIterations*2/10)
-		color = 0x0026BFFF;
+		color = 0x011B81FF;
 	else if (n > MaxIterations*1/10)
-		color = 0x001C8EFF;
+		color = 0x001466FF;
 	else if (n <= MaxIterations*1/10 && n > 1)
-		color = 0x001465FF;
+		color = 0x001051FF;
 	else if (n == 1)
-		color = 0x000C3CFF;
+		color = 0x000B37FF;
 	else
 		color = 0x000000FF;
 	return (color);
