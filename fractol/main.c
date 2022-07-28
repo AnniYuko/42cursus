@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/07/28 11:24:15 by akroll           ###   ########.fr       */
+/*   Updated: 2022/07/28 11:43:10 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	hook(void *param)
 			Z_re = c_re;
 			Z_im = c_im;
 			// Check if Z is part of the set
-			// bool isInside = true;
 			n = 0;
 			while (n < MaxIterations)
 			{
