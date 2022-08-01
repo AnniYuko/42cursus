@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/08/01 13:39:08 by akroll           ###   ########.fr       */
+/*   Updated: 2022/08/01 13:56:23 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	hook(void *param)
 	double		Im_factor = (MaxIm-MinIm)/g_img->height;
 	double		Z_re;
 	double		Z_im;
+	double		Z_re2;
 	double		Z_im2;
 	unsigned	n;
 	unsigned MaxIterations = 40;
@@ -64,14 +65,15 @@ void	hook(void *param)
 			while (n < MaxIterations)
 			{
 				// optimization & important to save value for calculating Z
-				Z_im2 = Z_im*Z_im;
+				Z_im2 = Z_im * Z_im;
+				Z_re2 = Z_re * Z_re;
 				/*  Check if Z is part of the set
 					Z > 4 means it goes to infinity */
-				if ((Z_re * Z_re + Z_im2) > 4)
+				if (Z_re2 + Z_im2 > 4)
 					break ;
 				// calculate Z = Z * Z + c
-				Z_im = 2 * Z_re * Z_im + c_im;
-				Z_re = (Z_re * Z_re) - Z_im2 + c_re;
+				Z_im = (Z_re + Z_re) * Z_im + c_im;
+				Z_re = Z_re2 - Z_im2 + c_re;
 				n++;
 			}
 				mlx_put_pixel(g_img, x, y, get_color(n, MaxIterations));
