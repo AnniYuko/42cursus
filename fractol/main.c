@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/07/28 11:43:10 by akroll           ###   ########.fr       */
+/*   Updated: 2022/08/01 13:39:08 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#define WIDTH 600
-#define HEIGHT 500
+#define WIDTH 700
+#define HEIGHT 600
 
 mlx_image_t	*g_img;
 
 int	get_color(unsigned n, unsigned MaxIterations)
 {
-	int	color;
-
-	if (n == MaxIterations)
-		color = 0x000000FF;
-	else if (n > MaxIterations*9/10)
-		color = 0xE6ECFFFF;
-	else if (n > MaxIterations*8/10)
-		color = 0x849DFFFF;
-	else if (n > MaxIterations*7/10)
-		color = 0x3D64FFFF;
-	else if (n > MaxIterations*6/10)
-		color = 0x5E7EFFFF;
-	else if (n > MaxIterations*5/10)
-		color = 0x0033FFFF;
-	else if (n > MaxIterations*4/10)
-		color = 0x0025B7FF;
-	else if (n > MaxIterations*3/10)
-		color = 0x001F9BFF;
-	else if (n > MaxIterations*2/10)
-		color = 0x011B81FF;
-	else if (n > MaxIterations*1/10)
-		color = 0x001466FF;
-	else if (n <= MaxIterations*1/10 && n > 1)
-		color = 0x001051FF;
-	else if (n == 1)
-		color = 0x000B37FF;
-	else
-		color = 0x000000FF;
-	return (color);
+	int	blue_palette[] = {0x000B37FF, 0x001051FF, 0x001466FF, 0x011B81FF, 0x001F9BFF, 0x001B87FF, 0x0058B3FF, \
+							0x00A6D7FF, 0x30E7EDFF, 0x86FAF2FF, 0x000000FF};
+	int	color = (float)n/(float)MaxIterations * (sizeof(blue_palette)/sizeof(blue_palette[0]) - 1);
+	return (blue_palette[color]);
 }
 
 void	hook(void *param)
@@ -85,12 +60,13 @@ void	hook(void *param)
 			// Set Z = c
 			Z_re = c_re;
 			Z_im = c_im;
-			// Check if Z is part of the set
 			n = 0;
 			while (n < MaxIterations)
 			{
 				// optimization & important to save value for calculating Z
 				Z_im2 = Z_im*Z_im;
+				/*  Check if Z is part of the set
+					Z > 4 means it goes to infinity */
 				if ((Z_re * Z_re + Z_im2) > 4)
 					break ;
 				// calculate Z = Z * Z + c
