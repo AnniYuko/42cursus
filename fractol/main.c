@@ -6,14 +6,11 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/08/02 16:11:16 by akroll           ###   ########.fr       */
+/*   Updated: 2022/08/02 17:05:02 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include "fractol.h"
 #define WIDTH 700
 #define HEIGHT 600
 
@@ -36,8 +33,7 @@ void	hook(void *param)
 {
 	unsigned	x;
 	unsigned	y;
-	double		c_im;
-	double		c_re;
+	t_complex	c;
 	double		MinIm = -1.2;
 	double		MinRe = -2.0;
 	double		MaxRe = 1.0;
@@ -55,15 +51,15 @@ void	hook(void *param)
 	y = 0;
 	while (y < HEIGHT)
 	{
-		c_im = MaxIm - y * Im_factor;
+		c.im = MaxIm - y * Im_factor;
 		x = 0;
 		while (x < WIDTH)
 		{
-			c_re = MinRe + x * Re_factor;
+			c.re = MinRe + x * Re_factor;
 
 			// Set Z = c
-			Z_re = c_re;
-			Z_im = c_im;
+			Z_re = c.re;
+			Z_im = c.im;
 			n = 0;
 			while (n < MaxIterations)
 			{
@@ -75,8 +71,8 @@ void	hook(void *param)
 				if (Z_re2 + Z_im2 > 4)
 					break ;
 				// calculate Z = Z * Z + c
-				Z_im = (Z_re + Z_re) * Z_im + c_im;
-				Z_re = Z_re2 - Z_im2 + c_re;
+				Z_im = (Z_re + Z_re) * Z_im + c.im;
+				Z_re = Z_re2 - Z_im2 + c.re;
 				n++;
 			}
 				mlx_put_pixel(img, x, y, get_color(n, MaxIterations));
@@ -89,23 +85,23 @@ void	hook(void *param)
 
 int	main(void)
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
+	t_info	*f;
 
-	mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true);
-	if (!mlx)
+	f = malloc(sizeof(t_info));
+	f->mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true);
+	if (!f->mlx)
 		exit(EXIT_FAILURE);
 	// image width and height
-	img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	f->img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
 	// all pixel channels to 255 (white)
-	memset(img->pixels, 255, img->width * img->height * sizeof(int));
+	memset(f->img->pixels, 255, f->img->width * f->img->height * sizeof(int));
 	// put image at position x, y
-	mlx_image_to_window(mlx, img, 0, 0);
+	mlx_image_to_window(f->mlx, f->img, 0, 0);
 	// add hook function to main loop
-	mlx_loop_hook(mlx, &detect_keys, mlx);
-	mlx_loop_hook(mlx, &hook, img);
-	mlx_loop(mlx);
-	mlx_delete_image(mlx, img);
-	mlx_terminate(mlx);
+	mlx_loop_hook(f->mlx, &detect_keys, f->mlx);
+	mlx_loop_hook(f->mlx, &hook, f->img);
+	mlx_loop(f->mlx);
+	mlx_delete_image(f->mlx, f->img);
+	mlx_terminate(f->mlx);
 	return (EXIT_SUCCESS);
 }
