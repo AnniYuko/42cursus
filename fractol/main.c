@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/08/02 17:05:02 by akroll           ###   ########.fr       */
+/*   Updated: 2022/08/04 14:03:35 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,23 +85,22 @@ void	hook(void *param)
 
 int	main(void)
 {
-	t_info	*f;
+	t_info	f;
 
-	f = malloc(sizeof(t_info));
-	f->mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true);
-	if (!f->mlx)
+	f.mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true);
+	if (!f.mlx)
 		exit(EXIT_FAILURE);
 	// image width and height
-	f->img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
+	f.img = mlx_new_image(f.mlx, WIDTH, HEIGHT);
 	// all pixel channels to 255 (white)
-	memset(f->img->pixels, 255, f->img->width * f->img->height * sizeof(int));
+	memset(f.img->pixels, 255, f.img->width * f.img->height * sizeof(int));
 	// put image at position x, y
-	mlx_image_to_window(f->mlx, f->img, 0, 0);
+	mlx_image_to_window(f.mlx, f.img, 0, 0);
 	// add hook function to main loop
-	mlx_loop_hook(f->mlx, &detect_keys, f->mlx);
-	mlx_loop_hook(f->mlx, &hook, f->img);
-	mlx_loop(f->mlx);
-	mlx_delete_image(f->mlx, f->img);
-	mlx_terminate(f->mlx);
+	mlx_loop_hook(f.mlx, &detect_keys, f.mlx);
+	mlx_loop_hook(f.mlx, &hook, f.img);
+	mlx_loop(f.mlx);
+	mlx_delete_image(f.mlx, f.img);
+	mlx_terminate(f.mlx);
 	return (EXIT_SUCCESS);
 }
