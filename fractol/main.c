@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/08/09 12:51:49 by akroll           ###   ########.fr       */
+/*   Updated: 2022/08/09 15:01:09 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,14 @@ void	hook(void *param)
 }
 
 
-int	main(void)
+// int	main(int argc, char **argv)
+int main()
 {
 	t_info	f;
+
+	// // --- check input --- // segfault?
+	// if (argc == 2 && strncmp(argv[1], "M", 1) == 0)
+	// 	puts("Mandelbrot");
 
 	f.mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true);
 	if (!f.mlx)
@@ -127,14 +132,12 @@ int	main(void)
 	initialize(f.mb);
 	// image width and height
 	f.img = mlx_new_image(f.mlx, WIDTH, HEIGHT);
-	// all pixel channels to 255 (white)
-	memset(f.img->pixels, 255, f.img->width * f.img->height * sizeof(int));
 	// put image at position x, y
 	mlx_image_to_window(f.mlx, f.img, 0, 0);
 	// add hook function to main loop
 	mlx_loop_hook(f.mlx, &detect_keys, f.mlx);
-	mlx_loop_hook(f.mlx, &hook, &f);
 	mlx_scroll_hook(f.mlx, &zoom_hook, f.mb);
+	mlx_loop_hook(f.mlx, &hook, &f);
 	mlx_loop(f.mlx);
 	mlx_delete_image(f.mlx, f.img);
 	mlx_terminate(f.mlx);
