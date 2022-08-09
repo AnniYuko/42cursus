@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/08/05 18:29:10 by akroll           ###   ########.fr       */
+/*   Updated: 2022/08/09 12:51:49 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	initialize(t_mandelbrot *mb)
 {
 	// f->mb->iter_max = 40;
 	mb->Re_min = -2.0;
-	mb->Re_max = 1.0;
-	mb->Im_min = -1.2;
-	mb->Im_max = mb->Im_min+(mb->Re_max - mb->Re_min)*(float)HEIGHT/(float)WIDTH;
+	mb->Re_max = 0.9;
+	mb->Im_min = -1.3;
+	mb->Im_max = 1.3;
 }
 
 void	detect_keys(void *param)
@@ -34,7 +34,9 @@ void zoom_hook(double xdelta, double ydelta, void* param)
 {
 	t_mandelbrot	*mb;
 	mb = param;
-	double	zoomfactor = 2;
+	double	zoomfactor = 0.9;
+	// double	x_ratio = x / (mb->Re_max-mb->Re_min)/(float)WIDTH;
+	// double	y_ratio = y / (mb->Im_max-mb->Im_min)/(float)HEIGHT;
 	double	delta_Re = mb->Re_max - mb->Re_min;
 	double	delta_Im = mb->Im_max - mb->Im_min;
 
@@ -47,12 +49,14 @@ void zoom_hook(double xdelta, double ydelta, void* param)
 		mb->Im_min = mb->Im_min - (1.0/zoomfactor * delta_Im);
 		mb->Im_max = mb->Im_max + (1.0/zoomfactor * delta_Im);
 	}
-	else if (ydelta < 0)
+	else
+	{
 		puts("Zoom in");
-		mb->Re_min = mb->Re_min - (zoomfactor * delta_Re);
-		mb->Re_max = mb->Re_max + (zoomfactor * delta_Re);
-		mb->Im_min = mb->Im_min - (zoomfactor * delta_Im);
-		mb->Im_max = mb->Im_max + (zoomfactor * delta_Im);
+		mb->Re_min = mb->Re_min + (zoomfactor * delta_Re);
+		mb->Re_max = mb->Re_max - (zoomfactor * delta_Re);
+		mb->Im_min = mb->Im_min + (zoomfactor * delta_Im);
+		mb->Im_max = mb->Im_max - (zoomfactor * delta_Im);
+	}
 }
 
 int	get_color(unsigned n, unsigned MaxIterations)
@@ -77,6 +81,7 @@ void	hook(void *param)
 	t_info		*f;
 
 	f = param;
+	// double		pixel_size = (f->mb->Re_max-f->mb->Re_min)/(float)WIDTH;
 	y = 0;
 	while (y < HEIGHT)
 	{
