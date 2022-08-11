@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 13:42:25 by akroll            #+#    #+#             */
-/*   Updated: 2022/08/11 16:36:57 by akroll           ###   ########.fr       */
+/*   Updated: 2022/08/11 17:43:30 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	bzero_arr(int *arr, int size)
 
 void	radix_sort(int *input_arr, int *output_arr, int size, unsigned int digits)
 {
-	unsigned int	count_arr[BASE-1];
+	unsigned int	count_arr[BASE];
 	unsigned int	i;
 	unsigned int	position;
 	unsigned int	num;
@@ -125,21 +125,30 @@ void	radix_sort(int *input_arr, int *output_arr, int size, unsigned int digits)
 			input_arr = output_arr;
 			output_arr = tmp;
 		}
-		// else if (d ==  0 && digits % 2 == 0)
-		// -> change pointers again or return input_arr
 		position *= 10;
 	}
 }
 
-int	main()
+int	main(int argc, char **argv)
 {
 	int	n;
-	int	arr[] = { 23, 144, 900, 52, 90, 1, 100, 0};
-	int	output_arr[n];
+	int	*arr;
+	int	*output_arr;
 	int	digits;
 	int	max;
+	int	*tmp;
+	int	i;
 
-	n = sizeof(arr)/sizeof(arr[0]);
+	n = argc - 1;
+	printf("%d\n", n);
+	arr = malloc(n * sizeof(int));
+	i = 0;
+	while (i < n)
+	{
+		arr[i] = atoi(argv[i + 1]);
+		i++;
+	}
+
 	max = get_max_num(arr, n);
 	digits = get_digits(max);
 
@@ -148,8 +157,17 @@ int	main()
 	printf("------- input -----------\n");
 	print_array(arr, n);
 
+	output_arr = malloc(n * sizeof(int));
 	radix_sort(arr, output_arr, n, digits);
+	if (digits % 2 == 0)
+	{
+		tmp = arr;
+		arr = output_arr;
+		output_arr = tmp;
+	}
 
 	printf("------- output -----------\n");
 	print_array(output_arr, n);
+	free(arr);
+	free(output_arr);
 }
