@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 13:42:25 by akroll            #+#    #+#             */
-/*   Updated: 2022/08/11 14:14:21 by akroll           ###   ########.fr       */
+/*   Updated: 2022/08/11 16:36:57 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,15 @@ void	bzero_arr(int *arr, int size)
 	}
 }
 
-int	*radix_sort(int *input_arr, unsigned int size, unsigned int digits)
+void	radix_sort(int *input_arr, int *output_arr, int size, unsigned int digits)
 {
-	int				*output_arr;
 	unsigned int	count_arr[BASE-1];
 	unsigned int	i;
-	unsigned int	mod;
+	unsigned int	position;
 	unsigned int	num;
 
-	mod = 1;
-	output_arr = calloc(size, sizeof(int));
+	position = 1;
+	// output_arr = calloc(size, sizeof(int));
 	while (digits > 0)
 	{
 		// counting_sort
@@ -87,14 +86,12 @@ int	*radix_sort(int *input_arr, unsigned int size, unsigned int digits)
 		i = 0;
 		while (i < size)
 		{
-			num = input_arr[i] / mod % 10;
+			num = input_arr[i] / position % 10;
 			count_arr[num] += 1;
 			i++;
 		}
-		mod *= 10;
-		digits--;
-		printf("---- counting sort \n");
-		print_array(count_arr, BASE);
+		// printf("---- counting sort \n");
+		// print_array(count_arr, BASE);
 
 		// prefix sum
 		i = 1;
@@ -103,29 +100,56 @@ int	*radix_sort(int *input_arr, unsigned int size, unsigned int digits)
 			count_arr[i] += count_arr[i - 1];
 			i++;
 		}
-		printf("---- prefix sum\n");
-		print_array(count_arr, BASE);
+		// printf("---- prefix sum\n");
+		// print_array(count_arr, BASE);
+
+		// radix sort (right to left)
+		int index;
+		int c = size - 1;
+		while (c >= 0)
+		{
+			num = input_arr[c] / position % 10;
+			count_arr[num] -= 1;
+			index = count_arr[num];
+			output_arr[index] = input_arr[c];
+			c--;
+		}
+		// printf("--- another round of radix sort ---\n");
+		// print_array(output_arr, size);
+
+		// ready for next round
+		int *tmp;
+		if (digits-- > 0)
+		{
+			tmp = input_arr;
+			input_arr = output_arr;
+			output_arr = tmp;
+		}
+		// else if (d ==  0 && digits % 2 == 0)
+		// -> change pointers again or return input_arr
+		position *= 10;
 	}
-	return (output_arr);
 }
 
 int	main()
 {
 	int	n;
-	int	arr[] = { 23, 9, 52, 90, 1 };
-	int	*sorted_arr;
+	int	arr[] = { 23, 144, 900, 52, 90, 1, 100, 0};
+	int	output_arr[n];
 	int	digits;
 	int	max;
 
 	n = sizeof(arr)/sizeof(arr[0]);
 	max = get_max_num(arr, n);
 	digits = get_digits(max);
-	sorted_arr = radix_sort(arr, n, digits);
 
 	printf("biggest number: %d\n", max);
 	printf("digits: %d\n\n", digits);
 	printf("------- input -----------\n");
 	print_array(arr, n);
+
+	radix_sort(arr, output_arr, n, digits);
+
 	printf("------- output -----------\n");
-	print_array(sorted_arr, n);
+	print_array(output_arr, n);
 }
