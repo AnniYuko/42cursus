@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 12:27:20 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/05 16:27:23 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/05 16:39:51 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,7 @@
 #define BPP sizeof(int)
 
 typedef struct screen_coord {
-	int x_start;
-	int y_start;
-	int x_end;
-	int y_end;
 	double scale;
-	double zoom;
 	int x_offset;
 	int y_offset;
 } screen_coord;
@@ -35,8 +30,6 @@ void	detect_keys(void *param)
 	mlx_t	*mlx = param;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	// if (mlx_is_mouse_down(mlx, MLX_MOUSE_BUTTON_LEFT))
-	// 	puts("click");
 }
 
 void zoom_hook(double xdelta, double ydelta, void* param)
@@ -48,29 +41,22 @@ void zoom_hook(double xdelta, double ydelta, void* param)
 	{
 		puts("Zoom in");
 		screen.scale *= 1.05f;
-		// screen.x_offset += screen.zoom;
-		// screen.y_offset += screen.zoom;
-
+		// screen.x_offset += ;
+		// screen.y_offset += ;
 	}
 	else
 	{
 		puts("Zoom out");
 		screen.scale *= 0.95f;
-		// screen.x_offset -= screen.zoom;
-		// screen.y_offset -= screen.zoom;
-
+		// screen.x_offset -= ;
+		// screen.y_offset -= ;
 	}
 }
 
 bool	is_inside_square(int x_start, int y_start, double size, int x, int y)
 {
-
-	if (y >= y_start && y < y_start + size
-		&& x >= x_start && x < x_start + size)
-	{
-		return true;
-	}
-	return false;
+	return (y >= y_start && y < y_start + size
+		&& x >= x_start && x < x_start + size);
 }
 
 void	draw_hook(void *param)
@@ -80,7 +66,6 @@ void	draw_hook(void *param)
 
 	img = param;
 	memset(img->pixels, 255, img->width * img->height * BPP);
-
 	// screen space
 	y = 0;
 	while (y < HEIGHT)
@@ -105,24 +90,16 @@ int main()
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 
-	screen.x_start = 0;
-	screen.y_start = 0;
-	screen.x_end = 500;
-	screen.y_end = 500;
 	screen.scale = 1.0f;
-	screen.zoom = 10;
 	screen.x_offset = 0;
 	screen.y_offset = 0;
 	mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true);
 	if (!mlx)
 		exit(EXIT_FAILURE);
-	// image width and height
 	img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	// put image at position x, y
 	mlx_image_to_window(mlx, img, 0, 0);
-	// white background
-	memset(img->pixels, 255, img->width * img->height * BPP);
-	// add draw_hook function to main loop
+	// loop hook means add func to main loop
 	mlx_loop_hook(mlx, &detect_keys, mlx);
 	mlx_loop_hook(mlx, &draw_hook, img);
 	mlx_scroll_hook(mlx, &zoom_hook, NULL);
