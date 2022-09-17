@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/08/09 15:01:09 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/17 14:18:12 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,37 +34,31 @@ void zoom_hook(double xdelta, double ydelta, void* param)
 {
 	t_mandelbrot	*mb;
 	mb = param;
-	double	zoomfactor = 0.9;
-	// double	x_ratio = x / (mb->Re_max-mb->Re_min)/(float)WIDTH;
-	// double	y_ratio = y / (mb->Im_max-mb->Im_min)/(float)HEIGHT;
-	double	delta_Re = mb->Re_max - mb->Re_min;
-	double	delta_Im = mb->Im_max - mb->Im_min;
-
+	double	zoom = 0.05;
+	double	part_Re;
+	double	part_Im;
 	(void)xdelta;
+
+	part_Re = (mb->Re_max - mb->Re_min) * zoom;
+	part_Im = (mb->Im_max - mb->Im_min) * zoom;
+	// if ydelta > 0 zoom out; else zoom in
 	if (ydelta > 0)
 	{
-		puts("Zoom out");
-		mb->Re_min = mb->Re_min - (1.0/zoomfactor * delta_Re);
-		mb->Re_max = mb->Re_max + (1.0/zoomfactor * delta_Re);
-		mb->Im_min = mb->Im_min - (1.0/zoomfactor * delta_Im);
-		mb->Im_max = mb->Im_max + (1.0/zoomfactor * delta_Im);
+		part_Im *= -1;
+		part_Re *= -1;
 	}
-	else
-	{
-		puts("Zoom in");
-		mb->Re_min = mb->Re_min + (zoomfactor * delta_Re);
-		mb->Re_max = mb->Re_max - (zoomfactor * delta_Re);
-		mb->Im_min = mb->Im_min + (zoomfactor * delta_Im);
-		mb->Im_max = mb->Im_max - (zoomfactor * delta_Im);
-	}
+		mb->Re_min = mb->Re_min + part_Re;
+		mb->Re_max = mb->Re_max - part_Re;
+		mb->Im_min = mb->Im_min + part_Im;
+		mb->Im_max = mb->Im_max - part_Im;
 }
 
 int	get_color(unsigned n, unsigned MaxIterations)
 {
-	int	blue_palette[] = {0x000B37FF, 0x001051FF, 0x001466FF, 0x011B81FF, \
-		0x001F9BFF, 0x001B87FF, 0x0058B3FF, 0x00A6D7FF, 0x30E7EDFF, \
-		0x86FAF2FF, 0x000000FF};
-	return (blue_palette[(int)((float)n/(float)MaxIterations * 10)]);
+	int	blue_palette[] = {0x000000FF, 0x060D28FF, 0x0D1535FF, 0x141D40FF, \
+		0x011B81FF, 0x001F9BFF, 0x0D30BCFF, 0x294DDBFF, 0x00A6D7FF, 0x30E7EDFF, \
+		0x33F9ECFF, 0x86FAF2FF, 0xB5F9F4FF, 0xFFFFFFFF, 0x000000FF};
+	return (blue_palette[(int)((float)n/(float)MaxIterations * 14)]);
 }
 
 void	hook(void *param)
@@ -81,7 +75,6 @@ void	hook(void *param)
 	t_info		*f;
 
 	f = param;
-	// double		pixel_size = (f->mb->Re_max-f->mb->Re_min)/(float)WIDTH;
 	y = 0;
 	while (y < HEIGHT)
 	{
@@ -89,8 +82,7 @@ void	hook(void *param)
 		x = 0;
 		while (x < WIDTH)
 		{
-			c.re = f->mb->Re_min + x * (f->mb->Re_max-f->mb->Re_min)/(float)WIDTH; // c = Re_min + (x * PixelSize), Im_max - (y * PixelSize)
-
+			c.re = f->mb->Re_min + x * (f->mb->Re_max-f->mb->Re_min)/(float)WIDTH;
 			// Set Z = c
 			Z_re = c.re;
 			Z_im = c.im;
@@ -116,15 +108,9 @@ void	hook(void *param)
 	}
 }
 
-
-// int	main(int argc, char **argv)
 int main()
 {
 	t_info	f;
-
-	// // --- check input --- // segfault?
-	// if (argc == 2 && strncmp(argv[1], "M", 1) == 0)
-	// 	puts("Mandelbrot");
 
 	f.mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true);
 	if (!f.mlx)
