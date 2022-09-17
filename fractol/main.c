@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/17 14:18:12 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/17 17:16:51 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #define WIDTH 700
 #define HEIGHT 600
 
-void	initialize(t_mandelbrot *mb)
+void	initialize(t_fractal *f)
 {
-	// f->mb->iter_max = 40;
-	mb->Re_min = -2.0;
-	mb->Re_max = 0.9;
-	mb->Im_min = -1.3;
-	mb->Im_max = 1.3;
+	// f->iter_max = 40;
+	f->Re_min = -2.0;
+	f->Re_max = 0.9;
+	f->Im_min = -1.3;
+	f->Im_max = 1.3;
 }
 
 void	detect_keys(void *param)
@@ -28,29 +28,37 @@ void	detect_keys(void *param)
 	mlx_t	*mlx = param;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
+	//* -- segfault if -- *//
+
+	// t_info	*i;
+	// i = param;
+	// if (mlx_is_key_down(&i->mlx, MLX_KEY_ESCAPE))
+	// 	mlx_close_window(&i->mlx);
+	// if (mlx_is_key_down(i->mlx, MLX_KEY_KP_ADD))
+
 }
 
 void zoom_hook(double xdelta, double ydelta, void* param)
 {
-	t_mandelbrot	*mb;
-	mb = param;
+	t_fractal	*f;
+	f = param;
 	double	zoom = 0.05;
 	double	part_Re;
 	double	part_Im;
 	(void)xdelta;
 
-	part_Re = (mb->Re_max - mb->Re_min) * zoom;
-	part_Im = (mb->Im_max - mb->Im_min) * zoom;
+	part_Re = (f->Re_max - f->Re_min) * zoom;
+	part_Im = (f->Im_max - f->Im_min) * zoom;
 	// if ydelta > 0 zoom out; else zoom in
 	if (ydelta > 0)
 	{
 		part_Im *= -1;
 		part_Re *= -1;
 	}
-		mb->Re_min = mb->Re_min + part_Re;
-		mb->Re_max = mb->Re_max - part_Re;
-		mb->Im_min = mb->Im_min + part_Im;
-		mb->Im_max = mb->Im_max - part_Im;
+		f->Re_min = f->Re_min + part_Re;
+		f->Re_max = f->Re_max - part_Re;
+		f->Im_min = f->Im_min + part_Im;
+		f->Im_max = f->Im_max - part_Im;
 }
 
 int	get_color(unsigned n, unsigned MaxIterations)
@@ -61,71 +69,107 @@ int	get_color(unsigned n, unsigned MaxIterations)
 	return (blue_palette[(int)((float)n/(float)MaxIterations * 14)]);
 }
 
+// int	calculate_mandelbrot(int n, void *param)
+// {
+// 	double	Z_re2;
+// 	double	Z_im2;
+// 	t_fractal	*f;
+
+// 	f = param;
+// 	// optimization & important to save value for calculating Z
+// 	Z_im2 = f->Z.im * f->Z.im;
+// 	Z_re2 = f->Z.re * f->Z.re;
+// 	/*  Check if Z is part of the set
+// 		Z > 4 means it goes to infinity */
+// 	if (Z_re2 + Z_im2 > 4)
+// 		return (n);
+// 	// calculate Z = Z * Z + c
+// 	f->Z.im = (f->Z.re + f->Z.re) * f->Z.im + f->c.im;
+// 	f->Z.re = Z_re2 - Z_im2 + f->c.re;
+// 	n++;
+// 	return (n);
+// }
+
 void	hook(void *param)
 {
 	unsigned	x;
 	unsigned	y;
-	t_complex	c;
-	double		Z_re;
-	double		Z_im;
-	double		Z_re2;
-	double		Z_im2;
+	double	Z_re2;
+	double	Z_im2;
 	unsigned	n;
 	unsigned MaxIterations = 40;
-	t_info		*f;
+	t_info		*i;
+	t_fractal 	*f;
 
-	f = param;
+	i = param;
+	f = &(i->fract);
 	y = 0;
 	while (y < HEIGHT)
 	{
-		c.im = f->mb->Im_max - y * (f->mb->Im_max-f->mb->Im_min)/(float)HEIGHT;
+		f->c.im = f->Im_max - y * (f->Im_max-f->Im_min)/(float)HEIGHT;
 		x = 0;
 		while (x < WIDTH)
 		{
-			c.re = f->mb->Re_min + x * (f->mb->Re_max-f->mb->Re_min)/(float)WIDTH;
+			f->c.re = f->Re_min + x * (f->Re_max-f->Re_min)/(float)WIDTH;
 			// Set Z = c
-			Z_re = c.re;
-			Z_im = c.im;
+			f->Z.re = f->c.re;
+			f->Z.im = f->c.im;
 			n = 0;
 			while (n < MaxIterations)
 			{
 				// optimization & important to save value for calculating Z
-				Z_im2 = Z_im * Z_im;
-				Z_re2 = Z_re * Z_re;
+				Z_im2 = f->Z.im * f->Z.im;
+				Z_re2 = f->Z.re * f->Z.re;
 				/*  Check if Z is part of the set
 					Z > 4 means it goes to infinity */
 				if (Z_re2 + Z_im2 > 4)
 					break ;
 				// calculate Z = Z * Z + c
-				Z_im = (Z_re + Z_re) * Z_im + c.im;
-				Z_re = Z_re2 - Z_im2 + c.re;
+				f->Z.im = (f->Z.re + f->Z.re) * f->Z.im + f->c.im;
+				f->Z.re = Z_re2 - Z_im2 + f->c.re;
 				n++;
+
+				// if (f->mandel == true)
+				// 	n = calculate_mandelbrot(n, &f);
+				// else if (f->julia == true)
+					// calculate_julia();
 			}
-				mlx_put_pixel(f->img, x, y, get_color(n, MaxIterations));
+				mlx_put_pixel(i->img, x, y, get_color(n, MaxIterations));
 				x++;
 		}
 		y++;
 	}
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-	t_info	f;
+	t_info	i;
 
-	f.mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true);
-	if (!f.mlx)
-		exit(EXIT_FAILURE);
-	initialize(f.mb);
+	if (argc == 2 && strncmp("mandel", argv[1], 6) == 0)
+		i.fract.mandel = true;
+	else if (argc == 3 && strncmp("julia", argv[1], 5) == 0)
+		i.fract.julia = true;
+
+	else
+	{
+		write(1, "Please choose Mandelbrot or Julia set\nexample:\n", 47);
+		write(1, "\t./fractol mandel\n\t./fractol julia [A-C]\n", 41);
+		return (1);
+	}
+	i.mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true);
+	if (!i.mlx)
+		return (1);
+	initialize(&i.fract);
 	// image width and height
-	f.img = mlx_new_image(f.mlx, WIDTH, HEIGHT);
+	i.img = mlx_new_image(i.mlx, WIDTH, HEIGHT);
 	// put image at position x, y
-	mlx_image_to_window(f.mlx, f.img, 0, 0);
+	mlx_image_to_window(i.mlx, i.img, 0, 0);
 	// add hook function to main loop
-	mlx_loop_hook(f.mlx, &detect_keys, f.mlx);
-	mlx_scroll_hook(f.mlx, &zoom_hook, f.mb);
-	mlx_loop_hook(f.mlx, &hook, &f);
-	mlx_loop(f.mlx);
-	mlx_delete_image(f.mlx, f.img);
-	mlx_terminate(f.mlx);
-	return (EXIT_SUCCESS);
+	mlx_loop_hook(i.mlx, &detect_keys, i.mlx);
+	mlx_scroll_hook(i.mlx, &zoom_hook, &i.fract);
+	mlx_loop_hook(i.mlx, &hook, &i);
+	mlx_loop(i.mlx);
+	mlx_delete_image(i.mlx, i.img);
+	mlx_terminate(i.mlx);
+	return (0);
 }
