@@ -6,22 +6,23 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/19 16:22:09 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/19 17:54:48 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-
 void	initialize(t_fractal *f)
 {
-	f->iter_max = 50;
-	f->Re_min = -2.0;
-	f->Re_max = 0.9;
 	f->Im_min = -1.3;
 	f->Im_max = 1.3;
+	f->Re_min = -2.0;
+	f->Re_max = 0.9;
+	f->iter_max = 50;
+	f->julia = false;
 	f->K.re = 0.285;
 	f->K.im = 0.01;
+	f->mandel = false;
 }
 
 int	get_color(unsigned n, unsigned max_iterations)
@@ -99,11 +100,11 @@ int main(int argc, char *argv[])
 {
 	t_info	i;
 
+	initialize(&i.fract);
 	if (argc == 2 && ft_strncmp("mandel", argv[1], 6) == 0)
 		i.fract.mandel = true;
 	else if (argc == 3 && ft_strncmp("julia", argv[1], 5) == 0)
 		i.fract.julia = true;
-
 	else
 	{
 		write(1, "Please choose Mandelbrot or Julia set\nexample:\n", 47);
@@ -113,16 +114,14 @@ int main(int argc, char *argv[])
 	i.mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true);
 	if (!i.mlx)
 		return (1);
-	initialize(&i.fract);
 	// image width and height
 	i.img = mlx_new_image(i.mlx, WIDTH, HEIGHT);
 	// put image at position x, y
 	mlx_image_to_window(i.mlx, i.img, 0, 0);
 	// add hook function to main loop
-	mlx_loop_hook(i.mlx, &hook, &i);
 	mlx_loop_hook(i.mlx, &detect_keys, &i);
+	mlx_loop_hook(i.mlx, &hook, &i);
 	mlx_scroll_hook(i.mlx, &zoom_hook, &i.fract);
-	// mlx_loop_hook(i.mlx, &extra_key_hook, &i.fract);
 	mlx_loop(i.mlx);
 	mlx_delete_image(i.mlx, i.img);
 	mlx_terminate(i.mlx);

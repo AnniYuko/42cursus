@@ -6,22 +6,31 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 16:15:30 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/19 17:11:27 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/19 18:00:35 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	panning_vert(t_fractal *f, int direction)
+// move the view (according to arrow keys)
+void	panning(t_fractal *f, int direction)
 {
 	double	fraction;
 	double	*max;
 	double	*min;
 
+	if (direction == UP || direction == DOWN)
+	{
 	max = &f->Im_max;
 	min = &f->Im_min;
+	}
+	else
+	{
+		max = &f->Re_max;
+		min = &f->Re_min;
+	}
 	fraction = fabs((*max - *min) * 0.05);
-	if (direction == DOWN)
+	if (direction == DOWN || direction == LEFT)
 		fraction *= -1;
 	*max += fraction;
 	*min += fraction;
@@ -47,11 +56,16 @@ void	detect_keys(void *param)
 		i->fract.mandel = true;
 	}
 	if (mlx_is_key_down(i->mlx, MLX_KEY_UP))
-		panning_vert(&i->fract, UP);
+		panning(&i->fract, UP);
 	else if (mlx_is_key_down(i->mlx, MLX_KEY_DOWN))
-		panning_vert(&i->fract, DOWN);
+		panning(&i->fract, DOWN);
+	if (mlx_is_key_down(i->mlx, MLX_KEY_LEFT))
+		panning(&i->fract, LEFT);
+	else if (mlx_is_key_down(i->mlx, MLX_KEY_RIGHT))
+		panning(&i->fract, RIGHT);
 }
 
+// if ydelta > 0 zoom out; else zoom in
 void zoom_hook(double xdelta, double ydelta, void* param)
 {
 	t_fractal	*f;
@@ -63,7 +77,6 @@ void zoom_hook(double xdelta, double ydelta, void* param)
 	f = param;
 	part_Re = (f->Re_max - f->Re_min) * zoom;
 	part_Im = (f->Im_max - f->Im_min) * zoom;
-	// if ydelta > 0 zoom out; else zoom in
 	if (ydelta > 0)
 	{
 		part_Im *= -1;

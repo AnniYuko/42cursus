@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 16:52:50 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/19 17:23:23 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/19 17:43:59 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 #define HEIGHT 600
 #define UP 1
 #define DOWN 2
+#define LEFT 3
+#define RIGHT 4
 
 typedef struct s_complex {
 	double	re;
@@ -49,7 +51,7 @@ typedef struct s_info {
 } t_info;
 
 // input
-void	panning_vert(t_fractal *f, int direction);
+void	panning(t_fractal *f, int direction);
 void	detect_keys(void *param);
 void	zoom_hook(double xdelta, double ydelta, void* param);
 #endif
