@@ -6,59 +6,22 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/19 13:30:13 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:17:15 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#define WIDTH 700
-#define HEIGHT 600
+
 
 void	initialize(t_fractal *f)
 {
-	// f->iter_max = 40;
+	f->iter_max = 50;
 	f->Re_min = -2.0;
 	f->Re_max = 0.9;
 	f->Im_min = -1.3;
 	f->Im_max = 1.3;
-}
-
-void	detect_keys(void *param)
-{
-	mlx_t	*mlx = param;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	//* -- segfault if -- *//
-
-	// t_info	*i;
-	// i = param;
-	// if (mlx_is_key_down(&i->mlx, MLX_KEY_ESCAPE))
-	// 	mlx_close_window(&i->mlx);
-	// if (mlx_is_key_down(i->mlx, MLX_KEY_KP_ADD))
-
-}
-
-void zoom_hook(double xdelta, double ydelta, void* param)
-{
-	t_fractal	*f;
-	f = param;
-	double	zoom = 0.05;
-	double	part_Re;
-	double	part_Im;
-	(void)xdelta;
-
-	part_Re = (f->Re_max - f->Re_min) * zoom;
-	part_Im = (f->Im_max - f->Im_min) * zoom;
-	// if ydelta > 0 zoom out; else zoom in
-	if (ydelta > 0)
-	{
-		part_Im *= -1;
-		part_Re *= -1;
-	}
-		f->Re_min = f->Re_min + part_Re;
-		f->Re_max = f->Re_max - part_Re;
-		f->Im_min = f->Im_min + part_Im;
-		f->Im_max = f->Im_max - part_Im;
+	f->K.re = 0.285;
+	f->K.im = 0.01;
 }
 
 int	get_color(unsigned n, unsigned MaxIterations)
@@ -69,37 +32,16 @@ int	get_color(unsigned n, unsigned MaxIterations)
 	return (blue_palette[(int)((float)n/(float)MaxIterations * 14)]);
 }
 
-// int	calculate_mandelbrot(int n, void *param)
-// {
-// 	double	Z_re2;
-// 	double	Z_im2;
-// 	t_fractal	*f;
-
-// 	f = param;
-// 	// optimization & important to save value for calculating Z
-// 	Z_im2 = f->Z.im * f->Z.im;
-// 	Z_re2 = f->Z.re * f->Z.re;
-// 	/*  Check if Z is part of the set
-// 		Z > 4 means it goes to infinity */
-// 	if (Z_re2 + Z_im2 > 4)
-// 		return (n);
-// 	// calculate Z = Z * Z + c
-// 	f->Z.im = (f->Z.re + f->Z.re) * f->Z.im + f->c.im;
-// 	f->Z.re = Z_re2 - Z_im2 + f->c.re;
-// 	n++;
-// 	return (n);
-// }
-
 void	hook(void *param)
 {
-	unsigned	x;
-	unsigned	y;
-	double	Z_re2;
-	double	Z_im2;
-	unsigned	n;
-	unsigned MaxIterations = 40;
-	t_info		*i;
-	t_fractal 	*f;
+	unsigned		x;
+	unsigned		y;
+	double			Z_re2;
+	double			Z_im2;
+	unsigned int	n;
+	// unsigned MaxIterations = 40;
+	t_info			*i;
+	t_fractal 		*f;
 
 	i = param;
 	f = &(i->fract);
@@ -114,8 +56,10 @@ void	hook(void *param)
 			// Set Z = c
 			f->Z.re = f->c.re;
 			f->Z.im = f->c.im;
+			if (f->mandel == true)
+			{
 			n = 0;
-			while (n < MaxIterations)
+			while (n < f->iter_max)
 			{
 				// optimization & important to save value for calculating Z
 				Z_im2 = f->Z.im * f->Z.im;
@@ -134,7 +78,25 @@ void	hook(void *param)
 				// else if (f->julia == true)
 					// calculate_julia();
 			}
-				mlx_put_pixel(i->img, x, y, get_color(n, MaxIterations));
+			}
+			else if (f->julia == true)
+			{
+				n = 0;
+				while (n < f->iter_max)
+				{
+					Z_im2 = f->Z.im * f->Z.im;
+					Z_re2 = f->Z.re * f->Z.re;
+					/*  Check if Z is part of the set
+						Z > 4 means it goes to infinity */
+					if (Z_re2 + Z_im2 > 4)
+						break ;
+					// calculate Z = Z * Z + K
+					f->Z.im = (f->Z.re + f->Z.re) * f->Z.im + f->K.im;
+					f->Z.re = Z_re2 - Z_im2 + f->K.re;
+					n++;
+				}
+			}
+				mlx_put_pixel(i->img, x, y, get_color(n, f->iter_max));
 				x++;
 		}
 		y++;
@@ -165,9 +127,10 @@ int main(int argc, char *argv[])
 	// put image at position x, y
 	mlx_image_to_window(i.mlx, i.img, 0, 0);
 	// add hook function to main loop
-	mlx_loop_hook(i.mlx, &detect_keys, i.mlx);
-	mlx_scroll_hook(i.mlx, &zoom_hook, &i.fract);
 	mlx_loop_hook(i.mlx, &hook, &i);
+	mlx_loop_hook(i.mlx, &detect_keys, &i);
+	mlx_scroll_hook(i.mlx, &zoom_hook, &i.fract);
+	// mlx_loop_hook(i.mlx, &extra_key_hook, &i.fract);
 	mlx_loop(i.mlx);
 	mlx_delete_image(i.mlx, i.img);
 	mlx_terminate(i.mlx);

@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 16:52:50 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/19 13:36:13 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:17:02 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include <string.h>
 #include <unistd.h>
 // #include <math.h>
+#define WIDTH 700
+#define HEIGHT 600
 
 typedef struct s_complex {
 	double	re;
@@ -32,7 +34,7 @@ typedef struct s_fractal {
 	double			Re_max;
 	unsigned int	iter_max;
 	bool			julia;
-	int				K;
+	t_complex		K;
 	bool			mandel;
 	t_complex		Z;
 	t_complex		c;
