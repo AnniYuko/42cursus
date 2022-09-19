@@ -6,7 +6,7 @@
 #    By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/05 10:29:30 by akroll            #+#    #+#              #
-#    Updated: 2022/08/15 12:26:03 by akroll           ###   ########.fr        #
+#    Updated: 2022/09/19 14:41:01 by akroll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,38 +14,42 @@ CC := cc
 RM := rm -f
 CFLAGS := -Wall -Werror -Wextra
 
+LIBFT_DIR := libft
+LIBFT := $(LIBFT_DIR)/libft.a
 LIB_MLX_DIR := ../../MLX42
-HEADERS := -I $(LIB_MLX_DIR)/include/MLX42
-LIBS := -lglfw -L /Users/akroll/.brew/opt/glfw/lib $(LIB_MLX_DIR)/libmlx42.a
+LIBMLX := $(LIB_MLX_DIR)/libmlx42.a
+ALL_LIBS := $(LIBFT) $(LIBMLX)
+HEADERS := -I $(LIB_MLX_DIR)/include/MLX42 -I $(LIBFT_DIR)
+LIBS := -lglfw -L /Users/akroll/.brew/opt/glfw/lib $(LIBMLX) $(LIBFT)
 
 NAME := fractol
 SRCS := main.c
 OBJS := $(SRCS:.c=.o)
 
-all: libmlx $(NAME)
+all: $(NAME)
 
-$(NAME): $(OBJS)
+$(ALL_LIBS):
+	make -C $(LIBFT_DIR)
+	make -C $(LIB_MLX_DIR)
+
+$(NAME): $(OBJS) $(ALL_LIBS)
 	$(CC) $(CFLAGS) $< -o $@ $(HEADERS) $(LIBS)
 
 $(OBJS): %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
 
-zoom: zoom.o
-	$(CC) $(CFLAGS) $< -o $@ $(HEADERS) $(LIBS)
+# zoom: zoom.o
+# 	$(CC) $(CFLAGS) $< -o $@ $(HEADERS) $(LIBS)
 
-zoom.o: zoom.c
-	$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
-
-libft:
-
-libmlx:
-	make -C $(LIB_MLX_DIR)
+# zoom.o: zoom.c
+# 	$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
 
 clean:
-	$(RM) *.o
+	make clean -C $(LIBFT_DIR)
+	$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(LIBFT)
 
 re: fclean all
-.PHONY: all clean fclean re libft libmlx
+.PHONY: all clean fclean re libmlx

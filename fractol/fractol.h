@@ -6,13 +6,14 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 16:52:50 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/17 16:19:39 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/19 13:36:13 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H_
 #define FRACTOL_H_
 #include "MLX42.h"
+#include "libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

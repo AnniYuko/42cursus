@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/17 17:16:51 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/19 13:30:13 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,9 @@ int main(int argc, char *argv[])
 {
 	t_info	i;
 
-	if (argc == 2 && strncmp("mandel", argv[1], 6) == 0)
+	if (argc == 2 && ft_strncmp("mandel", argv[1], 6) == 0)
 		i.fract.mandel = true;
-	else if (argc == 3 && strncmp("julia", argv[1], 5) == 0)
+	else if (argc == 3 && ft_strncmp("julia", argv[1], 5) == 0)
 		i.fract.julia = true;
 
 	else
