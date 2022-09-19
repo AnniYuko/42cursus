@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/19 16:17:15 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:22:09 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	initialize(t_fractal *f)
 	f->K.im = 0.01;
 }
 
-int	get_color(unsigned n, unsigned MaxIterations)
+int	get_color(unsigned n, unsigned max_iterations)
 {
 	int	blue_palette[] = {0x000000FF, 0x060D28FF, 0x0D1535FF, 0x141D40FF, \
 		0x011B81FF, 0x001F9BFF, 0x0D30BCFF, 0x294DDBFF, 0x00A6D7FF, 0x30E7EDFF, \
 		0x33F9ECFF, 0x86FAF2FF, 0xB5F9F4FF, 0xFFFFFFFF, 0x000000FF};
-	return (blue_palette[(int)((float)n/(float)MaxIterations * 14)]);
+	return (blue_palette[(int)((float)n/(float)max_iterations * 14)]);
 }
 
 void	hook(void *param)
@@ -39,7 +39,6 @@ void	hook(void *param)
 	double			Z_re2;
 	double			Z_im2;
 	unsigned int	n;
-	// unsigned MaxIterations = 40;
 	t_info			*i;
 	t_fractal 		*f;
 
@@ -72,11 +71,6 @@ void	hook(void *param)
 				f->Z.im = (f->Z.re + f->Z.re) * f->Z.im + f->c.im;
 				f->Z.re = Z_re2 - Z_im2 + f->c.re;
 				n++;
-
-				// if (f->mandel == true)
-				// 	n = calculate_mandelbrot(n, &f);
-				// else if (f->julia == true)
-					// calculate_julia();
 			}
 			}
 			else if (f->julia == true)
@@ -86,8 +80,6 @@ void	hook(void *param)
 				{
 					Z_im2 = f->Z.im * f->Z.im;
 					Z_re2 = f->Z.re * f->Z.re;
-					/*  Check if Z is part of the set
-						Z > 4 means it goes to infinity */
 					if (Z_re2 + Z_im2 > 4)
 						break ;
 					// calculate Z = Z * Z + K

@@ -6,13 +6,13 @@
 #    By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/05 10:29:30 by akroll            #+#    #+#              #
-#    Updated: 2022/09/19 16:15:41 by akroll           ###   ########.fr        #
+#    Updated: 2022/09/19 17:23:14 by akroll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC := cc
 RM := rm -f
-CFLAGS := -Wall -Werror -Wextra
+CFLAGS := -Wall -Werror -Wextra -O3
 
 LIBFT_DIR := libft
 LIBFT := $(LIBFT_DIR)/libft.a
@@ -20,7 +20,7 @@ LIB_MLX_DIR := ../../MLX42
 LIBMLX := $(LIB_MLX_DIR)/libmlx42.a
 ALL_LIBS := $(LIBFT) $(LIBMLX)
 HEADERS := -I $(LIB_MLX_DIR)/include/MLX42 -I $(LIBFT_DIR)
-LIBS := -lglfw -L /Users/akroll/.brew/opt/glfw/lib $(LIBMLX) $(LIBFT)
+LIBS := -lglfw -lm -L /Users/akroll/.brew/opt/glfw/lib $(LIBMLX) $(LIBFT)
 
 NAME := fractol
 SRCS := main.c input.c
@@ -33,7 +33,7 @@ $(ALL_LIBS):
 	make -C $(LIB_MLX_DIR)
 
 $(NAME): $(OBJS) $(ALL_LIBS)
-	$(CC) $(CFLAGS) $< -o $@ $(HEADERS) $(LIBS)
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(HEADERS) $(LIBS)
 
 $(OBJS): %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
