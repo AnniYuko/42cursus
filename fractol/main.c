@@ -56,9 +56,9 @@ void	hook(void *param)
 			// Set Z = c
 			f->Z.re = f->c.re;
 			f->Z.im = f->c.im;
+			n = 0;
 			if (f->mandel == true)
 			{
-			n = 0;
 			while (n < f->iter_max)
 			{
 				// optimization & important to save value for calculating Z
@@ -76,7 +76,6 @@ void	hook(void *param)
 			}
 			else if (f->julia == true)
 			{
-				n = 0;
 				while (n < f->iter_max)
 				{
 					Z_im2 = f->Z.im * f->Z.im;
