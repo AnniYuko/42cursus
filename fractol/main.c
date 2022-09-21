@@ -6,23 +6,29 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/19 17:54:48 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/21 15:00:55 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	initialize(t_fractal *f)
+void	set_starting_view(t_fractal *f, int option)
 {
 	f->Im_min = -1.3;
 	f->Im_max = 1.3;
 	f->Re_min = -2.0;
 	f->Re_max = 0.9;
 	f->iter_max = 50;
-	f->julia = false;
-	f->K.re = 0.285;
-	f->K.im = 0.01;
-	f->mandel = false;
+	if (option == JULIA)
+	{
+		f->julia = true;
+		f->mandel = false;
+	}
+	else if (option == MANDEL)
+	{
+		f->mandel = true;
+		f->julia = false;
+	}
 }
 
 int	get_color(unsigned n, unsigned max_iterations)
@@ -95,30 +101,77 @@ void	hook(void *param)
 	}
 }
 
+void	output_help_message(void)
+{
+	write(1, "Please choose Mandelbrot or Julia set\nexample:\n", 47);
+	write(1, "\t./fractol mandel\n\t./fractol julia [A-C]\n", 41);
+}
+
+int	select_julia_preset(t_fractal *fract, char option)
+{
+	if (option == 'A')
+		{
+			fract->K.re = 0.285;
+			fract->K.im = 0.01;
+		}
+		else if (option == 'B')
+		{
+			fract->K.re = -0.4;
+			fract->K.im = 0.6;
+		}
+		else if (option == 'C')
+		{
+			fract->K.re = -0.835;
+			fract->K.im = -0.2321;
+		}
+		else
+			return (1);
+		return (0);
+}
+
+int	input_parsing(t_fractal *fract, int argc, char *argv[])
+{
+	if (argc == 2 && ft_strncmp("mandel", argv[1], 6) == 0)
+		set_starting_view(fract, MANDEL);
+	else if (argc == 3 && ft_strncmp("julia", argv[1], 5) == 0)
+	{
+		if (select_julia_preset(fract, *argv[2]) == 1)
+			return 1;
+		// if (atof())
+		set_starting_view(fract, JULIA);
+	}
+	else
+		return 1;
+	return 0;
+}
+
+int	initialize_mlx(t_info *i)
+{
+	i->mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true);
+	if (!i->mlx)
+		return (1);
+	i->img = mlx_new_image(i->mlx, WIDTH, HEIGHT);
+	mlx_image_to_window(i->mlx, i->img, 0, 0);
+	return (0);
+}
+
 int main(int argc, char *argv[])
 {
 	t_info	i;
 
-	initialize(&i.fract);
-	if (argc == 2 && ft_strncmp("mandel", argv[1], 6) == 0)
-		i.fract.mandel = true;
-	else if (argc == 3 && ft_strncmp("julia", argv[1], 5) == 0)
-		i.fract.julia = true;
-	else
+	if (input_parsing(&i.fract, argc, argv) == 1)
 	{
-		write(1, "Please choose Mandelbrot or Julia set\nexample:\n", 47);
-		write(1, "\t./fractol mandel\n\t./fractol julia [A-C]\n", 41);
+		output_help_message();
 		return (1);
 	}
-	i.mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true);
-	if (!i.mlx)
+	if (initialize_mlx(&i) == 1)
+	{
+		perror("initialize mlx");
 		return (1);
-	// image width and height
-	i.img = mlx_new_image(i.mlx, WIDTH, HEIGHT);
-	// put image at position x, y
-	mlx_image_to_window(i.mlx, i.img, 0, 0);
-	// add hook function to main loop
-	mlx_loop_hook(i.mlx, &detect_keys, &i);
+	}
+	// main loop
+	mlx_loop_hook(i.mlx, &key_actions_functional, &i);
+	mlx_loop_hook(i.mlx, &key_actions_fractal, &i);
 	mlx_loop_hook(i.mlx, &hook, &i);
 	mlx_scroll_hook(i.mlx, &zoom_hook, &i.fract);
 	mlx_loop(i.mlx);
