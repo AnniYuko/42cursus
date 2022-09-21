@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 16:15:30 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/21 14:55:54 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/21 17:07:34 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	key_actions_fractal(void *param)
 }
 
 // if ydelta > 0 zoom out; else zoom in
-void zoom_hook(double xdelta, double ydelta, void* param)
+void zoom(double xdelta, double ydelta, void* param)
 {
 	t_fractal	*f;
 	double	part_Re;

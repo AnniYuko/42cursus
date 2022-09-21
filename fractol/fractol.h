@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 16:52:50 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/21 14:54:40 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/21 17:08:04 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ typedef struct s_complex {
 } t_complex;
 
 typedef struct s_fractal {
-	double			Im_min;
-	double			Im_max;
-	double			Re_min;
-	double			Re_max;
-	unsigned int	iter_max;
-	bool			julia;
-	t_complex		K;
-	bool			mandel;
-	t_complex		Z;
-	t_complex		c;
+	double		Im_min;
+	double		Im_max;
+	double		Re_min;
+	double		Re_max;
+	int			iter_max;
+	bool		julia;
+	t_complex	K;
+	bool		mandel;
+	t_complex	Z;
+	t_complex	c;
 } t_fractal;
 
 typedef struct s_info {
@@ -52,11 +52,19 @@ typedef struct s_info {
 	t_fractal	fract;
 } t_info;
 
+// utils.c
+int		initialize_mlx(t_info *i);
+int		input_parsing(t_fractal *fract, int argc, char *argv[]);
+void	output_help_message(void);
+int		get_color(unsigned n, unsigned max_iterations);
+// fractals.c
 void	set_starting_view(t_fractal *f, int option);
+int		calc_fractal(t_fractal *f, int n);
+void	calc_put_pixels(void *param);
 int		select_julia_preset(t_fractal *fract, char option);
-// input
+// input.c
 void	panning(t_fractal *f, int direction);
 void	key_actions_functional(void *param);
 void	key_actions_fractal(void *param);
-void	zoom_hook(double xdelta, double ydelta, void* param);
+void	zoom(double xdelta, double ydelta, void* param);
 #endif
