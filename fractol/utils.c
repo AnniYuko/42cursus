@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 17:02:47 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/21 17:05:38 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/21 18:12:20 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ void	output_help_message(void)
 {
 	write(1, "Please choose Mandelbrot or Julia set\nexample:\n", 47);
 	write(1, "\t./fractol mandel\n\t./fractol julia [A-C]\n", 41);
+}
+
+void	write_info_keybindings(void)
+{
+	write(1, "Use:\nMouse wheel to zoom,\nArrow keys to move\n", 45);
+	write(1, "Numpad + and - to adjust rendering\n", 35);
+	write(1, "a, b, c keys to select a julia preset\n", 38);
+	write(1, "m or j switch between julia and mandelbrot\n", 43);
+	write(1, "space to reset the view\n", 24);
 }
 
 int	get_color(unsigned n, unsigned max_iterations)

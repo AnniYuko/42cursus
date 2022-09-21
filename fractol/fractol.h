@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 16:52:50 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/21 17:08:04 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/21 18:12:55 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_info {
 int		initialize_mlx(t_info *i);
 int		input_parsing(t_fractal *fract, int argc, char *argv[]);
 void	output_help_message(void);
+void	write_info_keybindings(void);
 int		get_color(unsigned n, unsigned max_iterations);
 // fractals.c
 void	set_starting_view(t_fractal *f, int option);
