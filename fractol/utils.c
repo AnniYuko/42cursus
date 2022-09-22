@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 17:02:47 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/21 18:12:20 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/22 11:21:49 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,6 @@ int	initialize_mlx(t_info *i)
 		return (1);
 	i->img = mlx_new_image(i->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(i->mlx, i->img, 0, 0);
-	return (0);
-}
-
-int	input_parsing(t_fractal *fract, int argc, char *argv[])
-{
-	if (argc == 2 && ft_strncmp("mandel", argv[1], 6) == 0)
-		set_starting_view(fract, MANDEL);
-	else if (argc == 3 && ft_strncmp("julia", argv[1], 5) == 0)
-	{
-		if (select_julia_preset(fract, *argv[2]) == 1)
-			return (1);
-		set_starting_view(fract, JULIA);
-	}
-	else
-		return (1);
 	return (0);
 }
 

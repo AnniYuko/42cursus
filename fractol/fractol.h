@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 16:52:50 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/21 18:12:55 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/22 11:22:47 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_info {
 
 // utils.c
 int		initialize_mlx(t_info *i);
-int		input_parsing(t_fractal *fract, int argc, char *argv[]);
 void	output_help_message(void);
 void	write_info_keybindings(void);
 int		get_color(unsigned n, unsigned max_iterations);
@@ -64,6 +63,7 @@ int		calc_fractal(t_fractal *f, int n);
 void	calc_put_pixels(void *param);
 int		select_julia_preset(t_fractal *fract, char option);
 // input.c
+int		input_parsing(t_fractal *fract, int argc, char *argv[]);
 void	panning(t_fractal *f, int direction);
 void	key_actions_functional(void *param);
 void	key_actions_fractal(void *param);

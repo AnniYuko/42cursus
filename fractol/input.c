@@ -6,11 +6,29 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 16:15:30 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/21 17:07:34 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/22 11:22:09 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+int	input_parsing(t_fractal *fract, int argc, char *argv[])
+{
+	if (argc == 2 && ft_strncmp("mandel", argv[1], 6) == 0)
+	{
+		set_starting_view(fract, MANDEL);
+		select_julia_preset(fract, 'A');
+	}
+	else if (argc == 3 && ft_strncmp("julia", argv[1], 5) == 0)
+	{
+		if (select_julia_preset(fract, *argv[2]) == 1)
+			return (1);
+		set_starting_view(fract, JULIA);
+	}
+	else
+		return (1);
+	return (0);
+}
 
 // move the view (according to arrow keys)
 void	panning(t_fractal *f, int direction)
