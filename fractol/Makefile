@@ -6,7 +6,7 @@
 #    By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/05 10:29:30 by akroll            #+#    #+#              #
-#    Updated: 2022/09/21 17:11:37 by akroll           ###   ########.fr        #
+#    Updated: 2022/09/22 12:49:34 by akroll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,4 +46,4 @@ fclean: clean
 	$(RM) $(NAME) $(LIBFT)
 
 re: fclean all
-.PHONY: all clean fclean re libmlx
+.PHONY: all clean fclean re
