@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:16:23 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/21 17:07:41 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/21 18:12:36 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
 		return (1);
 	}
 	// main loop
+	write_info_keybindings();
 	mlx_loop_hook(i.mlx, &key_actions_functional, &i);
 	mlx_loop_hook(i.mlx, &key_actions_fractal, &i);
 	mlx_loop_hook(i.mlx, &calc_put_pixels, &i);
