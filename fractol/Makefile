@@ -6,7 +6,7 @@
 #    By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/05 10:29:30 by akroll            #+#    #+#              #
-#    Updated: 2022/09/22 12:39:46 by akroll           ###   ########.fr        #
+#    Updated: 2022/09/22 13:04:58 by akroll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS := -Wall -Werror -Wextra -O3
 
 LIBFT_DIR := libft
 LIBFT := $(LIBFT_DIR)/libft.a
-LIB_MLX_DIR := MLXlib42
+LIB_MLX_DIR := MLX42
 LIBMLX := $(LIB_MLX_DIR)/libmlx42.a
 ALL_LIBS := $(LIBFT) $(LIBMLX)
 HEADERS := -I $(LIB_MLX_DIR)/include/MLX42 -I $(LIBFT_DIR)
