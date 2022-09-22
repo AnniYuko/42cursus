@@ -1,0 +1,3 @@
+[submodule "fractol/MLXlib42"]
+	path = fractol/MLXlib42
+	url = https://github.com/codam-coding-college/MLX42.git
