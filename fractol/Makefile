@@ -6,7 +6,7 @@
 #    By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/05 10:29:30 by akroll            #+#    #+#              #
-#    Updated: 2022/09/22 13:07:39 by akroll           ###   ########.fr        #
+#    Updated: 2022/09/22 14:46:18 by akroll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIB_MLX_DIR := MLX42
 LIBMLX := $(LIB_MLX_DIR)/libmlx42.a
 ALL_LIBS := $(LIBFT) $(LIBMLX)
 HEADERS := -I $(LIB_MLX_DIR)/include/MLX42 -I $(LIBFT_DIR)
-LIBS := -lglfw -lm -L /Users/akroll/.brew/opt/glfw/lib $(LIBMLX) $(LIBFT)
+LIBS := -lglfw -lm -L /Users/$(USER)/.brew/opt/glfw/lib $(LIBMLX) $(LIBFT)
 
 NAME := fractol
 SRCS := main.c input.c fractals.c utils.c
