@@ -6,7 +6,7 @@
 #    By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/22 16:44:19 by akroll            #+#    #+#              #
-#    Updated: 2022/09/23 13:39:50 by akroll           ###   ########.fr        #
+#    Updated: 2022/09/24 13:18:24 by akroll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,19 +20,19 @@ HEADERS := -I $(LFT_DIR)
 LIBS := -lft -L $(LFT_DIR)
 
 NAME := push_swap
-SRCS := main.c
+SRCS := main.c utils.c stack_operations.c
 OBJS := $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $< -o $@ $(HEADERS) $(LIBS)
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(HEADERS) $(LIBS)
 
 $(OBJS): %.o: %.c $(LFT)
 	$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
 
 $(LFT):
-	make -C $(LFT_DIR)
+	make bonus -C $(LFT_DIR)
 
 clean:
 	make clean -C $(LFT_DIR)

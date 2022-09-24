@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 12:52:20 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/24 15:24:47 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/24 17:20:01 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,25 @@ long	*convert_to_int(char **char_arr, int size)
 	return (num_arr);
 }
 
-void	print_list(t_list **top_of_stack)
+void	print_list(t_list *stack_a, t_list *stack_b)
 {
-	t_list *tmp;
-
-	write(1, "What the stack looks like:\n", 27);
-	tmp = *top_of_stack;
-	while (tmp != NULL)
+	while (stack_a || stack_b)
 	{
-		printf("\t%li\n", *(long*)(tmp->content));
-		tmp = tmp->next;
+		if (stack_a)
+		{
+			printf("\t%li", *(long*)(stack_a->content));
+			stack_a = stack_a->next;
+
+		}
+		if (stack_b)
+		{
+			printf("\t%li", *(long*)(stack_b->content));
+			stack_b = stack_b->next;
+		}
+		printf("\n");
 	}
+	printf("\t__\t__\n");
+	printf("\t a\t b\n");
 }
 
 int	arr_get_size(char **char_arr)

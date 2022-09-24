@@ -6,65 +6,41 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:40:19 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/23 14:57:29 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/24 17:20:38 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 // #define DEBUG
 
-t_stack	*ft_stack_new(int num)
-{
-	t_stack	*elem;
-
-	elem = malloc(sizeof(t_stack));
-	if (!elem)
-		return (NULL);
-	elem->num = num;
-	elem->next = NULL;
-	return (elem);
-}
-
-t_stack **stack_add_front(t_stack **top, t_stack *new)
-{
-	if (*top == NULL)
-		*top = new;
-	else
-	{
-		new->next = *top;
-		*top = new;
-	}
-	return (top);
-}
-
 int main(int argc, char *argv[])
 {
-	t_stack **top_of_stack;
-	t_stack *tmp;
-	t_stack	*new;
-	char	**num_arr;
-	int	i;
+	t_list	**stack_a;
+	t_list	**stack_b;
+	t_list	*new;
+	char	**char_arr;
+	long	*num_arr;
+	int		size;
+	int		i;
 
-	new = NULL;
-	top_of_stack = malloc(sizeof(t_stack*));
-	if (!top_of_stack)
-		return (1);
 	if (argc == 2)
 	{
-		num_arr = ft_split(argv[1], ',');
+		stack_a = malloc(sizeof(t_list*)); // free in the end
+		stack_b = malloc(sizeof(t_list*)); // free in the end
+		if (!stack_a || !stack_b)
+			return (1);
+		char_arr = ft_split(argv[1], ',');
+		size = arr_get_size(char_arr);
+		num_arr = convert_to_int(char_arr, size);
+		// free char_arr
 		i = 0;
-		while (num_arr[i] != NULL)
+		while (i < size)
 		{
-			new = ft_stack_new(ft_atoi(num_arr[i]));
+			new = ft_lstnew(&num_arr[i]);
 			// if new == NULL, free the entire list and return
-			top_of_stack = stack_add_front(top_of_stack, new);
-			#ifdef DEBUG
-			printf("at the top: %p, content: %d\n", *top_of_stack, (**top_of_stack).num);
-			printf("elem %p\n\tcontent: %d\n\tnext: %p\n\n", new, new->num, new->next);
-			#endif
+			ft_lstadd_front(stack_a, new);
 			i++;
 		}
-		free(num_arr);
 	}
 	else
 	{
@@ -72,12 +48,16 @@ int main(int argc, char *argv[])
 		return (1);
 	}
 
-	// print out
-	write(1, "What the stack looks like:\n", 27);
-	tmp = *top_of_stack;
-	while (tmp != NULL)
-	{
-		printf("%d\n", tmp->num);
-		tmp = tmp->next;
-	}
+	print_list(*stack_a, *stack_b);
+
+	// write(1, "sa\n", 3);
+	// *stack_a = ft_lst_swap(*stack_a);
+
+	// write(1, "rotate\n", 7);
+	// *stack_a = ft_lst_rotate(*stack_a);
+
+	write(1, "\nreverse rotate\n\n", 17);
+	*stack_a = ft_lst_reverse_rotate(*stack_a);
+
+	print_list(*stack_a, *stack_b);
 }
