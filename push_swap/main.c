@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:40:19 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/24 17:20:38 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/24 18:07:56 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,15 @@ int main(int argc, char *argv[])
 	// write(1, "rotate\n", 7);
 	// *stack_a = ft_lst_rotate(*stack_a);
 
-	write(1, "\nreverse rotate\n\n", 17);
-	*stack_a = ft_lst_reverse_rotate(*stack_a);
-
+	write(1, "push a\n\n", 8);
+	ft_lst_push(stack_a, stack_b);
 	print_list(*stack_a, *stack_b);
+
+	write(1, "push a\n\n", 8);
+	ft_lst_push(stack_a, stack_b);
+	print_list(*stack_a, *stack_b);
+
+	// write(1, "reverse rotate\n\n", 16);
+	// *stack_a = ft_lst_reverse_rotate(*stack_a);
+	// print_list(*stack_a, *stack_b);
 }

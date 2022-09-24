@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:49:24 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/24 17:14:42 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/24 17:40:34 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int		arr_get_size(char **char_arr);
 t_list	*ft_lst_swap(t_list *top);
 t_list	*ft_lst_rotate(t_list *top);
 t_list	*ft_lst_reverse_rotate(t_list *top);
+void	ft_lst_push(t_list **top_from, t_list **top_to);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 12:52:20 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/24 17:20:01 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/24 17:45:58 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	print_list(t_list *stack_a, t_list *stack_b)
 			stack_a = stack_a->next;
 
 		}
+		else
+			printf("\t");
 		if (stack_b)
 		{
 			printf("\t%li", *(long*)(stack_b->content));
@@ -47,7 +49,7 @@ void	print_list(t_list *stack_a, t_list *stack_b)
 		printf("\n");
 	}
 	printf("\t__\t__\n");
-	printf("\t a\t b\n");
+	printf("\t a\t b\n\n");
 }
 
 int	arr_get_size(char **char_arr)
