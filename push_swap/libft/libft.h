@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:02:47 by akroll            #+#    #+#             */
-/*   Updated: 2022/04/15 13:21:46 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/25 17:16:53 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list	*ft_lstpenultimate(t_list *lst);
 //PART 1 ---------------------------
 //strings
 size_t	ft_strlen(const char *s);
