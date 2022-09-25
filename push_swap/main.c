@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:40:19 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/25 17:51:12 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/25 18:01:26 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int main(int argc, char *argv[])
 	write(1, "push a\n\n", 8);
 	ft_lst_push(stack_a, stack_b);
 	print_list(*stack_a, *stack_b);
-
-
 
 	// write(1, "push b\n\n", 8);
 	// ft_lst_push(stack_b, stack_a);

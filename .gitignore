@@ -1,3 +1,4 @@
 *.o
 *.out*
 *.a
+push_swap/push_swap
