@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:49:24 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/26 15:01:48 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/26 15:49:36 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 typedef struct s_stack {
 	int num;
@@ -47,5 +48,9 @@ t_list	*ft_lst_reverse_rotate(t_list *top);
 void	list_rra(t_list **stack_a);
 void	list_rrb(t_list **stack_b);
 void	list_rrr(t_list **stack_a, t_list **stack_b);
+// sorting.c
+int		get_value(t_list *elem);
+bool	is_sorted(t_list **stack_a);
+void	sort_small_stack(t_list **stack_a);
 
 #endif
