@@ -6,11 +6,23 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:48:46 by akroll            #+#    #+#             */
-/*   Updated: 2022/06/21 23:25:56 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/27 17:26:05 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static unsigned int	skip_delimiter_characters(char const *s, char c)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (s[i] == c)
+	{
+		i++;
+	}
+	return (i);
+}
 
 static unsigned int	iterate_word(char const *s, char c)
 {
@@ -24,25 +36,6 @@ static unsigned int	iterate_word(char const *s, char c)
 	return (i);
 }
 
-static char	*ft_strldup(const char *s1, int len)
-{
-	char	*dest;
-	int		i;
-
-	i = 0;
-	dest = malloc(sizeof(char) * (len + 1));
-	if (!dest)
-		return (NULL);
-	while (i < len)
-	{
-		dest[i] = s1[i];
-		i++;
-	}
-	dest[len] = '\0';
-	return (dest);
-}
-
-
 static unsigned int	count_strings(char const *s, char c)
 {
 	unsigned int	i;
@@ -51,10 +44,10 @@ static unsigned int	count_strings(char const *s, char c)
 
 	i = 0;
 	num_words = 0;
+	len = 0;
 	while (s[i] != '\0')
 	{
-		while (s[i] == c)
-			i++;
+		i += skip_delimiter_characters(&s[i], c);
 		len = iterate_word(&s[i], c);
 		i += len;
 		if (len > 0)
@@ -63,62 +56,49 @@ static unsigned int	count_strings(char const *s, char c)
 	return (num_words);
 }
 
-static void	free_array(char **split_array)
+static char	*free_array(char **array, unsigned int *k)
 {
-	while (*split_array != NULL)
+	unsigned int	i;
+
+	if (array[*k] == NULL)
 	{
-		free(*split_array);
-		split_array++;
+		i = 0;
+		while (array[i] != NULL)
+		{
+			free(array[i]);
+			i++;
+		}
+		free(array);
+		return (NULL);
 	}
-	free(split_array);
+	return (array[*k]);
 }
 
 char	**ft_split(char const *s, char c)
 {
 	char			**split_array;
 	unsigned int	string_len;
+	unsigned int	i;
 	unsigned int	k;
-	unsigned int	num_of_strings;
 
-	k = 0;
 	if (s == NULL)
 		return (NULL);
-	num_of_strings = count_strings(s, c);
-	if (!(split_array = malloc((num_of_strings + 1) * sizeof(char *))))
+	split_array = malloc((count_strings(s, c) + 1) * sizeof(char *));
+	if (split_array == NULL)
 		return (NULL);
-	while (k < num_of_strings)
+	i = 0;
+	k = 0;
+	while (k < count_strings(s, c))
 	{
-		while (*s == c)
-			s++;
-		string_len = iterate_word(s, c);
-		if (!(split_array[k] = ft_strldup(s, string_len))) {
-			free_array(split_array);
+		i += skip_delimiter_characters(&s[i], c);
+		string_len = iterate_word(&s[i], c);
+		i += string_len;
+		split_array[k] = malloc((string_len + 1) * sizeof(char));
+		if (free_array(split_array, &k) == NULL)
 			return (NULL);
-		}
-		s += string_len;
+		ft_strlcpy(split_array[k], &s[i] - string_len, string_len + 1);
 		k++;
 	}
 	split_array[k] = NULL;
 	return (split_array);
 }
-
-// int	main()
-// {
-// 	char *s;
-// 	char **arr;
-// 	int	i;
-
-// 	i = 0;
-// 	s = "_keep learning !_learn.code_repeat__";
-// 	printf("input:\n\t\"%s\"\n", s);
-
-// 	arr = ft_split(s, '_');
-
-// 	printf("\noutput:\n");
-// 	while (arr[i] != NULL)
-// 	{
-// 		printf("\tstring %d: %s\n", i, arr[i]);
-// 		i++;
-// 	}
-// 	return 0;
-// }

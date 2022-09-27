@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:02:47 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/25 17:16:53 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/27 16:53:08 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*ft_strrchr(const char *s, int c);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_atoi(const char *str);
+long	ft_atol(const char *str);
 //ascii
 int		ft_toupper(int c);
 int		ft_tolower(int c);
