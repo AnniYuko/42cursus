@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:28:52 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/26 14:31:54 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/27 14:36:24 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_list	*ft_lst_swap(t_list *top)
 	t_list	*second;
 
 	if (!top || !top->next)
-		return (top);
+		return (NULL);
 	second = top->next;
 	top->next = second->next;
 	second->next = top;

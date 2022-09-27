@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:19:28 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/27 14:00:00 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/27 14:27:36 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	get_value(t_list *elem)
 	return (*(int*)(elem->content));
 }
 
-bool	is_sorted(t_list **stack_a)
+bool	is_sorted(t_list **stack)
 {
 	t_list	*elem;
 
-	elem = *stack_a;
+	elem = *stack;
 	while (elem && elem->next)
 	{
 		if (get_value(elem) > get_value(elem->next))

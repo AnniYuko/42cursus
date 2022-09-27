@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:49:24 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/27 14:14:31 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/27 17:03:41 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <limits.h>
 
 typedef struct s_two_stacks {
 	t_list	**a;
@@ -26,6 +27,9 @@ typedef struct s_two_stacks {
 	int		size;
 } t_two_stacks;
 
+// init.c
+int		init(t_two_stacks *stacks);
+int		input_to_stack(t_two_stacks *stacks, int argc, char *argv[]);
 // utils.c
 int		*convert_to_int(char **char_arr, int size);
 void	print_list(t_list *stack_a, t_list *stack_b);

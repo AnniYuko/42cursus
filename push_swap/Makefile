@@ -6,7 +6,7 @@
 #    By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/22 16:44:19 by akroll            #+#    #+#              #
-#    Updated: 2022/09/26 15:22:35 by akroll           ###   ########.fr        #
+#    Updated: 2022/09/27 14:44:05 by akroll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ LIBS := -lft -L $(LFT_DIR)
 
 NAME := push_swap
 SRCS := main.c utils.c swap.c push.c rotate.c reverse_rotate.c \
-	sorting.c
+	sorting.c init.c
 OBJS := $(SRCS:.c=.o)
 
 all: $(NAME)
