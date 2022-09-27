@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:49:24 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/26 15:49:36 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/27 14:14:31 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@
 # include <unistd.h>
 # include <stdbool.h>
 
-typedef struct s_stack {
-	int num;
-	struct s_stack *next;
-} t_stack;
+typedef struct s_two_stacks {
+	t_list	**a;
+	t_list	**b;
+	int		*num_arr;
+	int		size;
+} t_two_stacks;
 
 // utils.c
-long	*convert_to_int(char **char_arr, int size);
+int		*convert_to_int(char **char_arr, int size);
 void	print_list(t_list *stack_a, t_list *stack_b);
 int		arr_get_size(char **char_arr);
 void	ft_error(void);

@@ -6,19 +6,19 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 12:52:20 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/26 14:29:21 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/27 14:20:45 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-long	*convert_to_int(char **char_arr, int size)
+int	*convert_to_int(char **char_arr, int size)
 {
-	long	*num_arr;
+	int	*num_arr;
 	int		i;
 
 	i = 0;
-	num_arr = malloc(size * sizeof(long));
+	num_arr = malloc(size * sizeof(int));
 	if (!num_arr)
 		return(NULL);
 	while (i < size)
@@ -35,7 +35,7 @@ void	print_list(t_list *stack_a, t_list *stack_b)
 	{
 		if (stack_a)
 		{
-			printf("\t%li", *(long*)(stack_a->content));
+			printf("\t%i", *(int*)(stack_a->content));
 			stack_a = stack_a->next;
 
 		}
@@ -43,7 +43,7 @@ void	print_list(t_list *stack_a, t_list *stack_b)
 			printf("\t");
 		if (stack_b)
 		{
-			printf("\t%li", *(long*)(stack_b->content));
+			printf("\t%i", *(int*)(stack_b->content));
 			stack_b = stack_b->next;
 		}
 		printf("\n");
