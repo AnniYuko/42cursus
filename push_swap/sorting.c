@@ -6,11 +6,23 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:19:28 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/27 14:27:36 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/29 15:43:56 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	sorting(t_two_stacks *stacks)
+{
+	while  (!is_sorted(stacks->a))
+	{
+		#ifdef DEBUG
+		print_list(*(stacks->a), *(stacks->b));
+		#endif
+
+		sort_small_stack(stacks->a);
+	}
+}
 
 int	get_value(t_list *elem)
 {
@@ -38,9 +50,16 @@ bool	is_sorted(t_list **stack)
 
 void	sort_small_stack(t_list **stack_a)
 {
-	t_list	*first;
+	int	first;
+	int	second;
+	// int	third;
 
-	first = *stack_a;
-	if (get_value(first) > get_value(first->next))
+	first = get_value(*stack_a);
+	second = get_value((*stack_a)->next);
+	if (first > second)
 		list_sa(stack_a);
+	// third = get_value((*stack_a)->next->next);
+	// if (first > second && second < third && third > first)
+		// list_sa(stack_a);
+	// if (first > second)
 }

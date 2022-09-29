@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 12:52:20 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/27 16:07:51 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:14:16 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,5 @@ int	arr_get_size(char **char_arr)
 void	ft_error(void)
 {
 	write(2, "Error\n", 6);
+	// clean();
 }

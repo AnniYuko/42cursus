@@ -6,19 +6,20 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:49:24 by akroll            #+#    #+#             */
-/*   Updated: 2022/09/27 17:03:41 by akroll           ###   ########.fr       */
+/*   Updated: 2022/09/29 15:36:23 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 # include "libft.h"
-
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
 # include <limits.h>
+
+#define DEBUG
 
 typedef struct s_two_stacks {
 	t_list	**a;
@@ -55,6 +56,7 @@ void	list_rra(t_list **stack_a);
 void	list_rrb(t_list **stack_b);
 void	list_rrr(t_list **stack_a, t_list **stack_b);
 // sorting.c
+void	sorting(t_two_stacks *stacks);
 int		get_value(t_list *elem);
 bool	is_sorted(t_list **stack_a);
 void	sort_small_stack(t_list **stack_a);
