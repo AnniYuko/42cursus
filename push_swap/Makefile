@@ -6,7 +6,7 @@
 #    By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/22 16:44:19 by akroll            #+#    #+#              #
-#    Updated: 2022/09/27 14:44:05 by akroll           ###   ########.fr        #
+#    Updated: 2022/10/13 14:57:38 by akroll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,7 @@ HEADERS := -I $(LFT_DIR)
 LIBS := -lft -L $(LFT_DIR)
 
 NAME := push_swap
-SRCS := main.c utils.c swap.c push.c rotate.c reverse_rotate.c \
-	sorting.c init.c
+SRCS := main.c init.c error.c
 OBJS := $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -33,7 +32,7 @@ $(OBJS): %.o: %.c $(LFT)
 	$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
 
 $(LFT):
-	make bonus -C $(LFT_DIR)
+	make -C $(LFT_DIR)
 
 clean:
 	make clean -C $(LFT_DIR)

@@ -61,9 +61,3 @@ int	arr_get_size(char **char_arr)
 		i++;
 	return (i);
 }
-
-void	ft_error(void)
-{
-	write(2, "Error\n", 6);
-	// clean();
-}
