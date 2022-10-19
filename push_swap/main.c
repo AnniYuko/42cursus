@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:40:19 by akroll            #+#    #+#             */
-/*   Updated: 2022/10/13 14:57:03 by akroll           ###   ########.fr       */
+/*   Updated: 2022/10/19 17:08:44 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int main(int argc, char *argv[])
 	t_int_stacks	stacks;
 
 	(void)argv;
-	if (init(&stacks, argc - 1) == 1)
-		ft_error(0);
-	// check input (only ints!)
+
+	if (!init(&stacks, argc))
+		return (1);
 	// if (input_to_stack(&stacks, argc, argv) == 1)
 	// 	ft_error(1);
 	// sorting(&stacks);

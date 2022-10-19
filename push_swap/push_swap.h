@@ -6,7 +6,7 @@
 /*   By: akroll <akroll@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:49:24 by akroll            #+#    #+#             */
-/*   Updated: 2022/10/13 15:01:06 by akroll           ###   ########.fr       */
+/*   Updated: 2022/10/19 17:09:28 by akroll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // # include <stdio.h>
 // # include <stdlib.h>
 // # include <unistd.h>
-// # include <stdbool.h>
+# include <stdbool.h>
 // # include <limits.h>
 
 // # define DEBUG
@@ -28,7 +28,7 @@ typedef struct s_int_stacks {
 } t_int_stacks;
 
 // init.c
-int	init(t_int_stacks *stacks, int size);
+bool	init(t_int_stacks *stacks, int argc);
 // error.c
 void	ft_error(int clean);
 // sorting.c
